@@ -1,0 +1,26 @@
+# Build files
+dist/
+build/
+
+# Config files
+*.config.js
+*.config.ts
+
+# Environment files
+.env*
+
+# Package manager files
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db

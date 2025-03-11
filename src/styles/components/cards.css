@@ -1,0 +1,25 @@
+@layer components {
+  .news-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .news-card-image {
+    @apply w-full h-48 object-cover;
+  }
+
+  .news-card-content {
+    @apply p-4;
+  }
+
+  .news-card-title {
+    @apply text-xl font-semibold mb-2 line-clamp-2;
+  }
+
+  .news-card-description {
+    @apply text-gray-600 mb-4 line-clamp-3;
+  }
+
+  .news-card-footer {
+    @apply flex justify-between items-center text-sm text-gray-500;
+  }
+}

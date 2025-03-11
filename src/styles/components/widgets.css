@@ -1,0 +1,45 @@
+@layer components {
+  .widget {
+    @apply bg-white rounded-lg shadow-lg p-6;
+  }
+
+  .widget-title {
+    @apply text-xl font-bold mb-4 text-gray-800;
+  }
+
+  .trending-item {
+    @apply flex gap-4 items-start;
+  }
+
+  .trending-number {
+    @apply text-2xl font-bold text-blue-600;
+  }
+
+  .trending-link {
+    @apply text-gray-700 hover:text-blue-600 line-clamp-2;
+  }
+
+  .topic-tag {
+    @apply px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-blue-100 hover:text-blue-700;
+  }
+
+  .weather-info {
+    @apply flex items-center justify-between;
+  }
+
+  .weather-location {
+    @apply text-gray-600;
+  }
+
+  .weather-temperature {
+    @apply text-3xl font-bold;
+  }
+
+  .weather-icon {
+    @apply text-4xl;
+  }
+
+  .weather-condition {
+    @apply text-gray-600 mt-2;
+  }
+}
