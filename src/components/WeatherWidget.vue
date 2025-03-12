@@ -8,15 +8,19 @@ const weather = {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-xl font-bold mb-4 text-gray-800">Weather</h2>
-    <div class="flex items-center justify-between">
+  <div class="weather-widget-container">
+    <h2 class="weather-widget-title">Weather</h2>
+    <div class="weather-widget-info">
       <div>
-        <p class="text-gray-600">{{ weather.location }}</p>
-        <p class="text-3xl font-bold">{{ weather.temperature }}</p>
+        <p class="weather-widget-location">{{ weather.location }}</p>
+        <p class="weather-widget-temperature">{{ weather.temperature }}</p>
       </div>
-      <div class="text-4xl">{{ weather.icon }}</div>
+      <div class="weather-widget-icon">{{ weather.icon }}</div>
     </div>
-    <p class="text-gray-600 mt-2">{{ weather.condition }}</p>
+    <p class="weather-widget-condition">{{ weather.condition }}</p>
   </div>
 </template>
+
+<style scoped>
+@import '../styles/components/weather-widget.css';
+</style>

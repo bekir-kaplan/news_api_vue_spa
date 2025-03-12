@@ -31,7 +31,7 @@ class NewsService extends HttpClient {
 
       return mapNewsResponse(response);
     } catch (error) {
-      console.warn('Failed to fetch from API, using mock data:', error);
+      // console.warn('Failed to fetch from API, using mock data:', error);
       let filteredArticles = topHeadlinesMockData.articles;
 
       if (params.category) {
@@ -61,7 +61,7 @@ class NewsService extends HttpClient {
           sortBy: params.sortBy || 'publishedAt',
           from:
             params.from ||
-            new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            new Date(Date.now() - 30 * 12 * 60 * 60 * 1000).toISOString().split('T')[0],
         },
       });
 
@@ -71,7 +71,7 @@ class NewsService extends HttpClient {
 
       return mapNewsResponse(response);
     } catch (error) {
-      console.warn('Failed to fetch from API, using filtered mock data:', error);
+      // console.warn('Failed to fetch from API, using filtered mock data:', error);
       let filteredArticles = everythingMockData.articles.filter(
         (article) =>
           article.title?.toLowerCase().includes(params.q.toLowerCase()) ||

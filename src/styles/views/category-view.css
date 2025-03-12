@@ -1,0 +1,23 @@
+.category-view-header {
+  @apply mb-8;
+}
+
+.category-view-title {
+  @apply text-3xl font-bold capitalize;
+}
+
+.category-view-error {
+  @apply text-center py-8 text-red-500;
+}
+
+.category-view-error-title {
+  @apply text-xl font-semibold mb-2;
+}
+
+.category-view-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.category-view-sidebar {
+  @apply space-y-6 sticky top-6;
+}

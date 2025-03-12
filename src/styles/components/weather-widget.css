@@ -1,0 +1,27 @@
+.weather-widget-container {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+.weather-widget-title {
+  @apply text-xl font-bold mb-4 text-gray-800;
+}
+
+.weather-widget-info {
+  @apply flex items-center justify-between;
+}
+
+.weather-widget-location {
+  @apply text-gray-600;
+}
+
+.weather-widget-temperature {
+  @apply text-3xl font-bold;
+}
+
+.weather-widget-icon {
+  @apply text-4xl;
+}
+
+.weather-widget-condition {
+  @apply text-gray-600 mt-2;
+}

@@ -1,0 +1,15 @@
+.share-buttons-container {
+  @apply flex items-center space-x-4;
+}
+
+.share-buttons-button {
+  @apply inline-flex items-center text-gray-600 hover:text-blue-600;
+}
+
+.share-buttons-icon {
+  @apply h-5 w-5;
+}
+
+.share-buttons-text {
+  @apply ml-2;
+}

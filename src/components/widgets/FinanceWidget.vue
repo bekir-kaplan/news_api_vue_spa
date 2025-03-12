@@ -1,5 +1,5 @@
 <template>
-  <div class="finance-widget-container">
+  <div class="bg-white rounded-lg shadow-lg p-6">
     <div class="finance-widget-header">
       <h2>Financial Markets</h2>
       <PeriodSelector
@@ -69,9 +69,6 @@ onMounted(async () => {
 
 <style scoped>
 /* Widget Container */
-.finance-widget-container {
-  @apply bg-white rounded-lg shadow-lg p-6;
-}
 .finance-widget-header {
   @apply flex justify-between items-center mb-6 flex-wrap md:flex-row;
 }

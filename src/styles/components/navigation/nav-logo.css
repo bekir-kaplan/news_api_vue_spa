@@ -1,0 +1,6 @@
+.nav-logo-container {
+  @apply flex-shrink-0;
+}
+.nav-logo {
+  @apply text-2xl font-bold text-blue-600;
+}

@@ -1,0 +1,11 @@
+.loading-spinner-container {
+  @apply text-center py-8;
+}
+
+.loading-spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto;
+}
+
+.loading-spinner-text {
+  @apply mt-4 text-xl text-gray-600;
+}

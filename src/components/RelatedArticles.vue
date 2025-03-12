@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '../stores/newsStore';
+
 const newsStore = useNewsStore();
 const { articles, selectedArticle } = storeToRefs(newsStore);
 
@@ -14,24 +15,31 @@ const relatedArticles = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-xl font-bold mb-4 text-gray-800">Related Articles</h2>
-    <div class="space-y-4">
-      <div v-for="article in relatedArticles" :key="article.url" class="group">
-        <router-link :to="`/article/${encodeURIComponent(article.title)}`">
+  <div class="related-articles-container">
+    <h2 class="related-articles-title">Related Articles</h2>
+    <div class="related-articles-list">
+      <div v-for="article in relatedArticles" :key="article.url" class="related-articles-item">
+        <router-link
+          :to="`/article/${encodeURIComponent(article.title)}`"
+          onclick="newsStore.setSelectedArticle(article)"
+        >
           <img
             v-if="article.urlToImage"
             :src="article.urlToImage"
             :alt="article.title"
-            class="w-full h-48 object-cover rounded-lg mb-2"
+            class="related-articles-image"
           />
-          <h3 class="font-semibold group-hover:text-blue-600 line-clamp-2">
+          <h3 class="related-articles-item-title group-hover:text-blue-600">
             {{ article.title }}
           </h3>
-          <span class="text-sm text-gray-500">{{ article.publishedAt }}</span>
-          <span class="text-sm text-gray-500">{{ article.author }}</span>
+          <span class="related-articles-item-meta">{{ article.publishedAt }}</span>
+          <span class="related-articles-item-meta">{{ article.author }}</span>
         </router-link>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@import '../styles/components/related-articles.css';
+</style>

@@ -20,11 +20,12 @@ const toggleLike = (event: Event): void => {
 </script>
 
 <template>
-  <button
-    class="top-4 right-4 p-2 rounded-full bg-white/80 hover:bg-white transition-colors"
-    @click="toggleLike"
-  >
-    <HeartSolid v-if="isLiked" class="h-5 w-5 text-red-500" />
-    <HeartOutline v-else class="h-5 w-5 text-gray-600" />
+  <button class="btn like-button" @click="toggleLike">
+    <HeartSolid v-if="isLiked" class="like-button-icon liked" />
+    <HeartOutline v-else class="like-button-icon not-liked" />
   </button>
 </template>
+
+<style scoped>
+@import '../styles/components/like-button.css';
+</style>

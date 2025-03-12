@@ -10,6 +10,7 @@ import TrendingNews from '../components/TrendingNews.vue';
 import WeatherWidget from '../components/WeatherWidget.vue';
 import PopularTopics from '../components/PopularTopics.vue';
 import FinanceWidget from '../components/widgets/FinanceWidget.vue';
+import LoadingSpinner from '../components/LoadingSpinner.vue';
 
 const newsStore = useNewsStore();
 const { articles, loading, error } = storeToRefs(newsStore);
@@ -38,24 +39,21 @@ onMounted(async () => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
-      <div v-if="loading" class="text-center py-8">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto" />
-        <p class="mt-4 text-xl text-gray-600">Loading news...</p>
-      </div>
+      <LoadingSpinner v-if="loading" />
 
-      <div v-else-if="error" class="text-center py-8 text-red-500">
-        <p class="text-xl font-semibold mb-2">Error loading news</p>
+      <div v-else-if="error" class="home-view-error">
+        <p class="home-view-error-title">Error loading news</p>
         <p>{{ error }}</p>
       </div>
 
       <template v-else>
         <!-- Featured Articles Carousel -->
-        <div class="mb-12">
+        <div class="home-view-carousel">
           <NewsCarousel :articles="featuredArticles" :autoplay="true" :interval="5000" />
         </div>
 
         <!-- Category Sections -->
-        <div class="space-y-12">
+        <div class="home-view-categories">
           <NewsSection
             v-for="category in categories"
             :key="category"
@@ -74,7 +72,7 @@ onMounted(async () => {
 
     <!-- Sidebar Content -->
     <template #sidebar>
-      <div class="space-y-6 sticky top-6">
+      <div class="home-view-sidebar">
         <FinanceWidget />
         <TrendingNews />
         <WeatherWidget />
@@ -83,3 +81,7 @@ onMounted(async () => {
     </template>
   </NewsLayout>
 </template>
+
+<style scoped>
+@import '../styles/views/home-view.css';
+</style>

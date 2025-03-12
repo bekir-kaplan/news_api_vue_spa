@@ -1,0 +1,39 @@
+.mobile-menu-container {
+  @apply md:hidden;
+}
+
+.mobile-menu-list {
+  @apply px-2 pt-2 pb-3 space-y-1;
+}
+
+.mobile-menu-item-with-submenu {
+  @apply relative;
+}
+
+.mobile-menu-item {
+  @apply w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 block;
+}
+
+.mobile-menu-item-content {
+  @apply flex justify-between items-center;
+}
+
+.mobile-menu-item-icon {
+  @apply transition-transform duration-200;
+}
+
+.mobile-menu-dropdown {
+  @apply mt-2 ml-4 space-y-1;
+}
+
+.mobile-menu-dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600;
+}
+
+.mobile-menu-item-active {
+  @apply text-blue-600 bg-blue-50;
+}
+
+.mobile-menu-dropdown-item-active {
+  @apply bg-blue-50 text-blue-600;
+}

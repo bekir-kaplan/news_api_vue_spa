@@ -5,13 +5,11 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex-shrink-0">
+  <div class="nav-logo-container">
     <router-link to="/" class="nav-logo" @click="emit('click')"> NewsApp </router-link>
   </div>
 </template>
 
 <style scoped>
-.nav-logo {
-  @apply text-2xl font-bold text-blue-600;
-}
+@import '../../styles/components/navigation/nav-logo.css';
 </style>

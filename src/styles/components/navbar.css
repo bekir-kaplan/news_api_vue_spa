@@ -1,0 +1,28 @@
+.navbar {
+  @apply bg-white shadow-md relative;
+}
+
+.navbar-container {
+  @apply container mx-auto px-4;
+}
+
+.navbar-content {
+  @apply flex justify-between items-center h-16;
+}
+
+.navbar-btn-icon {
+  @apply p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50 focus:outline-none;
+}
+
+.navbar-icon {
+  @apply h-5 w-5;
+}
+
+.navbar-icon-large {
+  @apply h-6 w-6;
+}
+
+.navbar-liked-count {
+  @apply absolute -top-1 -right-1 bg-red-500 text-white 
+          text-xs rounded-full h-4 w-4 flex items-center justify-center;
+}

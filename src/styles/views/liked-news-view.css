@@ -1,0 +1,31 @@
+.liked-news-view-title {
+  @apply text-3xl font-bold mb-6;
+}
+
+.liked-news-view-empty {
+  @apply text-center py-8;
+}
+
+.liked-news-view-empty-text {
+  @apply text-xl text-gray-600;
+}
+
+.liked-news-view-browse-link {
+  @apply mt-4 inline-block text-blue-600 hover:text-blue-800;
+}
+
+.liked-news-view-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.liked-news-view-sidebar {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+.liked-news-view-sidebar-title {
+  @apply text-xl font-bold mb-4;
+}
+
+.liked-news-view-sidebar-text {
+  @apply text-gray-600;
+}

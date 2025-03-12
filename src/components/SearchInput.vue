@@ -33,8 +33,8 @@ const onSelect = (article: Article): void => {
       @blur="handleBlur"
     />
 
-    <div v-if="loading" class="absolute right-3 top-2.5">
-      <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500" />
+    <div v-if="loading" class="search-input-spinner-container">
+      <div class="search-input-spinner" />
     </div>
 
     <div v-if="showResults && searchResults.length > 0" class="search-results">
@@ -45,16 +45,16 @@ const onSelect = (article: Article): void => {
           class="search-result-item"
           @mousedown="onSelect(article)"
         >
-          <div class="flex items-start gap-2">
+          <div class="search-result-item-content">
             <img
               v-if="article.urlToImage"
               :src="article.urlToImage"
               :alt="article.title"
-              class="w-12 h-12 object-cover rounded"
+              class="search-result-item-image"
             />
-            <div class="flex-1">
-              <p class="font-medium line-clamp-2">{{ article.title }}</p>
-              <p class="text-sm text-gray-500">{{ article.source.name }}</p>
+            <div class="search-result-item-text">
+              <p class="search-result-item-title">{{ article.title }}</p>
+              <p class="search-result-item-source">{{ article.source.name }}</p>
             </div>
           </div>
         </li>
@@ -64,17 +64,5 @@ const onSelect = (article: Article): void => {
 </template>
 
 <style scoped>
-.search-input {
-  @apply w-full p-2 border rounded-lg focus:ring-2 
-  focus:ring-blue-300 focus:border-blue-500 outline-none;
-}
-
-.search-results {
-  @apply relative z-50 w-full mt-1 bg-white border 
-  rounded-lg shadow-lg max-h-96 overflow-y-auto;
-}
-
-.search-result-item {
-  @apply px-4 py-2 hover:bg-gray-100 cursor-pointer;
-}
+@import '../styles/components/search-input.css';
 </style>

@@ -34,42 +34,42 @@ const goBack = (): void => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
-      <button @click="goBack" class="back-button">
-        <ArrowLeftIcon class="h-5 w-5 mr-2" />
+      <button @click="goBack" class="article-view-back-button">
+        <ArrowLeftIcon class="article-view-back-icon" />
         Back to News
       </button>
 
-      <article
-        v-if="selectedArticle"
-        class="bg-white rounded-lg shadow-lg overflow-hidden relative"
-      >
+      <article v-if="selectedArticle" class="article-view-container">
         <img
           v-if="selectedArticle.urlToImage"
           :src="selectedArticle.urlToImage"
           :alt="selectedArticle.title"
-          class="w-full h-96 object-cover"
+          class="article-view-image"
         />
-        <LikeButton :article="selectedArticle" />
 
-        <div class="p-8">
-          <div class="mb-6">
-            <h1 class="text-4xl font-bold mb-4">
+        <div class="article-view-content">
+          <div class="article-view-header">
+            <h1 class="article-view-title">
               {{ selectedArticle.title }}
             </h1>
-            <div class="flex items-center justify-between text-gray-600 mb-6">
+            <div class="article-view-meta">
               <div>
-                <p class="font-semibold">By {{ selectedArticle.author || 'Unknown' }}</p>
+                <p class="article-view-author">By {{ selectedArticle.author || 'Unknown' }}</p>
                 <p>{{ formattedDate }}</p>
               </div>
-              <ShareButtons :article="selectedArticle" />
+              <div class="article-view-actions">
+                <LikeButton :article="selectedArticle" />
+                <div class="article-view-actions-vertical-divider" />
+                <ShareButtons :article="selectedArticle" />
+              </div>
             </div>
           </div>
 
-          <div class="prose max-w-none">
-            <p class="text-xl mb-6">
+          <div class="article-view-body">
+            <p class="article-view-description">
               {{ selectedArticle.description }}
             </p>
-            <div class="text-lg leading-relaxed">
+            <div class="article-view-text">
               {{ selectedArticle.content }}
             </div>
           </div>
@@ -78,7 +78,7 @@ const goBack = (): void => {
             :href="selectedArticle.url"
             target="_blank"
             rel="noopener noreferrer"
-            class="link-read"
+            class="article-view-link"
           >
             Read Full Article on {{ selectedArticle.source.name }}
           </a>
@@ -88,7 +88,7 @@ const goBack = (): void => {
 
     <!-- Sidebar Content -->
     <template #sidebar>
-      <div class="space-y-6">
+      <div class="article-view-sidebar">
         <RelatedArticles />
       </div>
     </template>
@@ -96,12 +96,5 @@ const goBack = (): void => {
 </template>
 
 <style scoped>
-.back-button {
-  @apply mb-6 text-blue-600 hover:text-blue-800 font-semibold flex items-center;
-}
-
-.link-read {
-  @apply inline-block mt-8 px-6 py-3 bg-blue-600 text-white 
-  rounded-lg hover:bg-blue-700 transition-colors;
-}
+@import '../styles/views/article-view.css';
 </style>

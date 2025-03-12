@@ -1,0 +1,19 @@
+.news-layout-container {
+  @apply min-h-screen bg-gray-100;
+}
+
+.news-layout-inner {
+  @apply container mx-auto px-4 py-6;
+}
+
+.news-layout-grid {
+  @apply grid grid-cols-12 gap-6;
+}
+
+.news-layout-main {
+  @apply col-span-12 lg:col-span-8;
+}
+
+.news-layout-sidebar {
+  @apply col-span-12 lg:col-span-4;
+}

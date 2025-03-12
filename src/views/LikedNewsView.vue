@@ -11,24 +11,22 @@ const { likedArticles } = storeToRefs(likedNewsStore);
 <template>
   <NewsLayout>
     <template #main>
-      <h1 class="text-3xl font-bold mb-6">Liked Articles</h1>
+      <h1 class="liked-news-view-title">Liked Articles</h1>
 
-      <div v-if="likedArticles.length === 0" class="text-center py-8">
-        <p class="text-xl text-gray-600">No liked articles yet</p>
-        <router-link to="/" class="mt-4 inline-block text-blue-600 hover:text-blue-800">
-          Browse articles
-        </router-link>
+      <div v-if="likedArticles.length === 0" class="liked-news-view-empty">
+        <p class="liked-news-view-empty-text">No liked articles yet</p>
+        <router-link to="/" class="liked-news-view-browse-link"> Browse articles </router-link>
       </div>
 
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div v-else class="liked-news-view-grid">
         <NewsCard v-for="article in likedArticles" :key="article.url" :article="article" />
       </div>
     </template>
 
     <template #sidebar>
-      <div class="bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-xl font-bold mb-4">Your Collection</h2>
-        <p class="text-gray-600">
+      <div class="liked-news-view-sidebar">
+        <h2 class="liked-news-view-sidebar-title">Your Collection</h2>
+        <p class="liked-news-view-sidebar-text">
           You have liked {{ likedArticles.length }} article{{
             likedArticles.length !== 1 ? 's' : ''
           }}
@@ -37,3 +35,7 @@ const { likedArticles } = storeToRefs(likedNewsStore);
     </template>
   </NewsLayout>
 </template>
+
+<style scoped>
+@import '../styles/views/liked-news-view.css';
+</style>

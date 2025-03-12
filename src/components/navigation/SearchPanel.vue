@@ -31,18 +31,18 @@ const handleCategoryChange = (category: string): void => {
       'max-h-[calc(100vh-4rem)] opacity-100': isOpen,
     }"
   >
-    <div class="container mx-auto p-4">
+    <div class="search-panel-inner">
       <!-- Search Categories -->
-      <div class="mb-4 border-b pb-3">
-        <div class="flex flex-wrap gap-2">
+      <div class="search-panel-categories">
+        <div class="search-panel-categories-list">
           <button
             v-for="category in categories"
             :key="category"
-            class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+            class="search-panel-category-button"
             :class="
               selectedCategory === category
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'search-panel-category-button-active'
+                : 'search-panel-category-button-inactive'
             "
             @click="handleCategoryChange(category)"
           >
@@ -59,7 +59,7 @@ const handleCategoryChange = (category: string): void => {
       />
 
       <!-- Search Results Stats -->
-      <div v-if="newsStore.searchResults.length > 0" class="mt-3 text-sm text-gray-600">
+      <div v-if="newsStore.searchResults.length > 0" class="search-panel-results-stats">
         Found {{ newsStore.searchResults.length }} results
         {{ selectedCategory !== 'all' ? `in ${selectedCategory}` : '' }}
       </div>
@@ -68,18 +68,5 @@ const handleCategoryChange = (category: string): void => {
 </template>
 
 <style scoped>
-.search-panel-container {
-  @apply absolute left-0 right-0 bg-white z-50 shadow-lg 
-  transition-all duration-300 ease-in-out overflow-hidden;
-}
-.search-panel-enter-active,
-.search-panel-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-
-.search-panel-enter-from,
-.search-panel-leave-to {
-  opacity: 0;
-  max-height: 0;
-}
+@import '../../styles/components/navigation/search-panel.css';
 </style>

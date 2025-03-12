@@ -29,13 +29,14 @@ const shareArticle = (): void => {
 </script>
 
 <template>
-  <div class="flex items-center space-x-4">
-    <button
-      class="inline-flex items-center text-gray-600 hover:text-blue-600"
-      @click="shareArticle"
-    >
-      <ShareIcon class="h-5 w-5" />
-      <span class="ml-2">Share</span>
+  <div class="share-buttons-container">
+    <button class="share-buttons-button" @click="shareArticle">
+      <ShareIcon class="share-buttons-icon" />
+      <span class="share-buttons-text">Share</span>
     </button>
   </div>
 </template>
+
+<style scoped>
+@import '../styles/components/share-buttons.css';
+</style>

@@ -7,18 +7,18 @@ const { articles } = storeToRefs(newsStore);
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-xl font-bold mb-4 text-gray-800">Trending Now</h2>
-    <div class="space-y-4">
+  <div class="trending-news-container">
+    <h2 class="trending-news-title">Trending Now</h2>
+    <div class="trending-news-list">
       <div
         v-for="(article, index) in articles.slice(0, 5)"
         :key="article.url"
-        class="flex gap-4 items-start"
+        class="trending-news-item"
       >
-        <span class="text-2xl font-bold text-blue-600">{{ index + 1 }}</span>
+        <span class="trending-news-index">{{ index + 1 }}</span>
         <router-link
           :to="`/article/${encodeURIComponent(article.title)}`"
-          class="text-gray-700 hover:text-blue-600 line-clamp-2"
+          class="trending-news-link"
         >
           {{ article.title }}
         </router-link>
@@ -26,3 +26,7 @@ const { articles } = storeToRefs(newsStore);
     </div>
   </div>
 </template>
+
+<style scoped>
+@import '../styles/components/trending-news.css';
+</style>

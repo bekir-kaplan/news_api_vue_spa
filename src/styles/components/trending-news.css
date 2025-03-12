@@ -1,0 +1,23 @@
+.trending-news-container {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+.trending-news-title {
+  @apply text-xl font-bold mb-4 text-gray-800;
+}
+
+.trending-news-list {
+  @apply space-y-4;
+}
+
+.trending-news-item {
+  @apply flex gap-4 items-start;
+}
+
+.trending-news-index {
+  @apply text-2xl font-bold text-blue-600;
+}
+
+.trending-news-link {
+  @apply text-gray-700 hover:text-blue-600 line-clamp-2;
+}

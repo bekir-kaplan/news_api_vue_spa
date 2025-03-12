@@ -1,0 +1,23 @@
+.news-section {
+  @apply mb-12;
+}
+
+.news-section-header {
+  @apply flex justify-between items-center mb-6;
+}
+
+.news-section-title {
+  @apply text-2xl font-bold;
+}
+
+.news-section-link {
+  @apply flex items-center text-blue-600 hover:text-blue-800 font-semibold;
+}
+
+.news-section-icon {
+  @apply h-4 w-4 ml-1;
+}
+
+.news-section-content {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}

@@ -62,7 +62,7 @@ const imageErrorHandler = (e: Event): void => {
     <!-- Footer -->
     <footer class="news-card-footer">
       <div class="flex items-center justify-between">
-        <time :datetime="article.publishedAt" class="news-card-date-time">
+        <time :datetime="formattedDate" class="news-card-date-time">
           {{ formattedDate }}
         </time>
         <button @click="viewArticle" class="news-card-read-more">
@@ -74,46 +74,5 @@ const imageErrorHandler = (e: Event): void => {
 </template>
 
 <style scoped>
-.news-card-container {
-  @apply bg-white rounded-lg shadow-md overflow-visible 
-  hover:shadow-lg transition-shadow duration-300 flex flex-col;
-}
-
-.news-card-header {
-  @apply relative;
-}
-
-.news-card-source {
-  @apply absolute -top-[0.85rem] -left-2 bg-blue-600 text-white 
-  text-sm font-medium px-3 py-1 rounded-full z-10;
-}
-
-.news-card-image {
-  @apply w-full h-48 object-cover rounded-t-lg;
-}
-
-.news-card-content {
-  @apply p-6 flex-grow;
-}
-
-.news-card-title {
-  @apply text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors;
-}
-
-.news-card-description {
-  @apply text-gray-600 line-clamp-3 font-thin text-sm;
-}
-
-.news-card-footer {
-  @apply px-6 py-4 border-t border-gray-100;
-}
-
-.news-card-read-more {
-  @apply text-xs inline-flex items-center text-blue-600 
-  font-semibold hover:text-blue-800 transition-colors;
-}
-
-.news-card-date-time {
-  @apply text-xs text-gray-500;
-}
+@import '../styles/components/news-card.css';
 </style>

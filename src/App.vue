@@ -7,3 +7,7 @@ import DefaultLayout from './layouts/DefaultLayout.vue';
     <router-view />
   </DefaultLayout>
 </template>
+
+<style>
+@import './styles/global.css';
+</style>

@@ -1,0 +1,31 @@
+.related-articles-container {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+.related-articles-title {
+  @apply text-xl font-bold mb-4 text-gray-800;
+}
+
+.related-articles-list {
+  @apply space-y-4;
+}
+
+.related-articles-item {
+  @apply flex space-x-4;
+}
+
+.related-articles-item a {
+  @apply flex-1;
+}
+
+.related-articles-image {
+  @apply w-full h-48 object-cover rounded-lg mb-2;
+}
+
+.related-articles-item-title {
+  @apply font-semibold line-clamp-2;
+}
+
+.related-articles-item-meta {
+  @apply text-sm text-gray-500;
+}

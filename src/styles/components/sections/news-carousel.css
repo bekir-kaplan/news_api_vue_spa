@@ -1,0 +1,62 @@
+.news-carousel-container {
+  @apply relative w-full overflow-hidden rounded-lg shadow-lg bg-white;
+}
+
+.news-carousel-wrapper {
+  @apply relative w-full overflow-hidden;
+}
+
+.news-carousel-track {
+  @apply flex transition-transform duration-300 ease-in-out;
+}
+
+.news-carousel-slide {
+  @apply w-full flex-shrink-0 relative;
+}
+
+.news-carousel-image {
+  @apply w-full h-[400px] object-cover;
+}
+
+.news-carousel-content {
+  @apply absolute bottom-0 left-0 right-0 p-6 pb-24 bg-gradient-to-t 
+  from-black/80 to-transparent text-white;
+}
+
+.news-carousel-title {
+  @apply text-2xl font-bold mb-2;
+}
+
+.news-carousel-description {
+  @apply text-sm line-clamp-2;
+}
+
+.news-carousel-link {
+  @apply inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded 
+  hover:bg-blue-700 transition-colors cursor-pointer;
+}
+
+.news-carousel-controls {
+  @apply absolute left-0 right-0 bottom-4 flex mx-4 items-center justify-between gap-4;
+}
+
+.news-carousel-control-button {
+  @apply p-2 rounded-full bg-white/80 text-gray-800 hover:bg-white disabled:opacity-50 
+  disabled:cursor-not-allowed transition-colors;
+}
+
+.news-carousel-indicators {
+  @apply flex gap-2;
+}
+
+.news-carousel-indicator-dot {
+  @apply w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-colors;
+}
+
+.news-carousel-icon {
+  @apply w-6 h-6;
+}
+
+.news-carousel-indicator-active {
+  @apply bg-white;
+}

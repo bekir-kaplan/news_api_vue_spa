@@ -1,6 +1,19 @@
-@import './base/index.css';
-@import './components/article.css';
-@import './components/search.css';
-@import './components/navigation.css';
-@import './components/widgets.css';
-@import './layouts/grid.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-gray-50;
+  }
+
+  h1 {
+    @apply text-3xl font-bold;
+    color: #f4796c;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+    color: #f4796c;
+  }
+}
