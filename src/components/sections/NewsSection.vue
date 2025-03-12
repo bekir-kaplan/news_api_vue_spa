@@ -16,7 +16,7 @@ defineProps<{
         <ArrowRightIcon class="news-section-icon" />
       </router-link>
     </div>
-    <div class="news-section-content">
+    <div class="grid-template">
       <slot />
     </div>
   </section>

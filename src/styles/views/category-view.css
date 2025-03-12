@@ -14,10 +14,6 @@
   @apply text-xl font-semibold mb-2;
 }
 
-.category-view-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
-}
-
 .category-view-sidebar {
   @apply space-y-6 sticky top-6;
 }

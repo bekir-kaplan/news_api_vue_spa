@@ -11,14 +11,16 @@ const { likedArticles } = storeToRefs(likedNewsStore);
 <template>
   <NewsLayout>
     <template #main>
-      <h1 class="liked-news-view-title">Liked Articles</h1>
+      <div class="liked-news-header">
+        <h1 class="liked-news-view-title">Liked Articles</h1>
+      </div>
 
       <div v-if="likedArticles.length === 0" class="liked-news-view-empty">
         <p class="liked-news-view-empty-text">No liked articles yet</p>
         <router-link to="/" class="liked-news-view-browse-link"> Browse articles </router-link>
       </div>
 
-      <div v-else class="liked-news-view-grid">
+      <div v-else class="grid-template">
         <NewsCard v-for="article in likedArticles" :key="article.url" :article="article" />
       </div>
     </template>

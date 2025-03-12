@@ -1,5 +1,8 @@
+.liked-news-header {
+  @apply mb-8;
+}
 .liked-news-view-title {
-  @apply text-3xl font-bold mb-6;
+  @apply text-3xl font-bold capitalize;
 }
 
 .liked-news-view-empty {
@@ -12,10 +15,6 @@
 
 .liked-news-view-browse-link {
   @apply mt-4 inline-block text-blue-600 hover:text-blue-800;
-}
-
-.liked-news-view-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
 }
 
 .liked-news-view-sidebar {

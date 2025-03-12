@@ -11,6 +11,7 @@ import WeatherWidget from '../components/WeatherWidget.vue';
 import PopularTopics from '../components/PopularTopics.vue';
 import FinanceWidget from '../components/widgets/FinanceWidget.vue';
 import LoadingSpinner from '../components/LoadingSpinner.vue';
+import ErrorComponent from '../components/ErrorComponent.vue';
 
 const newsStore = useNewsStore();
 const { articles, loading, error } = storeToRefs(newsStore);
@@ -40,33 +41,26 @@ onMounted(async () => {
     <!-- Main Content -->
     <template #main>
       <LoadingSpinner v-if="loading" />
-
-      <div v-else-if="error" class="home-view-error">
-        <p class="home-view-error-title">Error loading news</p>
-        <p>{{ error }}</p>
-      </div>
+      <ErrorComponent v-else-if="error" :error="error" />
 
       <template v-else>
-        <!-- Featured Articles Carousel -->
         <div class="home-view-carousel">
           <NewsCarousel :articles="featuredArticles" :autoplay="true" :interval="5000" />
         </div>
 
-        <!-- Category Sections -->
-        <div class="home-view-categories">
-          <NewsSection
-            v-for="category in categories"
-            :key="category"
-            :title="category"
-            :category="category"
-          >
-            <NewsCard
-              v-for="article in categoryArticles[category]"
-              :key="article.url"
-              :article="article"
-            />
-          </NewsSection>
-        </div>
+        <!-- Category Section -->
+        <NewsSection
+          v-for="category in categories"
+          :key="category"
+          :title="category"
+          :category="category"
+        >
+          <NewsCard
+            v-for="article in categoryArticles[category]"
+            :key="article.url"
+            :article="article"
+          />
+        </NewsSection>
       </template>
     </template>
 

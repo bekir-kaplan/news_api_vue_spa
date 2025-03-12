@@ -7,11 +7,7 @@
 }
 
 .home-view-carousel {
-  @apply mb-12;
-}
-
-.home-view-categories {
-  @apply space-y-12;
+  @apply mb-6;
 }
 
 .home-view-sidebar {

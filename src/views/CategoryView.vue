@@ -8,6 +8,7 @@ import NewsCard from '../components/NewsCard.vue';
 import TrendingNews from '../components/TrendingNews.vue';
 import PopularTopics from '../components/PopularTopics.vue';
 import LoadingSpinner from '../components/LoadingSpinner.vue';
+import ErrorComponent from '../components/ErrorComponent.vue';
 
 const route = useRoute();
 const newsStore = useNewsStore();
@@ -48,13 +49,9 @@ onMounted(() => {
       </div>
 
       <LoadingSpinner v-if="loading" />
+      <ErrorComponent v-else-if="error" :error="error" />
 
-      <div v-else-if="error" class="category-view-error">
-        <p class="category-view-error-title">Error loading news</p>
-        <p>{{ error }}</p>
-      </div>
-
-      <div v-else class="category-view-grid">
+      <div v-else class="grid-template">
         <NewsCard v-for="article in articles" :key="article.url" :article="article" />
       </div>
     </template>
