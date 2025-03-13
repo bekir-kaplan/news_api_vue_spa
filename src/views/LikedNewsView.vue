@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useLikedNewsStore } from '../stores/likedNewsStore';
-import NewsLayout from '../layouts/NewsLayout.vue';
-import NewsCard from '../components/NewsCard.vue';
+import { useLikedNewsStore } from '@/stores/likedNewsStore';
+import NewsLayout from '@/layouts/NewsLayout.vue';
+import NewsCard from '@/components/NewsCard.vue';
+import GoBackButton from '@/components/GoBackButton.vue';
 
 const likedNewsStore = useLikedNewsStore();
-const { likedArticles } = storeToRefs(likedNewsStore);
+const { likedArticles, likedArticlesByCategory } = storeToRefs(likedNewsStore);
 </script>
 
 <template>
   <NewsLayout>
     <template #main>
+      <GoBackButton />
       <div class="liked-news-header">
         <h1 class="liked-news-view-title">Liked Articles</h1>
       </div>
@@ -33,11 +35,23 @@ const { likedArticles } = storeToRefs(likedNewsStore);
             likedArticles.length !== 1 ? 's' : ''
           }}
         </p>
+
+        <div class="badge-container">
+          <router-link
+            v-for="(likedArticle, idx) in likedArticlesByCategory"
+            :key="idx"
+            :to="`/category/${likedArticle.name.toLowerCase()}`"
+            class="badge-link"
+          >
+            {{ likedArticle.name }}
+            <span class="badge-count">{{ likedArticle.count }}</span>
+          </router-link>
+        </div>
       </div>
     </template>
   </NewsLayout>
 </template>
 
 <style scoped>
-@import '../styles/views/liked-news-view.css';
+@import '@/styles/views/liked-news-view.css';
 </style>

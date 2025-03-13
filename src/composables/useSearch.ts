@@ -1,9 +1,9 @@
 import { ref, watch } from 'vue';
-import type { Article } from '../api/types/mappedTypes';
-import { useNewsStore } from '../stores/newsStore';
-import { debounce } from '../utils/debounce';
+import { useNewsStore } from '@/stores/newsStore';
+import { debounce } from '@/utils/debounce';
+import type { NewsAPIArticle } from '@/api/types/news';
 
-export function useSearch(minChars = 3) {
+export function useSearch(minChars = 3): any {
   const newsStore = useNewsStore();
   const searchQuery = ref('');
   const showResults = ref(false);
@@ -22,13 +22,13 @@ export function useSearch(minChars = 3) {
     debouncedSearch(newQuery);
   });
 
-  const handleSelect = (article: Article) => {
+  const handleSelect = (article: NewsAPIArticle): void => {
     searchQuery.value = article.title;
     showResults.value = false;
     newsStore.clearSearch();
   };
 
-  const handleBlur = () => {
+  const handleBlur = (): void => {
     setTimeout(() => {
       showResults.value = false;
     }, 200);

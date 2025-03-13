@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
-import { useApiCacheStore } from '../../stores/apiCacheStore'; // Import the cache store
+import { useApiCacheStore } from '@/stores/apiCacheStore'; // Import the cache store
 
 export abstract class HttpClient {
   protected readonly instance: AxiosInstance;
@@ -22,6 +22,13 @@ export abstract class HttpClient {
     return Promise.reject(new Error(message));
   };
 
+  /**
+   * Perform a GET request with caching.
+   * @param url - The URL to request.
+   * @param config - Axios request configuration.
+   * @param cacheTime - Cache expiry time in milliseconds (default: 10 minutes).
+   * @returns The response data.
+   */
   protected async get<T>(
     url: string,
     config?: AxiosRequestConfig,
@@ -29,11 +36,11 @@ export abstract class HttpClient {
   ): Promise<T> {
     const cacheStore = useApiCacheStore(); // Access the Pinia store
 
-    // Generate a unique cache key (URL + query params)
+    // Unique cache key (URL + query params)
     const queryString = config?.params ? JSON.stringify(config.params) : '';
     const cacheKey = `${url}?${queryString}`;
 
-    // Check if data exists in cache
+    // If data exists in cache, return it.
     const cachedData = cacheStore.getCache(cacheKey, cacheTime);
 
     if (cachedData) {

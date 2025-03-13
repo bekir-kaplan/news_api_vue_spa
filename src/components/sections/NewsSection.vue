@@ -23,5 +23,5 @@ defineProps<{
 </template>
 
 <style scoped>
-@import '../../styles/components/sections/news-section.css';
+@import '@/styles/components/sections/news-section.css';
 </style>

@@ -3,8 +3,8 @@ import type {
   TimeSeriesValue,
   QuoteResponse,
   MarketStateResponse,
-} from '../types/finance';
-import type { MappedTimeSeries, MappedQuote, MappedMarketState } from '../types/mappedTypes';
+} from '@/api/types/finance';
+import type { MappedTimeSeries, MappedQuote, MappedMarketState } from '@/api/types/mappedTypes';
 
 export function mapTimeSeries(response: TimeSeriesResponse): MappedTimeSeries {
   return {

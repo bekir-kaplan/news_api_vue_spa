@@ -1,0 +1,21 @@
+.market-overview-container {
+  @apply grid grid-cols-2 gap-2;
+}
+.market-overview-quote {
+  @apply p-2 rounded-lg border cursor-pointer;
+}
+.market-overview-quote-content {
+  @apply flex justify-between 
+  items-start 
+  flex-col 
+  font-[400];
+}
+.market-overview-quote-title {
+  @apply overflow-hidden text-sm w-24 md:text-ellipsis md:whitespace-nowrap;
+}
+.market-overview-quote-price {
+  @apply text-xl m-0 p-0 text-right;
+}
+.market-overview-quote-change {
+  @apply text-sm text-right;
+}

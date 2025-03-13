@@ -1,8 +1,8 @@
-import { HttpClient } from '../lib/HttpClient';
-import { TWELVE_DATA_BASE_URL, TWELVE_DATA_CONFIG, TWELVE_DATA_ENDPOINTS } from '../config';
-import type { TimeSeriesResponse, QuoteResponse, MarketStateResponse } from '../types/finance';
-import { mapTimeSeries, mapQuote, mapMarketState } from '../mappers/financeMapper';
-import type { MappedTimeSeries, MappedQuote, MappedMarketState } from '../types/mappedTypes';
+import { HttpClient } from '@/api/lib/HttpClient';
+import { TWELVE_DATA_BASE_URL, TWELVE_DATA_CONFIG, TWELVE_DATA_ENDPOINTS } from '@/api/config';
+import type { TimeSeriesResponse, QuoteResponse, MarketStateResponse } from '@/api/types/finance';
+import { mapTimeSeries, mapQuote, mapMarketState } from '@/api/mappers/financeMapper';
+import type { MappedTimeSeries, MappedQuote, MappedMarketState } from '@/api/types/mappedTypes';
 
 class FinanceService extends HttpClient {
   constructor() {
@@ -22,11 +22,13 @@ class FinanceService extends HttpClient {
           outputsize,
         },
       });
-      if (response.code && response.code !== 200) {
-        throw new Error(`API Limit: ${response.message}`);
+
+      if (response.status !== 'ok') {
+        throw new Error(`API Error: ${response.message || 'Unknown error'}`);
       }
+
       return mapTimeSeries(response);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to fetch time series:', error);
       throw new Error(error.message);
     }

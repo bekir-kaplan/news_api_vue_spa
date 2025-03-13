@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../stores/newsStore';
+import { useNewsStore } from '@/stores/newsStore';
 
 const newsStore = useNewsStore();
 const { articles } = storeToRefs(newsStore);
@@ -28,5 +28,5 @@ const { articles } = storeToRefs(newsStore);
 </template>
 
 <style scoped>
-@import '../styles/components/trending-news.css';
+@import '@/styles/components/trending-news.css';
 </style>

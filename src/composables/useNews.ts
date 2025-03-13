@@ -1,12 +1,12 @@
 import { ref, computed } from 'vue';
-import type { Article } from '../api/types/mappedTypes';
-import { newsService } from '../api/services/newsService';
-import { CON_NEWS_CATEGORIES } from '../constants/conNews';
+import { newsService } from '@/api/services/newsService';
+import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
+import type { NewsAPIArticle } from '@/api/types/news';
 
-export function useNews() {
-  const articles = ref<Article[]>([]);
-  const selectedArticle = ref<Article | null>(null);
-  const searchResults = ref<Article[]>([]);
+export function useNews(): any {
+  const articles = ref<NewsAPIArticle[]>([]);
+  const selectedArticle = ref<NewsAPIArticle | null>(null);
+  const searchResults = ref<NewsAPIArticle[]>([]);
   const searchQuery = ref('');
   const loading = ref(false);
   const error = ref<string | null>(null);
@@ -17,13 +17,14 @@ export function useNews() {
   const hasArticles = computed(() => articles.value.length > 0);
   const hasSearchResults = computed(() => searchResults.value.length > 0);
 
-  const fetchTopHeadlines = async (category?: string) => {
+  const fetchTopHeadlines = async (category?: string): Promise<void> => {
     try {
       loading.value = true;
       error.value = null;
-      articles.value = await newsService.getTopHeadlines({
+      const mappedNewsResponse = await newsService.getTopHeadlines({
         category: category && category !== 'all' ? category : undefined,
       });
+      articles.value = mappedNewsResponse.articles;
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to fetch news articles';
       articles.value = [];
@@ -32,7 +33,7 @@ export function useNews() {
     }
   };
 
-  const searchNews = async (query: string) => {
+  const searchNews = async (query: string): Promise<void> => {
     try {
       loading.value = true;
       error.value = null;
@@ -41,7 +42,8 @@ export function useNews() {
         q: query,
         category: selectedCategory.value !== 'all' ? selectedCategory.value : undefined,
       };
-      searchResults.value = await newsService.searchNews(params);
+      const mappedNewsResponse = await newsService.searchNews(params);
+      searchResults.value = mappedNewsResponse.articles;
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to search news articles';
       searchResults.value = [];
@@ -50,11 +52,11 @@ export function useNews() {
     }
   };
 
-  const setSelectedArticle = (article: Article) => {
+  const setSelectedArticle = (article: NewsAPIArticle): void => {
     selectedArticle.value = article;
   };
 
-  const setCategory = (category: string) => {
+  const setCategory = (category: string): void => {
     selectedCategory.value = category;
     if (searchQuery.value) {
       searchNews(searchQuery.value);
@@ -63,7 +65,7 @@ export function useNews() {
     }
   };
 
-  const clearSearch = () => {
+  const clearSearch = (): void => {
     searchResults.value = [];
     searchQuery.value = '';
   };

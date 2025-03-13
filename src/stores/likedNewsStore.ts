@@ -1,19 +1,26 @@
-import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { Article } from '../api/types/mappedTypes';
+import type { NewsAPIArticle } from '@/api/types/news';
+import { defineStore } from 'pinia';
+
+export interface ILikedArticlesByCategory {
+  [key: string]: {
+    name: string;
+    count: number;
+  };
+}
 
 export const useLikedNewsStore = defineStore(
   'likedNews',
   () => {
-    const likedArticles = ref<Article[]>([]);
+    const likedArticles = ref<NewsAPIArticle[]>([]);
 
     const likedCount = computed(() => likedArticles.value.length);
 
-    const isLiked = (article: Article): boolean => {
+    const isLiked = (article: NewsAPIArticle): boolean => {
       return likedArticles.value.some((a) => a.url === article.url);
     };
 
-    const toggleLike = (article: Article): void => {
+    const toggleLike = (article: NewsAPIArticle): void => {
       const index = likedArticles.value.findIndex((a) => a.url === article.url);
       if (index === -1) {
         likedArticles.value.push(article);
@@ -22,11 +29,27 @@ export const useLikedNewsStore = defineStore(
       }
     };
 
+    const likedArticlesByCategory = computed(() => {
+      return likedArticles.value.reduce((acc: ILikedArticlesByCategory, article) => {
+        const category = article.category || 'Uncategorized';
+        if (!acc[category]) {
+          acc[category] = {
+            name: category,
+            count: 0,
+          };
+        }
+        acc[category].name = category;
+        acc[category].count++;
+        return acc;
+      }, {});
+    });
+
     return {
       likedArticles,
       likedCount,
       isLiked,
       toggleLike,
+      likedArticlesByCategory,
     };
   },
   {

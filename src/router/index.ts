@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 
-const ArticleView = (): Promise<unknown> => import('../views/ArticleView.vue');
-const LikedNewsView = (): Promise<unknown> => import('../views/LikedNewsView.vue');
-const CategoryView = (): Promise<unknown> => import('../views/CategoryView.vue');
+const ArticleView = (): Promise<unknown> => import('@/views/ArticleView.vue');
+const LikedNewsView = (): Promise<unknown> => import('@/views/LikedNewsView.vue');
+const CategoryView = (): Promise<unknown> => import('@/views/CategoryView.vue');
 
 const router = createRouter({
   history: createWebHistory(),

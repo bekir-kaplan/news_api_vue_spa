@@ -1,0 +1,8 @@
+.go-back-button {
+  @apply flex mb-6 text-white hover:text-slate-400 font-semibold items-center 
+  rounded-md px-4 py-2 bg-slate-600 hover:bg-slate-700;
+}
+
+.go-back-icon {
+  @apply h-5 w-5 mr-2;
+}

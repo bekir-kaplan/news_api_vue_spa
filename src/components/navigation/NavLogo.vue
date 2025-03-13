@@ -11,5 +11,5 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-@import '../../styles/components/navigation/nav-logo.css';
+@import '@/styles/components/navigation/nav-logo.css';
 </style>

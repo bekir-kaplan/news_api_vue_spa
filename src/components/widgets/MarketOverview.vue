@@ -1,34 +1,10 @@
-<template>
-  <div class="market-overview-container">
-    <div
-      v-for="quote in marketData"
-      :key="quote.symbol"
-      class="quote"
-      :class="getQuoteClasses(quote)"
-      @click="$emit('select-symbol', quote.symbol)"
-    >
-      <div class="flex justify-between items-start flex-wrap">
-        <div>
-          <h3 class="font-semibold">{{ quote.name }}</h3>
-          <p class="text-xl font-bold">
-            {{ quote.price.close.toLocaleString() }}
-          </p>
-        </div>
-        <span class="change" :class="quote.change.percent >= 0 ? 'text-green-600' : 'text-red-600'">
-          {{ quote.change.percent.toFixed(2) }}%
-        </span>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import type { MappedQuote } from '../../api/types/mappedTypes';
+import type { MappedQuote } from '@/api/types/mappedTypes';
 
 defineProps<{ marketData: MappedQuote[] }>();
 defineEmits(['select-symbol']);
 
-const getQuoteClasses = (quote: MappedQuote) => {
+const getQuoteClasses = (quote: MappedQuote): { [key: string]: boolean } => {
   return {
     'border-green-200 bg-green-50': quote.change.percent >= 0,
     'border-red-200 bg-red-50': quote.change.percent < 0,
@@ -36,14 +12,31 @@ const getQuoteClasses = (quote: MappedQuote) => {
 };
 </script>
 
+<template>
+  <div class="market-overview-container">
+    <div
+      v-for="quote in marketData"
+      :key="quote.symbol"
+      class="market-overview-quote"
+      :class="getQuoteClasses(quote)"
+      @click="$emit('select-symbol', quote.symbol)"
+    >
+      <div class="market-overview-quote-content" :title="quote.name">
+        <h3 class="market-overview-quote-title">{{ quote.name }}</h3>
+        <div class="market-overview-quote-price">
+          {{ quote.price.close.toLocaleString() }}
+        </div>
+        <div
+          class="market-overview-quote-change"
+          :class="quote.change.percent >= 0 ? 'text-green-600' : 'text-red-600'"
+        >
+          {{ quote.change.percent.toFixed(2) }}%
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style scoped>
-.market-overview-container {
-  @apply grid grid-cols-2 gap-2 mb-6;
-}
-.quote {
-  @apply p-4 rounded-lg border cursor-pointer;
-}
-.change {
-  @apply text-sm font-semibold;
-}
+@import '@/styles/components/market-overview.css';
 </style>

@@ -1,11 +1,11 @@
-import { HttpClient } from '../lib/HttpClient';
-import { API_BASE_URL, API_CONFIG, API_ENDPOINTS } from '../config';
-import type { NewsAPIResponse } from '../types/responses';
-import type { TopHeadlinesParams, SearchNewsParams } from '../types/requests';
-import { mapNewsResponse } from '../mappers/newsMapper';
-import type { MappedNewsResponse } from '../types/mappedTypes';
-import everythingMockData from '../../mocks/newsapi/everything.json';
-import topHeadlinesMockData from '../../mocks/newsapi/top-headlines.json';
+import { HttpClient } from '@/api/lib/HttpClient';
+import { API_BASE_URL, API_CONFIG, API_ENDPOINTS } from '@/api/config';
+import type { NewsAPIResponse, NewsAPISourcesResponse } from '@/api/types/responses';
+import type { TopHeadlinesParams, SearchNewsParams } from '@/api/types/requests';
+import { mapNewsResponse } from '@/api/mappers/newsMapper';
+import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import everythingMockData from '@/mocks/newsapi/everything.json';
+import topHeadlinesMockData from '@/mocks/newsapi/top-headlines.json';
 
 class NewsService extends HttpClient {
   constructor() {
@@ -98,14 +98,14 @@ class NewsService extends HttpClient {
 
   async getSources(category?: string): Promise<string[]> {
     try {
-      const response = await this.get(API_ENDPOINTS.SOURCES, {
+      const response = await this.get<NewsAPISourcesResponse>(API_ENDPOINTS.SOURCES, {
         params: {
           category,
           language: 'en',
         },
       });
 
-      return response.sources.map((source: any) => source.id);
+      return response.sources?.map((source: any) => source.id);
     } catch (error) {
       console.warn('Failed to fetch sources:', error);
       return [];

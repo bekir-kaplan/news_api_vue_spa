@@ -17,5 +17,5 @@
 </template>
 
 <style scoped>
-@import '../styles/layouts/news-layout.css';
+@import '@/styles/layouts/news-layout.css';
 </style>

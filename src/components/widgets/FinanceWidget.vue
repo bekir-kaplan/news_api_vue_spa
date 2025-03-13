@@ -1,38 +1,13 @@
-<template>
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <div class="finance-widget-header">
-      <h2>Financial Markets</h2>
-      <PeriodSelector
-        :periods="CON_TIME_PERIODS"
-        :selected-interval="selectedInterval"
-        @update-period="handlePeriodChange"
-      />
-    </div>
-
-    <MarketOverview v-if="!loading" :market-data="marketData" @select-symbol="handleSymbolSelect" />
-    <div v-else class="finance-widget-loader-container">
-      <div class="loader" />
-    </div>
-
-    <ChartView v-if="!loading" :chart-data="chartData" :chart-options="chartOptions" />
-    <div v-else class="finance-widget-loader-container">
-      <div class="finance-widget-loader" />
-    </div>
-
-    <div v-if="error" class="finance-widget-error">
-      {{ error }}
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useFinanceStore } from '../../stores/financeStore';
+import { useFinanceStore } from '@/stores/financeStore';
 import MarketOverview from './MarketOverview.vue';
 import ChartView from './ChartView.vue';
 import PeriodSelector from './PeriodSelector.vue';
-import { CON_TIME_PERIODS } from '../../constants/conFinance';
+import { CON_TIME_PERIODS } from '@/constants/conFinance';
+import LoadingSpinner from '../LoadingSpinner.vue';
+import ErrorComponent from '../ErrorComponent.vue';
 
 const financeStore = useFinanceStore();
 const { marketData, chartData, loading, error, selectedInterval } = storeToRefs(financeStore);
@@ -43,7 +18,7 @@ const chartOptions = {
   scales: {
     x: {
       ticks: {
-        callback(value: string) {
+        callback(value: string): any {
           // Extract only the date part without time
           const label = this.getLabelForValue(value);
           return label.split(' ')[0];
@@ -66,6 +41,28 @@ onMounted(async () => {
   await financeStore.loadTimeSeriesData();
 });
 </script>
+
+<template>
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="finance-widget-header">
+      <h2>Financial Markets</h2>
+      <PeriodSelector
+        :periods="CON_TIME_PERIODS"
+        :selected-interval="selectedInterval"
+        @update-period="handlePeriodChange"
+      />
+    </div>
+
+    <LoadingSpinner v-if="loading" />
+
+    <div v-else-if="marketData">
+      <MarketOverview :market-data="marketData" @select-symbol="handleSymbolSelect" />
+      <ChartView :chart-data="chartData" :chart-options="chartOptions" />
+    </div>
+
+    <ErrorComponent v-else-if="error" :error="error" class="finance-widget-error" />
+  </div>
+</template>
 
 <style scoped>
 /* Widget Container */

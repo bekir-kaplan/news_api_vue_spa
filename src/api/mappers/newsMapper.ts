@@ -1,7 +1,8 @@
-import type { NewsAPIArticle, NewsAPIResponse } from '../types/responses';
-import type { Article, MappedNewsResponse } from '../types/mappedTypes';
+import type { NewsAPIResponse } from '@/api/types/responses';
+import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import type { NewsAPIArticle } from '@/api/types/news';
 
-export function mapArticle(article: NewsAPIArticle): Article {
+export function mapArticle(article: NewsAPIArticle): NewsAPIArticle {
   return {
     source: {
       id: article.source.id,
@@ -22,7 +23,7 @@ export function mapNewsResponse(response: NewsAPIResponse): MappedNewsResponse {
   return {
     articles: response.articles.map(mapArticle),
     totalResults: response.totalResults,
-    status: response.status === 'ok',
+    status: response.status === 'ok' ? 'success' : 'error',
   };
 }
 

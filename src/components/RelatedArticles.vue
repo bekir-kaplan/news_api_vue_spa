@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../stores/newsStore';
+import { useNewsStore } from '@/stores/newsStore';
 
 const newsStore = useNewsStore();
 const { articles, selectedArticle } = storeToRefs(newsStore);
@@ -41,5 +41,5 @@ const relatedArticles = computed(() => {
 </template>
 
 <style scoped>
-@import '../styles/components/related-articles.css';
+@import '@/styles/components/related-articles.css';
 </style>

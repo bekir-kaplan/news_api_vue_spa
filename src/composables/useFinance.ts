@@ -1,8 +1,8 @@
 import { ref } from 'vue';
-import { financeService } from '../api/services/financeService';
-import type { MappedQuote, MappedTimeSeriesValue } from '../api/types/mappedTypes';
+import { financeService } from '@/api/services/financeService';
+import type { MappedQuote, MappedTimeSeriesValue } from '@/api/types/mappedTypes';
 
-export function useFinance() {
+export function useFinance(): any {
   const loading = ref(false);
   const error = ref<string | null>(null);
   const marketData = ref<MappedQuote[]>([]);

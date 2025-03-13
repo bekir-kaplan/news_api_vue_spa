@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../stores/newsStore';
+import { useNewsStore } from '@/stores/newsStore';
 
 const newsStore = useNewsStore();
 const { categories } = storeToRefs(newsStore);
@@ -16,7 +16,7 @@ const filteredCategories = categories.value.filter((category: string) => categor
         v-for="category in filteredCategories"
         :key="category"
         :to="`/category/${category.toLowerCase()}`"
-        class="popular-topics-link"
+        class="badge-link"
       >
         {{ category }}
       </router-link>
@@ -25,5 +25,5 @@ const filteredCategories = categories.value.filter((category: string) => categor
 </template>
 
 <style scoped>
-@import '../styles/components/popular-topics.css';
+@import '@/styles/components/popular-topics.css';
 </style>

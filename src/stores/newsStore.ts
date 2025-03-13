@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { Article } from '../api/types/mappedTypes';
-import { newsService } from '../api/services/newsService';
-import { CON_NEWS_CATEGORIES } from '../constants/conNews';
+import { newsService } from '@/api/services/newsService';
+import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
+import type { NewsAPIArticle } from '@/api/types/news';
+import { useNews } from '@/composables/useNews';
 
 export const useNewsStore = defineStore(
   'news',
   () => {
-    const articles = ref<Article[]>([]);
-    const selectedArticle = ref<Article | null>(null);
-    const searchResults = ref<Article[]>([]);
+    const articles = ref<NewsAPIArticle[]>([]);
+    const selectedArticle = ref<NewsAPIArticle | null>(null);
+    const searchResults = ref<NewsAPIArticle[]>([]);
     const loading = ref(false);
     const error = ref<string | null>(null);
     const selectedCategory = ref('all');
@@ -22,7 +23,7 @@ export const useNewsStore = defineStore(
     const fetchTopHeadlines = async (params?: {
       category?: string;
       pageSize?: number;
-    }): Promise<Article[]> => {
+    }): Promise<NewsAPIArticle[]> => {
       try {
         loading.value = true;
         error.value = null;
@@ -69,7 +70,7 @@ export const useNewsStore = defineStore(
       }
     };
 
-    const setSelectedArticle = (article: Article): void => {
+    const setSelectedArticle = (article: NewsAPIArticle): void => {
       selectedArticle.value = article;
     };
 

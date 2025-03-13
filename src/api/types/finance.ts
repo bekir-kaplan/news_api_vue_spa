@@ -14,23 +14,19 @@ export interface TimeSeriesResponse {
     currency: string;
     exchange_timezone: string;
     exchange: string;
+    mic_code: string;
     type: string;
   };
-  values: TimeSeriesValue[];
+  values: Array<TimeSeriesValue>;
   status: string;
+  message?: string;
 }
 
-export interface QuoteResponse {
+export interface QuoteResponse extends TimeSeriesValue {
   symbol: string;
   name: string;
   exchange: string;
   currency: string;
-  datetime: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
   previous_close: string;
   change: string;
   percent_change: string;

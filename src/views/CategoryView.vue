@@ -2,13 +2,14 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../stores/newsStore';
-import NewsLayout from '../layouts/NewsLayout.vue';
-import NewsCard from '../components/NewsCard.vue';
-import TrendingNews from '../components/TrendingNews.vue';
-import PopularTopics from '../components/PopularTopics.vue';
-import LoadingSpinner from '../components/LoadingSpinner.vue';
-import ErrorComponent from '../components/ErrorComponent.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import NewsLayout from '@/layouts/NewsLayout.vue';
+import NewsCard from '@/components/NewsCard.vue';
+import TrendingNews from '@/components/TrendingNews.vue';
+import PopularTopics from '@/components/PopularTopics.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import ErrorComponent from '@/components/ErrorComponent.vue';
+import GoBackButton from '@/components/GoBackButton.vue';
 
 const route = useRoute();
 const newsStore = useNewsStore();
@@ -44,6 +45,7 @@ onMounted(() => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
+      <GoBackButton />
       <div class="category-view-header">
         <h1 class="category-view-title">{{ category }} News</h1>
       </div>
@@ -67,5 +69,5 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@import '../styles/views/category-view.css';
+@import '@/styles/views/category-view.css';
 </style>

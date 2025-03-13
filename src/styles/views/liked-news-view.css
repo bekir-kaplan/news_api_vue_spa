@@ -18,7 +18,7 @@
 }
 
 .liked-news-view-sidebar {
-  @apply bg-white rounded-lg shadow-lg p-6;
+  @apply bg-white rounded-lg shadow-lg p-6 sticky top-4;
 }
 
 .liked-news-view-sidebar-title {

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../../stores/newsStore';
-import SearchInput from '../SearchInput.vue';
-import type { Article } from '../../api/types/mappedTypes';
+import { useNewsStore } from '@/stores/newsStore';
+import SearchInput from '@/components/SearchInput.vue';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 defineProps<{
   isOpen: boolean;
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', article: Article): void;
+  (e: 'select', article: NewsAPIArticle): void;
 }>();
 
 const newsStore = useNewsStore();
@@ -68,5 +68,5 @@ const handleCategoryChange = (category: string): void => {
 </template>
 
 <style scoped>
-@import '../../styles/components/navigation/search-panel.css';
+@import '@/styles/components/navigation/search-panel.css';
 </style>

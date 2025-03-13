@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-gray-50;
+    @apply min-h-screen bg-gray-50 font-extralight text-sm;
   }
 
   h1 {
@@ -15,5 +15,9 @@
   h2 {
     @apply text-2xl font-semibold;
     color: #f4796c;
+  }
+
+  p {
+    @apply mb-4 px-2 text-sm;
   }
 }

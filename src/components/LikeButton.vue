@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 import { HeartIcon as HeartOutline } from '@heroicons/vue/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/vue/24/solid';
-import type { Article } from '../api/types/mappedTypes';
-import { useLikedNewsStore } from '../stores/likedNewsStore';
+import { useLikedNewsStore } from '@/stores/likedNewsStore';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 const props = defineProps<{
-  article: Article;
+  article: NewsAPIArticle;
 }>();
 
 const likedNewsStore = useLikedNewsStore();
@@ -27,5 +27,5 @@ const toggleLike = (event: Event): void => {
 </template>
 
 <style scoped>
-@import '../styles/components/like-button.css';
+@import '@/styles/components/like-button.css';
 </style>

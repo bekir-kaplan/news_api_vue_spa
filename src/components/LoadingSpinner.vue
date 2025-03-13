@@ -6,5 +6,5 @@
 </template>
 
 <style scoped>
-@import '../styles/components/loading-spinner.css';
+@import '@/styles/components/loading-spinner.css';
 </style>

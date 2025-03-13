@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MenuItem } from '../../types/navigation';
+import type { MenuItem } from '@/types/navigation';
 import { ref } from 'vue';
 
 defineProps<{
@@ -65,5 +65,5 @@ const toggleDropdown = (menuId: string): void => {
 </template>
 
 <style scoped>
-@import '../../styles/components/navigation/mobile-menu.css';
+@import '@/styles/components/navigation/mobile-menu.css';
 </style>

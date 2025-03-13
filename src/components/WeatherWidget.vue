@@ -22,5 +22,5 @@ const weather = {
 </template>
 
 <style scoped>
-@import '../styles/components/weather-widget.css';
+@import '@/styles/components/weather-widget.css';
 </style>

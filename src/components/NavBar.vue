@@ -2,15 +2,15 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useNavigationStore } from '../stores/navigationStore';
-import { useLikedNewsStore } from '../stores/likedNewsStore';
+import { useNavigationStore } from '@/stores/navigationStore';
+import { useLikedNewsStore } from '@/stores/likedNewsStore';
 import { MagnifyingGlassIcon, XMarkIcon, Bars3Icon, HeartIcon } from '@heroicons/vue/24/outline';
-import { useNewsStore } from '../stores/newsStore';
-import type { Article } from '../api/types/mappedTypes';
-import NavLogo from './navigation/NavLogo.vue';
-import DesktopMenu from './navigation/DesktopMenu.vue';
-import MobileMenu from './navigation/MobileMenu.vue';
-import SearchPanel from './navigation/SearchPanel.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import NavLogo from '@/components/navigation/NavLogo.vue';
+import DesktopMenu from '@/components/navigation/DesktopMenu.vue';
+import MobileMenu from '@/components/navigation/MobileMenu.vue';
+import SearchPanel from '@/components/navigation/SearchPanel.vue';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 const router = useRouter();
 const navigationStore = useNavigationStore();
@@ -33,7 +33,7 @@ const toggleSearch = (): void => {
   }
 };
 
-const handleArticleSelect = (article: Article): void => {
+const handleArticleSelect = (article: NewsAPIArticle): void => {
   newsStore.setSelectedArticle(article);
   router.push(`/article/${encodeURIComponent(article.title)}`);
   isSearchOpen.value = false;
@@ -108,5 +108,5 @@ const goToLikedNews = (): void => {
 </template>
 
 <style scoped>
-@import '../styles/components/navbar.css';
+@import '@/styles/components/navbar.css';
 </style>

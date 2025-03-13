@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
-import { useNewsStore } from '../stores/newsStore';
-import NewsLayout from '../layouts/NewsLayout.vue';
-import RelatedArticles from '../components/RelatedArticles.vue';
-import ShareButtons from '../components/ShareButtons.vue';
-import LikeButton from '../components/LikeButton.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import NewsLayout from '@/layouts/NewsLayout.vue';
+import RelatedArticles from '@/components/RelatedArticles.vue';
+import ShareButtons from '@/components/ShareButtons.vue';
+import LikeButton from '@/components/LikeButton.vue';
+import GoBackButton from '@/components/GoBackButton.vue';
 
 const newsStore = useNewsStore();
-const router = useRouter();
 const { selectedArticle } = storeToRefs(newsStore);
 
 const formattedDate = computed(() => {
@@ -24,20 +22,13 @@ const formattedDate = computed(() => {
     day: 'numeric',
   });
 });
-
-const goBack = (): void => {
-  router.push('/');
-};
 </script>
 
 <template>
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
-      <button @click="goBack" class="article-view-back-button">
-        <ArrowLeftIcon class="article-view-back-icon" />
-        Back to News
-      </button>
+      <GoBackButton />
 
       <article v-if="selectedArticle" class="article-view-container">
         <img
@@ -54,8 +45,8 @@ const goBack = (): void => {
             </h1>
             <div class="article-view-meta">
               <div>
-                <p class="article-view-author">By {{ selectedArticle.author || 'Unknown' }}</p>
-                <p>{{ formattedDate }}</p>
+                <div class="article-view-author">By {{ selectedArticle.author || 'Unknown' }}</div>
+                <div>{{ formattedDate }}</div>
               </div>
               <div class="article-view-actions">
                 <LikeButton :article="selectedArticle" />
@@ -69,9 +60,9 @@ const goBack = (): void => {
             <p class="article-view-description">
               {{ selectedArticle.description }}
             </p>
-            <div class="article-view-text">
+            <p class="article-view-text">
               {{ selectedArticle.content }}
-            </div>
+            </p>
           </div>
 
           <a
@@ -96,5 +87,5 @@ const goBack = (): void => {
 </template>
 
 <style scoped>
-@import '../styles/views/article-view.css';
+@import '@/styles/views/article-view.css';
 </style>

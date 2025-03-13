@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/24/solid';
-import type { MenuItem } from '../../types/navigation';
+import type { MenuItem } from '@/types/navigation';
 
 defineProps<{
   items: MenuItem[];
@@ -52,5 +52,5 @@ const toggleDropdown = (menuId: string): void => {
 </template>
 
 <style scoped>
-@import '../../styles/components/navigation/desktop-menu.css';
+@import '@/styles/components/navigation/desktop-menu.css';
 </style>

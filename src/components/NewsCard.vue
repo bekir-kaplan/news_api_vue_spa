@@ -2,12 +2,12 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ArrowRightIcon } from '@heroicons/vue/24/outline';
-import type { Article } from '../api/types/mappedTypes';
-import { useNewsStore } from '../stores/newsStore';
-import LikeButton from './LikeButton.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import LikeButton from '@/components/LikeButton.vue';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 const props = defineProps<{
-  article: Article;
+  article: NewsAPIArticle;
 }>();
 
 const router = useRouter();
@@ -74,5 +74,5 @@ const imageErrorHandler = (e: Event): void => {
 </template>
 
 <style scoped>
-@import '../styles/components/news-card.css';
+@import '@/styles/components/news-card.css';
 </style>

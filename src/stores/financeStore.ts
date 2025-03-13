@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { useFinance } from '../composables/useFinance';
-import type { MappedQuote } from '../api/types/mappedTypes';
+import { useFinance } from '@/composables/useFinance';
+import type { MappedQuote, MappedTimeSeriesValue } from '@/api/types/mappedTypes';
 
 export const useFinanceStore = defineStore(
   'finance',
@@ -9,7 +9,7 @@ export const useFinanceStore = defineStore(
     const { fetchMarketData, fetchTimeSeriesData, loading, error } = useFinance();
 
     const marketData = ref<MappedQuote[]>([]);
-    const timeSeriesData = ref<any[]>([]);
+    const timeSeriesData = ref<MappedTimeSeriesValue[]>([]);
     const selectedSymbol = ref<string>('SPY');
     const selectedInterval = ref<string>('1day');
 
@@ -65,10 +65,15 @@ export const useFinanceStore = defineStore(
         const data = await fetchTimeSeriesData(selectedSymbol.value, selectedInterval.value);
 
         if (data) {
-          timeSeriesData.value = data.sort((a, b) => a.datetime.getTime() - b.datetime.getTime());
+          timeSeriesData.value = data.sort(
+            (a: MappedTimeSeriesValue, b: MappedTimeSeriesValue) =>
+              a.datetime.getTime() - b.datetime.getTime()
+          );
         }
       } catch (err) {
-        console.error('Failed to load time series data:', err);
+        error.value = err instanceof Error ? err.message : 'Failed to fetch time series data';
+      } finally {
+        loading.value = false;
       }
     };
 

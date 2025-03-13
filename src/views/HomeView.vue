@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '../stores/newsStore';
-import NewsLayout from '../layouts/NewsLayout.vue';
-import NewsSection from '../components/sections/NewsSection.vue';
-import NewsCarousel from '../components/sections/NewsCarousel.vue';
-import NewsCard from '../components/NewsCard.vue';
-import TrendingNews from '../components/TrendingNews.vue';
-import WeatherWidget from '../components/WeatherWidget.vue';
-import PopularTopics from '../components/PopularTopics.vue';
-import FinanceWidget from '../components/widgets/FinanceWidget.vue';
-import LoadingSpinner from '../components/LoadingSpinner.vue';
-import ErrorComponent from '../components/ErrorComponent.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import NewsLayout from '@/layouts/NewsLayout.vue';
+import NewsSection from '@/components/sections/NewsSection.vue';
+import NewsCarousel from '@/components/sections/NewsCarousel.vue';
+import NewsCard from '@/components/NewsCard.vue';
+import TrendingNews from '@/components/TrendingNews.vue';
+import WeatherWidget from '@/components/WeatherWidget.vue';
+import PopularTopics from '@/components/PopularTopics.vue';
+import FinanceWidget from '@/components/widgets/FinanceWidget.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import ErrorComponent from '@/components/ErrorComponent.vue';
 
 const newsStore = useNewsStore();
 const { articles, loading, error } = storeToRefs(newsStore);
 
-const categories = ['Sports', 'Entertainment', 'Technology', 'Health'];
+const categories = ['Business', 'Sports', 'Entertainment', 'Technology', 'Health'];
 const categoryArticles = ref<Record<string, any[]>>({});
 
 const featuredArticles = computed(() => articles.value?.slice(0, 5) || []);
@@ -77,5 +77,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import '../styles/views/home-view.css';
+@import '@/styles/views/home-view.css';
 </style>

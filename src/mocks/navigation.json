@@ -50,12 +50,6 @@
       ]
     },
     {
-      "id": "trending",
-      "label": "Trending",
-      "path": "/trending",
-      "icon": "trending"
-    },
-    {
       "id": "liked",
       "label": "Liked Articles",
       "path": "/liked",

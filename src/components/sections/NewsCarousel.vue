@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
-import { useNewsStore } from '../../stores/newsStore';
+import { useNewsStore } from '@/stores/newsStore';
 import { useRouter } from 'vue-router';
-import type { Article } from '../../api/types/mappedTypes';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 const props = defineProps<{
-  articles: Article[];
+  articles: NewsAPIArticle[];
   autoplay?: boolean;
   interval?: number;
 }>();
@@ -17,7 +17,7 @@ const currentSlide = ref(0);
 const carouselRef = ref<HTMLElement | null>(null);
 let autoplayInterval: number | null = null;
 
-const viewArticle = (article: Article): void => {
+const viewArticle = (article: NewsAPIArticle): void => {
   newsStore.setSelectedArticle(article);
   router.push(`/article/${encodeURIComponent(article.title)}`);
 };
@@ -124,5 +124,5 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-@import '../../styles/components/sections/news-carousel.css';
+@import '@/styles/components/sections/news-carousel.css';
 </style>

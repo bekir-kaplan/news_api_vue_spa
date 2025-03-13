@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Article } from '../api/types/mappedTypes';
+import type { NewsAPIArticle } from '@/api/types/news';
 import { ShareIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
 
-const props = defineProps<{ article: Article }>();
+const props = defineProps<{ article: NewsAPIArticle }>();
 
 const shareUrl = ref(''); // Reactive variable to store the URL
 
@@ -18,7 +18,7 @@ const shareArticle = (): void => {
     navigator
       .share({
         title: props.article.title,
-        text: props.article.description,
+        text: props.article.description || undefined,
         url: shareUrl.value, // Use reactive value
       })
       .catch((error) => console.error('Sharing failed:', error));
@@ -38,5 +38,5 @@ const shareArticle = (): void => {
 </template>
 
 <style scoped>
-@import '../styles/components/share-buttons.css';
+@import '@/styles/components/share-buttons.css';
 </style>

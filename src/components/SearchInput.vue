@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import type { Article } from '../api/types/mappedTypes';
-import { useNewsStore } from '../stores/newsStore';
-import { useSearch } from '../composables/useSearch';
+import { useNewsStore } from '@/stores/newsStore';
+import { useSearch } from '@/composables/useSearch';
+import type { NewsAPIArticle } from '@/api/types/news';
 
 const props = defineProps<{
   placeholder?: string;
@@ -10,14 +10,14 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', article: Article): void;
+  (e: 'select', article: NewsAPIArticle): void;
 }>();
 
 const newsStore = useNewsStore();
 const { loading, searchResults } = storeToRefs(newsStore);
 const { searchQuery, showResults, handleSelect, handleBlur } = useSearch(props.minChars);
 
-const onSelect = (article: Article): void => {
+const onSelect = (article: NewsAPIArticle): void => {
   handleSelect(article);
   emit('select', article);
 };
@@ -64,5 +64,5 @@ const onSelect = (article: Article): void => {
 </template>
 
 <style scoped>
-@import '../styles/components/search-input.css';
+@import '@/styles/components/search-input.css';
 </style>
