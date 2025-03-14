@@ -43,13 +43,9 @@ export const useFinanceStore = defineStore(
     });
 
     const loadMarketData = async (): Promise<void> => {
-      try {
-        const data = await fetchMarketData(watchlist.value);
-        if (data) {
-          marketData.value = data;
-        }
-      } catch (err) {
-        console.error('Failed to load market data:', err);
+      const data = await fetchMarketData(watchlist.value);
+      if (data) {
+        marketData.value = data;
       }
     };
 
@@ -70,8 +66,6 @@ export const useFinanceStore = defineStore(
               a.datetime.getTime() - b.datetime.getTime()
           );
         }
-      } catch (err) {
-        error.value = err instanceof Error ? err.message : 'Failed to fetch time series data';
       } finally {
         loading.value = false;
       }

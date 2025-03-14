@@ -9,7 +9,6 @@ import type { NewsAPIArticle } from '@/api/types/news';
 const props = defineProps<{
   article: NewsAPIArticle;
 }>();
-
 const router = useRouter();
 const newsStore = useNewsStore();
 
@@ -40,7 +39,7 @@ const imageErrorHandler = (e: Event): void => {
         {{ article.source.name }}
       </div>
       <img
-        :src="article.urlToImage"
+        :src="article.urlToImage || 'https://placehold.co/400x300'"
         :alt="article.title"
         class="news-card-image"
         loading="lazy"

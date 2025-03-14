@@ -1,0 +1,22 @@
+/* Widget Container */
+.finance-widget-header {
+  @apply flex justify-between items-center mb-6 flex-wrap md:flex-row;
+}
+
+h2 {
+  @apply text-xl font-bold text-gray-800;
+}
+
+/* Loader */
+.finance-widget-loader-container {
+  @apply flex justify-center items-center h-16;
+}
+
+.finance-widget-loader {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500;
+}
+
+/* Error Message */
+.finance-widget-error {
+  @apply mt-4 p-4 bg-red-100 text-red-600 rounded-lg text-[9px];
+}

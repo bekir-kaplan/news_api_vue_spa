@@ -2,15 +2,14 @@
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useFinanceStore } from '@/stores/financeStore';
-import MarketOverview from './MarketOverview.vue';
-import ChartView from './ChartView.vue';
-import PeriodSelector from './PeriodSelector.vue';
 import { CON_TIME_PERIODS } from '@/constants/conFinance';
-import LoadingSpinner from '../LoadingSpinner.vue';
-import ErrorComponent from '../ErrorComponent.vue';
+import MarketOverview from '@/components/widgets/MarketOverview.vue';
+import ChartView from '@/components/widgets/ChartView.vue';
+import PeriodSelector from '@/components/widgets/PeriodSelector.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
 const financeStore = useFinanceStore();
-const { marketData, chartData, loading, error, selectedInterval } = storeToRefs(financeStore);
+const { marketData, chartData, loading, selectedInterval } = storeToRefs(financeStore);
 
 const chartOptions = {
   responsive: true,
@@ -55,45 +54,13 @@ onMounted(async () => {
 
     <LoadingSpinner v-if="loading" />
 
-    <div v-else-if="marketData">
+    <div>
       <MarketOverview :market-data="marketData" @select-symbol="handleSymbolSelect" />
       <ChartView :chart-data="chartData" :chart-options="chartOptions" />
     </div>
-
-    <ErrorComponent v-else-if="error" :error="error" class="finance-widget-error" />
   </div>
 </template>
 
 <style scoped>
-/* Widget Container */
-.finance-widget-header {
-  @apply flex justify-between items-center mb-6 flex-wrap md:flex-row;
-}
-
-h2 {
-  @apply text-xl font-bold text-gray-800;
-}
-
-/* Loader */
-.finance-widget-loader-container {
-  @apply flex justify-center items-center h-16;
-}
-
-.finance-widget-loader {
-  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500;
-}
-
-/* Error Message */
-.finance-widget-error {
-  @apply mt-4 p-4 bg-red-100 text-red-600 rounded-lg text-[9px];
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+@import '@/styles/components/widgets/finance-widget.css';
 </style>

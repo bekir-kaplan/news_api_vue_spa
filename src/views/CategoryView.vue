@@ -1,42 +1,71 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue';
+import { onMounted, watch, ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useNewsStore } from '@/stores/newsStore';
+import { useCategoryStore } from '@/stores/categoryStore';
 import NewsLayout from '@/layouts/NewsLayout.vue';
 import NewsCard from '@/components/NewsCard.vue';
 import TrendingNews from '@/components/TrendingNews.vue';
 import PopularTopics from '@/components/PopularTopics.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import ErrorComponent from '@/components/ErrorComponent.vue';
 import GoBackButton from '@/components/GoBackButton.vue';
 
 const route = useRoute();
-const newsStore = useNewsStore();
-const { loading, error } = storeToRefs(newsStore);
+const categoryStore = useCategoryStore();
+const { category, categoryArticlesPaginated, loading } = storeToRefs(categoryStore);
 
-const category = computed(() => route.params.category as string);
-const articles = ref<typeof newsStore.articles>([]);
+const observer = ref<IntersectionObserver | null>(null);
 
-const loadArticles = async (): Promise<void> => {
-  articles.value = await newsStore.fetchTopHeadlines({
-    category: category.value,
-    pageSize: 30,
-  });
+const loadMoreArticles = async (): Promise<void> => {
+  await categoryStore.loadMoreArticles();
+};
+
+// Throttle function
+function throttle(func: typeof loadMoreArticles, limit: number | undefined): () => void {
+  let inThrottle: boolean;
+  return function (...args: any) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+
+// Throttled version of loadMoreArticles
+const throttledLoadMoreArticles = (): void => {
+  throttle(loadMoreArticles, 1000)();
 };
 
 // Watch for category changes
 watch(
   () => route.params.category,
-  () => {
-    loadArticles();
+  async (newCategory) => {
+    categoryStore.setCategory(Array.isArray(newCategory) ? newCategory[0] : newCategory);
+    categoryStore.resetArticles();
   },
   { immediate: true }
 );
 
 onMounted(() => {
-  if (!articles.value.length) {
-    loadArticles();
+  observer.value = new IntersectionObserver(
+    async (entries) => {
+      if (entries[0].isIntersecting) {
+        await throttledLoadMoreArticles();
+      }
+    },
+    { rootMargin: '200px' }
+  );
+
+  const sentinel = document.querySelector('#infinite-scroll-sentinel');
+  if (sentinel) {
+    observer.value.observe(sentinel);
+  }
+});
+
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect();
   }
 });
 </script>
@@ -45,17 +74,20 @@ onMounted(() => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
+      <LoadingSpinner v-if="loading" />
       <GoBackButton />
       <div class="category-view-header">
         <h1 class="category-view-title">{{ category }} News</h1>
       </div>
 
-      <LoadingSpinner v-if="loading" />
-      <ErrorComponent v-else-if="error" :error="error" />
-
-      <div v-else class="grid-template">
-        <NewsCard v-for="article in articles" :key="article.url" :article="article" />
+      <div class="grid-template">
+        <NewsCard
+          v-for="article in categoryArticlesPaginated"
+          :key="article.url"
+          :article="article"
+        />
       </div>
+      <div id="infinite-scroll-sentinel" />
     </template>
 
     <!-- Sidebar Content -->

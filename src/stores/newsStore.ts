@@ -8,7 +8,9 @@ import { useNews } from '@/composables/useNews';
 export const useNewsStore = defineStore(
   'news',
   () => {
+    const newsComposable = useNews();
     const articles = ref<NewsAPIArticle[]>([]);
+    const categoryArticles = ref<Record<string, NewsAPIArticle[]>>({});
     const selectedArticle = ref<NewsAPIArticle | null>(null);
     const searchResults = ref<NewsAPIArticle[]>([]);
     const loading = ref(false);
@@ -23,26 +25,24 @@ export const useNewsStore = defineStore(
     const fetchTopHeadlines = async (params?: {
       category?: string;
       pageSize?: number;
-    }): Promise<NewsAPIArticle[]> => {
+      page?: number;
+    }): Promise<void> => {
       try {
         loading.value = true;
         error.value = null;
 
-        const result = await newsService.getTopHeadlines({
+        const result = await newsComposable.fetchTopHeadlines({
           ...params,
-          pageSize: params?.pageSize || 20,
+          category: params?.category !== 'all' ? params?.category?.toLocaleLowerCase() : undefined,
+          pageSize: params?.pageSize || 10,
+          page: params?.page || 1,
         });
 
         if (params?.category) {
-          return result.articles;
+          categoryArticles.value[params.category] = result.articles;
         } else {
           articles.value = result.articles;
         }
-
-        return result.articles;
-      } catch (err) {
-        error.value = err instanceof Error ? err.message : 'Failed to fetch news articles';
-        return [];
       } finally {
         loading.value = false;
       }
@@ -57,14 +57,11 @@ export const useNewsStore = defineStore(
           q: query,
           category: selectedCategory.value !== 'all' ? selectedCategory.value : undefined,
           sortBy: 'publishedAt' as const,
-          pageSize: 20,
+          pageSize: 20, // todo pagesize
         };
 
         const result = await newsService.searchNews(params);
         searchResults.value = result.articles;
-      } catch (err) {
-        error.value = err instanceof Error ? err.message : 'Failed to search news articles';
-        searchResults.value = [];
       } finally {
         loading.value = false;
       }
@@ -85,6 +82,7 @@ export const useNewsStore = defineStore(
     return {
       // State
       articles,
+      categoryArticles,
       selectedArticle,
       searchResults,
       loading,

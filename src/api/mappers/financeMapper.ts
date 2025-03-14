@@ -27,7 +27,7 @@ export function mapTimeSeriesValue(value: TimeSeriesValue): MappedTimeSeries['va
   };
 }
 
-export function mapQuote(response: QuoteResponse): MappedQuote {
+export function mapQuote(response: QuoteResponse): MappedQuote | null {
   return {
     symbol: response.symbol,
     name: response.name,

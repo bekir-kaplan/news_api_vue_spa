@@ -5,11 +5,11 @@ import { ref, onMounted } from 'vue';
 
 const props = defineProps<{ article: NewsAPIArticle }>();
 
-const shareUrl = ref(''); // Reactive variable to store the URL
+const shareUrl = ref('');
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
-    shareUrl.value = window.location.href; // Assign only when mounted
+    shareUrl.value = window.location.href;
   }
 });
 
@@ -19,11 +19,13 @@ const shareArticle = (): void => {
       .share({
         title: props.article.title,
         text: props.article.description || undefined,
-        url: shareUrl.value, // Use reactive value
+        url: shareUrl.value,
       })
-      .catch((error) => console.error('Sharing failed:', error));
+      .catch((error) => {
+        throw new Error(`Sharing failed: ${error}`);
+      });
   } else {
-    console.warn('Web Share API is not supported in this browser.');
+    throw new Error('Web Share API is not supported in this browser.');
   }
 };
 </script>
