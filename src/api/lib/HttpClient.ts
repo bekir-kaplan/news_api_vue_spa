@@ -1,7 +1,10 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { useApiCacheStore } from '@/stores/apiCacheStore'; // Import the cache store
-import { checkErrorInFinanceApiResponse, handleHttpError } from '@/api/utils/ErrorHandler';
+import { handleHttpError } from '@/api/utils/ErrorHandler';
+import { checkErrorInFinanceApiResponse } from '@/api/utils/FinanceErrorHandler';
+import { checkErrorInNewsApiResponse } from '@/api/utils/NewsErrorHandler';
+import { NEWS_API_BASE_URL, TWELVE_DATA_BASE_URL } from '@/api/config';
 
 export abstract class HttpClient {
   protected readonly instance: AxiosInstance;
@@ -12,16 +15,16 @@ export abstract class HttpClient {
   }
 
   private _initializeResponseInterceptor(): void {
-    this.instance.interceptors.response.use(this._handleResponse, this._handleError);
+    this.instance.interceptors.response.use(this._handleResponse, handleHttpError);
   }
 
   private _handleResponse = ({ data }: AxiosResponse): any => data;
 
-  protected _handleError = (error: any): Promise<typeof Error> => {
-    const message =
-      error.response?.data?.message || error.message || 'An unexpected error occurred';
-    return Promise.reject(new Error(message));
-  };
+  // protected _handleError = (error: any): Promise<typeof Error> => {
+  //   const message =
+  //     error.response?.data?.message || error.message || 'An unexpected error occurred';
+  //   return Promise.reject(new Error(message));
+  // };
 
   /**
    * Perform a GET request with optional caching.
@@ -48,17 +51,18 @@ export abstract class HttpClient {
       }
     }
 
-    try {
-      const response = await this.instance.get<T, T>(url, config);
+    const response = await this.instance.get<T, T>(url, config);
+
+    if (this.instance.getUri().indexOf(TWELVE_DATA_BASE_URL) !== -1) {
       checkErrorInFinanceApiResponse(response);
-      if (useCache) {
-        const cacheKey = this._getCacheKey(url, config);
-        this._storeInCache(cacheStore, cacheKey, response);
-      }
-      return response;
-    } catch (error) {
-      handleHttpError(error);
+    } else if (this.instance.getUri().indexOf(NEWS_API_BASE_URL) !== -1) {
+      checkErrorInNewsApiResponse(response);
     }
+    if (useCache) {
+      const cacheKey = this._getCacheKey(url, config);
+      this._storeInCache(cacheStore, cacheKey, response);
+    }
+    return response;
   }
 
   private _getCacheKey(url: string, config?: AxiosRequestConfig): string {

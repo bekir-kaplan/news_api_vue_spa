@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { newsService } from '@/api/services/newsService';
 import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
 import type { NewsAPIArticle } from '@/api/types/news';
 import { useNews } from '@/composables/useNews';
+import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
+import { newsService } from '@/api/services/newsService';
 
 export const useNewsStore = defineStore(
   'news',
@@ -22,11 +23,7 @@ export const useNewsStore = defineStore(
     const hasArticles = computed(() => articles.value.length > 0);
     const hasSearchResults = computed(() => searchResults.value.length > 0);
 
-    const fetchTopHeadlines = async (params?: {
-      category?: string;
-      pageSize?: number;
-      page?: number;
-    }): Promise<void> => {
+    const fetchTopHeadlines = async (params?: TopHeadlinesParams): Promise<void> => {
       try {
         loading.value = true;
         error.value = null;
@@ -48,19 +45,18 @@ export const useNewsStore = defineStore(
       }
     };
 
-    const searchNews = async (query: string): Promise<void> => {
+    const searchNews = async (query: SearchNewsParams): Promise<void> => {
       try {
         loading.value = true;
         error.value = null;
 
         const params = {
-          q: query,
+          ...query,
           category: selectedCategory.value !== 'all' ? selectedCategory.value : undefined,
-          sortBy: 'publishedAt' as const,
-          pageSize: 20, // todo pagesize
         };
 
         const result = await newsService.searchNews(params);
+
         searchResults.value = result.articles;
       } finally {
         loading.value = false;

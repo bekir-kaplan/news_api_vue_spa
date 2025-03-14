@@ -13,12 +13,16 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div v-if="error || props.customError" class="error-container" :class="[props.class]">
-    <button @click="errorStore.clearError" class="error-close-button">
-      <XCircleIcon class="error-close-icon" />
-    </button>
-    <p class="error-title">Error</p>
-    <p class="error-message">{{ error || customError }}</p>
+  <div v-if="error?.length || props.customError">
+    <div class="error-container" :class="[props.class]">
+      <button @click="errorStore.clearError" class="error-close-button">
+        <XCircleIcon class="error-close-icon" />
+      </button>
+      <div v-for="(err, idx) in error" :key="idx">
+        <p class="error-title">Error</p>
+        <p class="error-message">{{ err || customError }}</p>
+      </div>
+    </div>
   </div>
 </template>
 

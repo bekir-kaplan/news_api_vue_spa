@@ -18,7 +18,7 @@ const { loading, searchResults } = storeToRefs(newsStore);
 const { searchQuery, showResults, handleSelect, handleBlur } = useSearch(props.minChars);
 
 const onSelect = (article: NewsAPIArticle): void => {
-  handleSelect(article);
+  handleSelect();
   emit('select', article);
 };
 </script>
@@ -30,6 +30,7 @@ const onSelect = (article: NewsAPIArticle): void => {
       type="text"
       :placeholder="placeholder || 'Search...'"
       class="search-input"
+      maxlength="500"
       @blur="handleBlur"
     />
 

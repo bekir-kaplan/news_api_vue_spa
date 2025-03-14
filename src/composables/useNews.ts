@@ -2,17 +2,14 @@ import { ref } from 'vue';
 import { newsService } from '@/api/services/newsService';
 import type { NewsAPIArticle } from '@/api/types/news';
 import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
 
 export function useNews(): any {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
   // Fetch Top Headlines
-  const fetchTopHeadlines = async (params: {
-    category?: string;
-    pageSize?: number;
-    page?: number;
-  }): Promise<MappedNewsResponse> => {
+  const fetchTopHeadlines = async (params: TopHeadlinesParams): Promise<MappedNewsResponse> => {
     try {
       loading.value = true;
       error.value = null;
@@ -24,16 +21,14 @@ export function useNews(): any {
   };
 
   // Search News
-  const searchNewsAPI = async (query: string, category: string): Promise<NewsAPIArticle[]> => {
+  const searchNewsAPI = async (query: SearchNewsParams): Promise<NewsAPIArticle[]> => {
     try {
       loading.value = true;
       error.value = null;
 
       const params = {
-        q: query,
-        category: category !== 'all' ? category : undefined,
-        sortBy: 'publishedAt' as const,
-        pageSize: 10, // todo pagesize
+        ...query,
+        category: query.category !== 'all' ? query.category : undefined,
       };
 
       const result = await newsService.searchNews(params);

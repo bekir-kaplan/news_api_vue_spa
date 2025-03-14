@@ -15,7 +15,7 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue';
 const newsStore = useNewsStore();
 const { articles, categoryArticles, loading } = storeToRefs(newsStore);
 
-const categories = ['business', 'sports']; // 'entertainment', 'technology', 'health'
+const categories = ['business', 'sports', 'entertainment', 'technology', 'health']; // 'entertainment', 'technology', 'health'
 
 const featuredArticles = computed(() => articles.value?.slice(0, 10) || []);
 

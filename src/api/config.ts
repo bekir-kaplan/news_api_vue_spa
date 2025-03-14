@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 
-export const API_CONFIG: AxiosRequestConfig = {
+export const NEWS_API_CONFIG: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',
     'X-Api-Key': import.meta.env.VITE_NEWS_API_KEY,
@@ -8,13 +8,13 @@ export const API_CONFIG: AxiosRequestConfig = {
   timeout: 10000,
 };
 
-export const API_ENDPOINTS = {
+export const NEWS_API_ENDPOINTS = {
   TOP_HEADLINES: '/v2/top-headlines',
   EVERYTHING: '/v2/everything',
   SOURCES: '/v2/sources',
 } as const;
 
-export const API_BASE_URL = import.meta.env.VITE_NEWS_DATA_BASE_URL;
+export const NEWS_API_BASE_URL = import.meta.env.VITE_NEWS_DATA_BASE_URL;
 
 export const TWELVE_DATA_CONFIG: AxiosRequestConfig = {
   headers: {

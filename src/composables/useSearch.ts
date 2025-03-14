@@ -1,7 +1,6 @@
 import { ref, watch } from 'vue';
 import { useNewsStore } from '@/stores/newsStore';
 import { debounce } from '@/utils/debounce';
-import type { NewsAPIArticle } from '@/api/types/news';
 
 export function useSearch(minChars = 3): any {
   const newsStore = useNewsStore();
@@ -9,8 +8,9 @@ export function useSearch(minChars = 3): any {
   const showResults = ref(false);
 
   const debouncedSearch = debounce(async (query: string) => {
-    if (query.length >= minChars) {
-      await newsStore.searchNews(query);
+    const encodedQuery = encodeURIComponent(query);
+    if (encodedQuery.length >= minChars) {
+      await newsStore.searchNews({ q: encodedQuery });
       showResults.value = true;
     } else {
       showResults.value = false;
@@ -22,8 +22,7 @@ export function useSearch(minChars = 3): any {
     debouncedSearch(newQuery);
   });
 
-  const handleSelect = (article: NewsAPIArticle): void => {
-    searchQuery.value = article.title;
+  const handleSelect = (): void => {
     showResults.value = false;
     newsStore.clearSearch();
   };
@@ -31,7 +30,7 @@ export function useSearch(minChars = 3): any {
   const handleBlur = (): void => {
     setTimeout(() => {
       showResults.value = false;
-    }, 200);
+    }, 1000);
   };
 
   return {

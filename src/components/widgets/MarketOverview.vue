@@ -38,5 +38,5 @@ const getQuoteClasses = (quote: MappedQuote): { [key: string]: boolean } => {
 </template>
 
 <style scoped>
-@import '@/styles/components/market-overview.css';
+@import '@/styles/components/widgets/market-overview.css';
 </style>

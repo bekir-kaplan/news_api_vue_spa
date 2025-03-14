@@ -29,6 +29,8 @@ export function handleHttpError(error: any): never {
         throw new HttpError(status, `Not Found: ${message}`);
       case 409:
         throw new HttpError(status, `Api request reached: ${message}`);
+      case 429:
+        throw new HttpError(status, `Too Many Requests: ${message}`);
       case 500:
         throw new HttpError(status, `Internal Server Error: ${message}`);
       case 502:
@@ -49,22 +51,4 @@ export function handleHttpError(error: any): never {
     errorStore.setError(errorMessage);
     throw new HttpError(0, `Error in request setup: ${errorMessage}`);
   }
-}
-
-export function checkErrorInFinanceApiResponse(apiResponse: any): any {
-  if (apiResponse.code && apiResponse.code !== 200) {
-    const errorStore = useErrorStore();
-    errorStore.setError(apiResponse.message);
-    handleHttpError({
-      response: {
-        status: apiResponse.code,
-        statusText: apiResponse.status,
-        data: {
-          message: apiResponse.message,
-        },
-      },
-    });
-  }
-
-  return apiResponse;
 }

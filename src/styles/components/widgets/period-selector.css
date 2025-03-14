@@ -1,0 +1,12 @@
+.period-selector-container {
+  @apply flex gap-2 flex-wrap;
+}
+.period-selector-period-button {
+  @apply px-2 py-1 text-sm rounded-md transition-colors;
+}
+.period-selector-selected {
+  @apply bg-blue-600 text-white;
+}
+.period-selector-unselected {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}

@@ -1,5 +1,5 @@
 import { HttpClient } from '@/api/lib/HttpClient';
-import { API_BASE_URL, API_CONFIG, API_ENDPOINTS } from '@/api/config';
+import { NEWS_API_BASE_URL, NEWS_API_CONFIG, NEWS_API_ENDPOINTS } from '@/api/config';
 import type { NewsAPIResponse, NewsAPISourcesResponse } from '@/api/types/responses';
 import type { TopHeadlinesParams, SearchNewsParams } from '@/api/types/requests';
 import { mapNewsResponse } from '@/api/mappers/newsMapper';
@@ -7,13 +7,13 @@ import type { MappedNewsResponse } from '@/api/types/mappedTypes';
 
 class NewsService extends HttpClient {
   constructor() {
-    super(API_BASE_URL, API_CONFIG);
+    super(NEWS_API_BASE_URL, NEWS_API_CONFIG);
   }
 
   async getTopHeadlines(
     params: TopHeadlinesParams = { country: 'us' }
   ): Promise<MappedNewsResponse> {
-    const response = await this.get<NewsAPIResponse>(API_ENDPOINTS.TOP_HEADLINES, {
+    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
       params: {
         ...params,
         pageSize: params.pageSize || 10, // todo pagesize
@@ -26,7 +26,7 @@ class NewsService extends HttpClient {
   }
 
   async searchNews(params: SearchNewsParams): Promise<MappedNewsResponse> {
-    const response = await this.get<NewsAPIResponse>(API_ENDPOINTS.EVERYTHING, {
+    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.EVERYTHING, {
       params: {
         ...params,
         pageSize: params.pageSize || 20, // todo pagesize
@@ -42,7 +42,7 @@ class NewsService extends HttpClient {
   }
 
   async getSources(category?: string): Promise<string[]> {
-    const response = await this.get<NewsAPISourcesResponse>(API_ENDPOINTS.SOURCES, {
+    const response = await this.get<NewsAPISourcesResponse>(NEWS_API_ENDPOINTS.SOURCES, {
       params: {
         category,
         language: 'en',
