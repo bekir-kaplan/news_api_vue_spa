@@ -1,8 +1,7 @@
 import { handleHttpError } from '@/api/utils/ErrorHandler';
 
 export function checkErrorInNewsApiResponse(apiResponse: any): any {
-  debugger;
-  if (apiResponse.status && apiResponse.status !== 200) {
+  if (apiResponse.status && apiResponse.status !== 'ok') {
     handleHttpError({
       response: {
         status: apiResponse.code,

@@ -37,8 +37,8 @@ export abstract class HttpClient {
   protected async get<T>(
     url: string,
     config?: AxiosRequestConfig,
-    cacheTime = 600000 * 3, // Default cache expiry: 30 minutes
-    useCache = false // Default to not using cache
+    cacheTime = 600000 * 6, // Default cache expiry: 1 hour
+    useCache = true // Default to not using cache
   ): Promise<T> {
     const cacheStore = useApiCacheStore(); // Access the Pinia store
 

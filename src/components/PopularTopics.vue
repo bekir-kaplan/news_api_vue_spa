@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useNewsStore } from '@/stores/newsStore';
-
-const newsStore = useNewsStore();
-const { categories } = storeToRefs(newsStore);
-
-const filteredCategories = categories.value.filter((category: string) => category !== 'all');
+import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
+const filteredCategories = Object.values(CON_NEWS_CATEGORIES).filter(
+  (category) => category.key !== 'all'
+);
 </script>
 
 <template>
@@ -14,11 +11,11 @@ const filteredCategories = categories.value.filter((category: string) => categor
     <div class="popular-topics-list">
       <router-link
         v-for="category in filteredCategories"
-        :key="category"
-        :to="`/category/${category.toLowerCase()}`"
+        :key="category.key"
+        :to="`/category/${category.key}`"
         class="badge-link"
       >
-        {{ category }}
+        {{ category.value }}
       </router-link>
     </div>
   </div>

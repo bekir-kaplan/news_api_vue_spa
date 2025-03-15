@@ -23,7 +23,7 @@ const viewArticle = (article: NewsAPIArticle): void => {
 };
 
 const nextSlide = (): void => {
-  if (currentSlide.value < props.articles.length - 1) {
+  if (currentSlide.value < props.articles?.length - 1) {
     currentSlide.value++;
   } else {
     currentSlide.value = 0;
@@ -34,7 +34,7 @@ const prevSlide = (): void => {
   if (currentSlide.value > 0) {
     currentSlide.value--;
   } else {
-    currentSlide.value = props.articles.length - 1;
+    currentSlide.value = props.articles?.length - 1;
   }
 };
 
@@ -115,7 +115,7 @@ onUnmounted(() => {
       <button
         @click="nextSlide"
         class="news-carousel-control-button"
-        :disabled="currentSlide === articles.length - 1"
+        :disabled="currentSlide === articles?.length - 1"
       >
         <ChevronRightIcon class="news-carousel-icon" />
       </button>

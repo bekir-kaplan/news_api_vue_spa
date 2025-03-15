@@ -4,13 +4,13 @@ import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 
 const newsStore = useNewsStore();
-const { articles, selectedArticle } = storeToRefs(newsStore);
+const { categoryArticles, selectedArticle } = storeToRefs(newsStore);
 
 const relatedArticles = computed(() => {
-  if (!selectedArticle.value) {
+  if (!selectedArticle.value || !selectedArticle.value.category) {
     return [];
   }
-  return articles.value.filter((article) => article.url !== selectedArticle.value?.url).slice(0, 3);
+  return categoryArticles.value[selectedArticle.value.category];
 });
 </script>
 

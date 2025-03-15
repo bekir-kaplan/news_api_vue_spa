@@ -16,20 +16,17 @@ class NewsService extends HttpClient {
     const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
       params: {
         ...params,
-        pageSize: params.pageSize || 10, // todo pagesize
-        language: params.language || 'en',
-        country: params.country || 'us',
       },
     });
 
-    return mapNewsResponse(response);
+    return mapNewsResponse(response, params.category);
   }
 
   async searchNews(params: SearchNewsParams): Promise<MappedNewsResponse> {
     const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.EVERYTHING, {
       params: {
         ...params,
-        pageSize: params.pageSize || 20, // todo pagesize
+        pageSize: params.pageSize || 20, // TODO: pagesize
         language: params.language || 'en',
         sortBy: params.sortBy || 'publishedAt',
         from:

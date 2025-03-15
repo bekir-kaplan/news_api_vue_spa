@@ -1,6 +1,6 @@
 .search-panel-container {
   @apply absolute left-0 right-0 bg-white z-50 shadow-lg 
-  transition-all duration-300 ease-in-out overflow-hidden;
+  transition-all duration-300 ease-in-out;
 }
 
 .search-panel-inner {

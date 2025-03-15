@@ -17,7 +17,7 @@ export function handleHttpError(error: any): never {
     const status = error.response.status;
     const message = error.response.data.message || error.response.statusText;
 
-    errorStore.setError(message);
+    errorStore.setError(message, status);
     switch (status) {
       case 400:
         throw new HttpError(status, `Bad Request: ${message}`);
@@ -44,11 +44,11 @@ export function handleHttpError(error: any): never {
     }
   } else if (error.request) {
     const errorMessage = 'No response received from server';
-    errorStore.setError(errorMessage);
+    errorStore.setError(errorMessage, 'no_response');
     throw new HttpError(0, errorMessage);
   } else {
     const errorMessage = `Error in request setup: ${error}`;
-    errorStore.setError(errorMessage);
+    errorStore.setError(errorMessage, 'err_in_request');
     throw new HttpError(0, `Error in request setup: ${errorMessage}`);
   }
 }

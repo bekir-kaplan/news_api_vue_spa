@@ -52,7 +52,7 @@ onMounted(async () => {
       />
     </div>
 
-    <LoadingSpinner v-if="loading" />
+    <LoadingSpinner :loading="loading" />
 
     <div>
       <MarketOverview :market-data="marketData" @select-symbol="handleSymbolSelect" />

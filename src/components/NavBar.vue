@@ -9,7 +9,7 @@ import { useNewsStore } from '@/stores/newsStore';
 import NavLogo from '@/components/navigation/NavLogo.vue';
 import DesktopMenu from '@/components/navigation/DesktopMenu.vue';
 import MobileMenu from '@/components/navigation/MobileMenu.vue';
-import SearchPanel from '@/components/navigation/SearchPanel.vue';
+import SearchPanel from '@/components/search/SearchPanel.vue';
 import type { NewsAPIArticle } from '@/api/types/news';
 
 const router = useRouter();

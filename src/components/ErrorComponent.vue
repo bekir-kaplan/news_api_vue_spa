@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { useErrorStore } from '@/stores/errorStore';
-import { storeToRefs } from 'pinia';
 import { XCircleIcon } from '@heroicons/vue/24/outline';
+import { computed } from 'vue';
 
 const errorStore = useErrorStore();
-const { error } = storeToRefs(errorStore);
 
 const props = defineProps<{
   customError?: string;
   class?: string;
 }>();
+
+const storeErrors = computed(() => errorStore.error);
 </script>
 
 <template>
-  <div v-if="error?.length || props.customError">
+  <div v-if="storeErrors?.length || props.customError">
     <div class="error-container" :class="[props.class]">
       <button @click="errorStore.clearError" class="error-close-button">
         <XCircleIcon class="error-close-icon" />
       </button>
-      <div v-for="(err, idx) in error" :key="idx">
+      <div v-for="(err, idx) in storeErrors" :key="idx">
         <p class="error-title">Error</p>
         <p class="error-message">{{ err || customError }}</p>
       </div>

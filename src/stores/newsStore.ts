@@ -1,74 +1,89 @@
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
-import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
-import type { NewsAPIArticle } from '@/api/types/news';
 import { useNews } from '@/composables/useNews';
-import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
 import { newsService } from '@/api/services/newsService';
+import { useNewsFilter } from './newsFilter';
+import type { NewsAPIArticle } from '@/api/types/news';
+import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
+import type { MappedNewsResponse } from '@/api/types/mappedTypes';
 
 export const useNewsStore = defineStore(
   'news',
   () => {
+    const filterStore = useNewsFilter();
+    const { newsFilters } = storeToRefs(filterStore);
     const newsComposable = useNews();
+    const { loading, error } = newsComposable;
     const articles = ref<NewsAPIArticle[]>([]);
+    const carouselArticles = ref<NewsAPIArticle[]>([]);
     const categoryArticles = ref<Record<string, NewsAPIArticle[]>>({});
     const selectedArticle = ref<NewsAPIArticle | null>(null);
     const searchResults = ref<NewsAPIArticle[]>([]);
-    const loading = ref(false);
-    const error = ref<string | null>(null);
-    const selectedCategory = ref('all');
-
-    const categories = computed(() => CON_NEWS_CATEGORIES);
 
     const hasArticles = computed(() => articles.value.length > 0);
     const hasSearchResults = computed(() => searchResults.value.length > 0);
 
-    const fetchTopHeadlines = async (params?: TopHeadlinesParams): Promise<void> => {
-      try {
-        loading.value = true;
-        error.value = null;
+    const fetch = {
+      topHeadlines: {
+        /**
+         * Get main page carousel slide show data from top headlines
+         * @param params type TopHeadlinesParams
+         */
+        carousel: async (params?: TopHeadlinesParams): Promise<void> => {
+          const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+            ...params,
+          });
+          carouselArticles.value = result.articles;
+        },
 
-        const result = await newsComposable.fetchTopHeadlines({
-          ...params,
-          category: params?.category !== 'all' ? params?.category?.toLocaleLowerCase() : undefined,
-          pageSize: params?.pageSize || 10,
-          page: params?.page || 1,
-        });
+        /**
+         * Get sections data from top headlines
+         * @param params type TopHeadlinesParams
+         */
+        sections: async (params: TopHeadlinesParams): Promise<void> => {
+          if (params.category) {
+            const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+              category: params.category,
+              pageSize: params.pageSize,
+            });
+            categoryArticles.value[params.category] = result.articles;
+          }
+        },
 
-        if (params?.category) {
-          categoryArticles.value[params.category] = result.articles;
-        } else {
-          articles.value = result.articles;
-        }
-      } finally {
-        loading.value = false;
-      }
-    };
+        /**
+         * Search in top headlines with query and newsFilter form params
+         * @param query string
+         */
+        search: async (query: string): Promise<void> => {
+          const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+            ...newsFilters.value,
+            q: query,
+          });
+          searchResults.value = result.articles;
+        },
+      },
+      everything: {
+        search: async (query: SearchNewsParams): Promise<void> => {
+          try {
+            loading.value = true;
+            error.value = null;
 
-    const searchNews = async (query: SearchNewsParams): Promise<void> => {
-      try {
-        loading.value = true;
-        error.value = null;
+            const params = {
+              ...query,
+            };
 
-        const params = {
-          ...query,
-          category: selectedCategory.value !== 'all' ? selectedCategory.value : undefined,
-        };
+            const result = await newsService.searchNews(params);
 
-        const result = await newsService.searchNews(params);
-
-        searchResults.value = result.articles;
-      } finally {
-        loading.value = false;
-      }
+            searchResults.value = result.articles;
+          } finally {
+            loading.value = false;
+          }
+        },
+      },
     };
 
     const setSelectedArticle = (article: NewsAPIArticle): void => {
       selectedArticle.value = article;
-    };
-
-    const setCategory = (category: string): void => {
-      selectedCategory.value = category;
     };
 
     const clearSearch = (): void => {
@@ -81,20 +96,17 @@ export const useNewsStore = defineStore(
       categoryArticles,
       selectedArticle,
       searchResults,
+      carouselArticles,
       loading,
       error,
-      selectedCategory,
-      categories,
 
       // Computed
       hasArticles,
       hasSearchResults,
 
       // Actions
-      fetchTopHeadlines,
-      searchNews,
+      fetch,
       setSelectedArticle,
-      setCategory,
       clearSearch,
     };
   },

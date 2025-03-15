@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 import NewsLayout from '@/layouts/NewsLayout.vue';
@@ -11,23 +11,19 @@ import WeatherWidget from '@/components/WeatherWidget.vue';
 import PopularTopics from '@/components/PopularTopics.vue';
 import FinanceWidget from '@/components/widgets/FinanceWidget.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { CON_FETCH_PARAMS } from '@/constants/conNews';
 
 const newsStore = useNewsStore();
-const { articles, categoryArticles, loading } = storeToRefs(newsStore);
-
-const categories = ['business', 'sports', 'entertainment', 'technology', 'health']; // 'entertainment', 'technology', 'health'
-
-const featuredArticles = computed(() => articles.value?.slice(0, 10) || []);
+const { carouselArticles, categoryArticles, loading } = storeToRefs(newsStore);
 
 onMounted(async () => {
   // Fetch general headlines
-  await newsStore.fetchTopHeadlines();
+  await newsStore.fetch.topHeadlines.carousel(CON_FETCH_PARAMS.CAROUSEL);
 
   // Fetch articles for each category concurrently
-  const fetchPromises = categories.map(async (category) => {
-    await newsStore.fetchTopHeadlines({
-      category,
-      pageSize: 3,
+  const fetchPromises = CON_FETCH_PARAMS.SECTIONS.map(async (section) => {
+    await newsStore.fetch.topHeadlines.sections({
+      ...section,
     });
   });
 
@@ -39,26 +35,25 @@ onMounted(async () => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
-      <LoadingSpinner v-if="loading" />
-      <template v-else>
-        <div class="home-view-carousel">
-          <NewsCarousel :articles="featuredArticles" :autoplay="true" :interval="5000" />
-        </div>
+      <LoadingSpinner :loading="loading" />
 
-        <!-- Category Section -->
-        <NewsSection
-          v-for="category in categories"
-          :key="category"
-          :title="category"
-          :category="category"
-        >
-          <NewsCard
-            v-for="article in categoryArticles[category]"
-            :key="article.url"
-            :article="article"
-          />
-        </NewsSection>
-      </template>
+      <div class="home-view-carousel">
+        <NewsCarousel :articles="carouselArticles" :autoplay="true" :interval="5000" />
+      </div>
+
+      <!-- Category Section -->
+      <NewsSection
+        v-for="section in CON_FETCH_PARAMS.SECTIONS"
+        :key="section.category"
+        :title="section.title || ''"
+        :category="section.category || ''"
+      >
+        <NewsCard
+          v-for="article in categoryArticles[section?.category || '']"
+          :key="article.url"
+          :article="article"
+        />
+      </NewsSection>
     </template>
 
     <!-- Sidebar Content -->

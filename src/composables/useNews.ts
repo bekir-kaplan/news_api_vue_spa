@@ -13,7 +13,7 @@ export function useNews(): any {
     try {
       loading.value = true;
       error.value = null;
-      const result = await newsService.getTopHeadlines(params);
+      const result = await newsService.getTopHeadlines({ ...params });
       return result;
     } finally {
       loading.value = false;
@@ -28,7 +28,6 @@ export function useNews(): any {
 
       const params = {
         ...query,
-        category: query.category !== 'all' ? query.category : undefined,
       };
 
       const result = await newsService.searchNews(params);

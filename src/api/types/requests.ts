@@ -3,10 +3,11 @@ export interface TopHeadlinesParams {
   category?: string;
   sources?: string;
   q?: string;
-  language?: string;
   pageSize?: number;
   page?: number;
 }
+
+export type TopHeadlinesParamTypes = keyof TopHeadlinesParams;
 
 export interface SearchNewsParams {
   q: string;

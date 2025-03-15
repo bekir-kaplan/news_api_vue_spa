@@ -23,7 +23,7 @@ const loadMoreArticles = async (): Promise<void> => {
 // Throttle function
 function throttle(func: typeof loadMoreArticles, limit: number | undefined): () => void {
   let inThrottle: boolean;
-  return function (...args: any) {
+  return function (this: unknown, ...args: any) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -74,7 +74,7 @@ onUnmounted(() => {
   <NewsLayout>
     <!-- Main Content -->
     <template #main>
-      <LoadingSpinner v-if="loading" />
+      <LoadingSpinner :loading="loading" />
       <GoBackButton />
       <div class="category-view-header">
         <h1 class="category-view-title">{{ category }} News</h1>

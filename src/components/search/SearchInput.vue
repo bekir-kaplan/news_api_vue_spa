@@ -15,7 +15,9 @@ const emit = defineEmits<{
 
 const newsStore = useNewsStore();
 const { loading, searchResults } = storeToRefs(newsStore);
-const { searchQuery, showResults, handleSelect, handleBlur } = useSearch(props.minChars);
+const { searchQuery, showResults, handleSelect, handleBlur, handleFocus } = useSearch(
+  props.minChars
+);
 
 const onSelect = (article: NewsAPIArticle): void => {
   handleSelect();
@@ -32,6 +34,7 @@ const onSelect = (article: NewsAPIArticle): void => {
       class="search-input"
       maxlength="500"
       @blur="handleBlur"
+      @focus="handleFocus"
     />
 
     <div v-if="loading" class="search-input-spinner-container">
