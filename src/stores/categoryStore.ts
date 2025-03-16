@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useNews } from '@/composables/useNews';
-import type { NewsAPIArticle } from '@/api/types/news';
-import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import type { INewsArticle } from '@/api/types/news';
+import type { INewsMapNewsRes } from '@/api/types/mapTypes';
 
 export const useCategoryStore = defineStore('category', () => {
   const { fetchTopHeadlines, loading } = useNews();
   const category = ref<string>('');
   const page = ref(0);
-  const result = ref<MappedNewsResponse>({ status: 'ok', totalResults: 0, articles: [] });
-  const categoryArticlesPaginated = ref<NewsAPIArticle[]>([]);
+  const result = ref<INewsMapNewsRes>({ status: 'ok', totalResults: 0, articles: [] });
+  const categoryArticlesPaginated = ref<INewsArticle[]>([]);
 
   const setCategory = (newCategory: string): void => {
     category.value = newCategory;

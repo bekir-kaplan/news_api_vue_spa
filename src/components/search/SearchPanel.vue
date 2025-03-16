@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useNewsStore } from '@/stores/newsStore';
 import SearchInput from '@/components/search/SearchInput.vue';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 import NewsSearchFilter from './NewsSearchFilter.vue';
 
 defineProps<{
@@ -9,7 +9,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', article: NewsAPIArticle): void;
+  (e: 'select', article: INewsArticle): void;
 }>();
 
 const newsStore = useNewsStore();

@@ -2,8 +2,11 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
+import type { INewsArticle } from '@/api/types/news';
+import { useRouter } from 'vue-router';
 
 const newsStore = useNewsStore();
+const router = useRouter();
 const { categoryArticles, selectedArticle } = storeToRefs(newsStore);
 
 const relatedArticles = computed(() => {
@@ -12,6 +15,11 @@ const relatedArticles = computed(() => {
   }
   return categoryArticles.value[selectedArticle.value.category];
 });
+
+const handleArticleClick = (article: INewsArticle): void => {
+  newsStore.setSelectedArticle(article);
+  router.push(`/article/${encodeURIComponent(article.title)}`);
+};
 </script>
 
 <template>
@@ -21,7 +29,7 @@ const relatedArticles = computed(() => {
       <div v-for="article in relatedArticles" :key="article.url" class="related-articles-item">
         <router-link
           :to="`/article/${encodeURIComponent(article.title)}`"
-          onclick="newsStore.setSelectedArticle(article)"
+          @click="handleArticleClick(article)"
         >
           <img
             v-if="article.urlToImage"

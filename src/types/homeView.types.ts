@@ -1,7 +1,7 @@
-import type { TopHeadlinesParams } from '@/api/types/requests';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import type { ICategoryKey } from './news.types';
 
-export interface ISection extends TopHeadlinesParams {
+export interface ISection extends INewsReqTopHeadlineQParam {
   pageSize?: number;
   title?: string;
 }

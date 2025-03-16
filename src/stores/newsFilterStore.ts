@@ -1,11 +1,11 @@
-import type { TopHeadlinesParams, TopHeadlinesParamTypes } from '@/api/types/requests';
+import type { INewsReqTopHeadlineQParam, TNewsReqTopHeadlineQParam } from '@/api/types/requests';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export const useNewsFilter = defineStore('newsFilter', () => {
-  const newsFilters = ref<TopHeadlinesParams>({});
+export const useNewsFilterStore = defineStore('newsFilter', () => {
+  const newsFilters = ref<INewsReqTopHeadlineQParam>({});
 
-  function setFilter(key: TopHeadlinesParamTypes, value: string): void {
+  function setFilter(key: TNewsReqTopHeadlineQParam, value: string): void {
     if (value) {
       newsFilters.value[key] = encodeURIComponent(value) as any;
     } else {

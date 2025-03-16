@@ -1,21 +1,14 @@
-import type { NewsAPIArticle, NewsAPISource } from '@/api/types/news';
+import type { INewsArticle, INewsSource } from '@/api/types/news';
 
 // News API Response Types
-export interface NewsAPIResponse {
+export interface INewsApiRes {
   status: string;
   totalResults: number;
-  articles: NewsAPIArticle[];
+  articles: INewsArticle[];
   message?: string;
 }
 
-// Generic API Response type for future endpoints
-export interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message?: string;
-}
-
-export interface NewsAPISourceResponse {
+export interface INewsApiResSource {
   status: string;
-  sources: NewsAPISource[];
+  sources: INewsSource[];
 }

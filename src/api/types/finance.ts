@@ -1,4 +1,4 @@
-export interface TimeSeriesValue {
+export interface IFinTimeSeriesValue {
   datetime: string;
   open: string;
   high: string;
@@ -7,7 +7,7 @@ export interface TimeSeriesValue {
   volume: string;
 }
 
-export interface TimeSeriesResponse {
+export interface IFinResTimeSeries {
   meta: {
     symbol: string;
     interval: string;
@@ -17,12 +17,12 @@ export interface TimeSeriesResponse {
     mic_code: string;
     type: string;
   };
-  values: Array<TimeSeriesValue>;
+  values: Array<IFinTimeSeriesValue>;
   status: string;
   message?: string;
 }
 
-export interface QuoteResponse extends TimeSeriesValue {
+export interface IFinResQuote extends IFinTimeSeriesValue {
   symbol: string;
   name: string;
   exchange: string;
@@ -38,7 +38,7 @@ export interface QuoteResponse extends TimeSeriesValue {
   status: string;
 }
 
-export interface MarketStateResponse {
+export interface IFinResMarketState {
   symbol: string;
   exchange: string;
   market_state: 'open' | 'closed';

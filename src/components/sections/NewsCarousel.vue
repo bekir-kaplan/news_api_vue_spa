@@ -3,10 +3,10 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import { useNewsStore } from '@/stores/newsStore';
 import { useRouter } from 'vue-router';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 
 const props = defineProps<{
-  articles: NewsAPIArticle[];
+  articles: INewsArticle[];
   autoplay?: boolean;
   interval?: number;
 }>();
@@ -17,7 +17,7 @@ const currentSlide = ref(0);
 const carouselRef = ref<HTMLElement | null>(null);
 let autoplayInterval: number | null = null;
 
-const viewArticle = (article: NewsAPIArticle): void => {
+const viewArticle = (article: INewsArticle): void => {
   newsStore.setSelectedArticle(article);
   router.push(`/article/${encodeURIComponent(article.title)}`);
 };

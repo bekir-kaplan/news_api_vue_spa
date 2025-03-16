@@ -1,12 +1,12 @@
 import type {
-  TimeSeriesResponse,
-  TimeSeriesValue,
-  QuoteResponse,
-  MarketStateResponse,
+  IFinResTimeSeries,
+  IFinTimeSeriesValue,
+  IFinResQuote,
+  IFinResMarketState,
 } from '@/api/types/finance';
-import type { MappedTimeSeries, MappedQuote, MappedMarketState } from '@/api/types/mappedTypes';
+import type { MappedTimeSeries, IFinMapQuote, IFinMapMarketState } from '@/api/types/mapTypes';
 
-export function mapTimeSeries(response: TimeSeriesResponse): MappedTimeSeries {
+export function mapTimeSeries(response: IFinResTimeSeries): MappedTimeSeries {
   return {
     symbol: response.meta?.symbol,
     interval: response.meta?.interval,
@@ -16,7 +16,7 @@ export function mapTimeSeries(response: TimeSeriesResponse): MappedTimeSeries {
   };
 }
 
-export function mapTimeSeriesValue(value: TimeSeriesValue): MappedTimeSeries['values'][0] {
+export function mapTimeSeriesValue(value: IFinTimeSeriesValue): MappedTimeSeries['values'][0] {
   return {
     datetime: new Date(value.datetime),
     open: parseFloat(value.open),
@@ -27,7 +27,7 @@ export function mapTimeSeriesValue(value: TimeSeriesValue): MappedTimeSeries['va
   };
 }
 
-export function mapQuote(response: QuoteResponse): MappedQuote | null {
+export function mapQuote(response: IFinResQuote): IFinMapQuote | null {
   return {
     symbol: response.symbol,
     name: response.name,
@@ -56,7 +56,7 @@ export function mapQuote(response: QuoteResponse): MappedQuote | null {
   };
 }
 
-export function mapMarketState(response: MarketStateResponse): MappedMarketState {
+export function mapMarketState(response: IFinResMarketState): IFinMapMarketState {
   return {
     symbol: response.symbol,
     exchange: response.exchange,

@@ -3,10 +3,10 @@ import { computed } from 'vue';
 import { HeartIcon as HeartOutline } from '@heroicons/vue/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/vue/24/solid';
 import { useLikedNewsStore } from '@/stores/likedNewsStore';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 
 const props = defineProps<{
-  article: NewsAPIArticle;
+  article: INewsArticle;
 }>();
 
 const likedNewsStore = useLikedNewsStore();

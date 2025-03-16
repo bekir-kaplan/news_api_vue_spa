@@ -2,23 +2,23 @@ import { defineStore, storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
 import { useNews } from '@/composables/useNews';
 import { newsService } from '@/api/services/newsService';
-import { useNewsFilter } from './newsFilter';
-import type { NewsAPIArticle } from '@/api/types/news';
-import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
-import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import { useNewsFilterStore } from './newsFilterStore';
+import type { INewsArticle } from '@/api/types/news';
+import type { INewsReqEverythingQParam, INewsReqTopHeadlineQParam } from '@/api/types/requests';
+import type { INewsMapNewsRes } from '@/api/types/mapTypes';
 
 export const useNewsStore = defineStore(
   'news',
   () => {
-    const filterStore = useNewsFilter();
+    const filterStore = useNewsFilterStore();
     const { newsFilters } = storeToRefs(filterStore);
     const newsComposable = useNews();
     const { loading, error } = newsComposable;
-    const articles = ref<NewsAPIArticle[]>([]);
-    const carouselArticles = ref<NewsAPIArticle[]>([]);
-    const categoryArticles = ref<Record<string, NewsAPIArticle[]>>({});
-    const selectedArticle = ref<NewsAPIArticle | null>(null);
-    const searchResults = ref<NewsAPIArticle[]>([]);
+    const articles = ref<INewsArticle[]>([]);
+    const carouselArticles = ref<INewsArticle[]>([]);
+    const categoryArticles = ref<Record<string, INewsArticle[]>>({});
+    const selectedArticle = ref<INewsArticle | null>(null);
+    const searchResults = ref<INewsArticle[]>([]);
 
     const hasArticles = computed(() => articles.value.length > 0);
     const hasSearchResults = computed(() => searchResults.value.length > 0);
@@ -27,10 +27,10 @@ export const useNewsStore = defineStore(
       topHeadlines: {
         /**
          * Get main page carousel slide show data from top headlines
-         * @param params type TopHeadlinesParams
+         * @param params type INewsReqTopHeadlineQParam
          */
-        carousel: async (params?: TopHeadlinesParams): Promise<void> => {
-          const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+        carousel: async (params?: INewsReqTopHeadlineQParam): Promise<void> => {
+          const result: INewsMapNewsRes = await newsComposable.fetchTopHeadlines({
             ...params,
           });
           carouselArticles.value = result.articles;
@@ -38,11 +38,11 @@ export const useNewsStore = defineStore(
 
         /**
          * Get sections data from top headlines
-         * @param params type TopHeadlinesParams
+         * @param params type INewsReqTopHeadlineQParam
          */
-        sections: async (params: TopHeadlinesParams): Promise<void> => {
+        sections: async (params: INewsReqTopHeadlineQParam): Promise<void> => {
           if (params.category) {
-            const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+            const result: INewsMapNewsRes = await newsComposable.fetchTopHeadlines({
               category: params.category,
               pageSize: params.pageSize,
             });
@@ -55,7 +55,7 @@ export const useNewsStore = defineStore(
          * @param query string
          */
         search: async (query: string): Promise<void> => {
-          const result: MappedNewsResponse = await newsComposable.fetchTopHeadlines({
+          const result: INewsMapNewsRes = await newsComposable.fetchTopHeadlines({
             ...newsFilters.value,
             q: query,
           });
@@ -63,7 +63,9 @@ export const useNewsStore = defineStore(
         },
       },
       everything: {
-        search: async (query: SearchNewsParams): Promise<void> => {
+        // TODO: In search panel we need to add selection
+        // to search in everything or topheadlines search
+        search: async (query: INewsReqEverythingQParam): Promise<void> => {
           try {
             loading.value = true;
             error.value = null;
@@ -82,7 +84,7 @@ export const useNewsStore = defineStore(
       },
     };
 
-    const setSelectedArticle = (article: NewsAPIArticle): void => {
+    const setSelectedArticle = (article: INewsArticle): void => {
       selectedArticle.value = article;
     };
 

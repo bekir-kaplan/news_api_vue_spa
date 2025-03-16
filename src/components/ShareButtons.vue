@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 import { ShareIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
 
-const props = defineProps<{ article: NewsAPIArticle }>();
+const props = defineProps<{ article: INewsArticle }>();
 
 const shareUrl = ref('');
 

@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 import { useSearch } from '@/composables/useSearch';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 
 const props = defineProps<{
   placeholder?: string;
@@ -10,7 +10,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', article: NewsAPIArticle): void;
+  (e: 'select', article: INewsArticle): void;
 }>();
 
 const newsStore = useNewsStore();
@@ -19,7 +19,7 @@ const { searchQuery, showResults, handleSelect, handleBlur, handleFocus } = useS
   props.minChars
 );
 
-const onSelect = (article: NewsAPIArticle): void => {
+const onSelect = (article: INewsArticle): void => {
   handleSelect();
   emit('select', article);
 };

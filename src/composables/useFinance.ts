@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 import { financeService } from '@/api/services/financeService';
-import type { MappedQuote, MappedTimeSeriesValue } from '@/api/types/mappedTypes';
+import type { IFinMapQuote, MappedTimeSeriesValue } from '@/api/types/mapTypes';
 
 export function useFinance(): any {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  const fetchMarketData = async (symbols: string[]): Promise<MappedQuote[] | null> => {
+  const fetchMarketData = async (symbols: string[]): Promise<IFinMapQuote[] | null> => {
     try {
       loading.value = true;
       error.value = null;
@@ -17,7 +17,7 @@ export function useFinance(): any {
         })
       );
 
-      const validQuotes = quotes.filter((quote): quote is MappedQuote => quote !== null);
+      const validQuotes = quotes.filter((quote): quote is IFinMapQuote => quote !== null);
       return validQuotes;
     } finally {
       loading.value = false;

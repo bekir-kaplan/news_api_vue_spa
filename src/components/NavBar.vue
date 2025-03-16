@@ -10,7 +10,7 @@ import NavLogo from '@/components/navigation/NavLogo.vue';
 import DesktopMenu from '@/components/navigation/DesktopMenu.vue';
 import MobileMenu from '@/components/navigation/MobileMenu.vue';
 import SearchPanel from '@/components/search/SearchPanel.vue';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 
 const router = useRouter();
 const navigationStore = useNavigationStore();
@@ -33,7 +33,7 @@ const toggleSearch = (): void => {
   }
 };
 
-const handleArticleSelect = (article: NewsAPIArticle): void => {
+const handleArticleSelect = (article: INewsArticle): void => {
   newsStore.setSelectedArticle(article);
   router.push(`/article/${encodeURIComponent(article.title)}`);
   isSearchOpen.value = false;

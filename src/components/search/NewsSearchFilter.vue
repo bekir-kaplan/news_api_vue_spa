@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useNewsFilter } from '@/stores/newsFilter';
-import type { TopHeadlinesParams } from '@/api/types/requests';
+import { useNewsFilterStore } from '@/stores/newsFilterStore';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
 import { computed } from 'vue';
 import type { IEventSelectElementChange } from '@/components/form-elements/FormSelectElement.vue';
 import FormSelectElement from '@/components/form-elements/FormSelectElement.vue';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
 
-const filterStore = useNewsFilter();
+const filterStore = useNewsFilterStore();
 const categories = computed(() => CON_NEWS_CATEGORIES);
 const pageSizes = [
   { key: 'all', value: 'All' },
@@ -21,7 +21,7 @@ function updateFilter(param: IEventSelectElementChange): void {
   if (filterValue === CON_NEWS_CATEGORIES.all.key) {
     filterValue = '';
   }
-  filterStore.setFilter(param.key as keyof TopHeadlinesParams, filterValue);
+  filterStore.setFilter(param.key as keyof INewsReqTopHeadlineQParam, filterValue);
 }
 </script>
 

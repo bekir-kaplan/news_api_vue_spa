@@ -1,15 +1,19 @@
 import { ref } from 'vue';
 import { newsService } from '@/api/services/newsService';
-import type { NewsAPIArticle } from '@/api/types/news';
-import type { MappedNewsResponse } from '@/api/types/mappedTypes';
-import type { SearchNewsParams, TopHeadlinesParams } from '@/api/types/requests';
+import type { INewsArticle } from '@/api/types/news';
+import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
+import type {
+  INewsReqEverythingQParam,
+  INewsReqSourceQParam,
+  INewsReqTopHeadlineQParam,
+} from '@/api/types/requests';
 
 export function useNews(): any {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
   // Fetch Top Headlines
-  const fetchTopHeadlines = async (params: TopHeadlinesParams): Promise<MappedNewsResponse> => {
+  const fetchTopHeadlines = async (params: INewsReqTopHeadlineQParam): Promise<INewsMapNewsRes> => {
     try {
       loading.value = true;
       error.value = null;
@@ -21,7 +25,7 @@ export function useNews(): any {
   };
 
   // Search News
-  const searchNewsAPI = async (query: SearchNewsParams): Promise<NewsAPIArticle[]> => {
+  const fetchEverything = async (query: INewsReqEverythingQParam): Promise<INewsArticle[]> => {
     try {
       loading.value = true;
       error.value = null;
@@ -31,11 +35,23 @@ export function useNews(): any {
       };
 
       const result = await newsService.searchNews(params);
-      return result.articles as NewsAPIArticle[];
+      return result.articles;
     } finally {
       loading.value = false;
     }
   };
 
-  return { fetchTopHeadlines, searchNewsAPI, loading, error };
+  // Fetch Sources
+  const fetchSources = async (params: INewsReqSourceQParam): Promise<INewsMapSourceRes> => {
+    try {
+      loading.value = true;
+      error.value = null;
+      const result = await newsService.getSources({ ...params });
+      return result;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return { fetchTopHeadlines, fetchEverything, fetchSources, loading, error };
 }

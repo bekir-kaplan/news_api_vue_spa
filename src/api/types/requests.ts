@@ -1,4 +1,6 @@
-export interface TopHeadlinesParams {
+export type TNewsReqTopHeadlineQParam = keyof INewsReqTopHeadlineQParam;
+export type TSortBy = 'relevancy' | 'popularity' | 'publishedAt';
+export interface INewsReqTopHeadlineQParam {
   country?: string;
   category?: string;
   sources?: string;
@@ -6,23 +8,21 @@ export interface TopHeadlinesParams {
   pageSize?: number;
   page?: number;
 }
-
-export type TopHeadlinesParamTypes = keyof TopHeadlinesParams;
-
-export interface SearchNewsParams {
+export interface INewsReqEverythingQParam {
   q: string;
+  searchIn?: string; // title, description, content,
   sources?: string;
+  excludeDomains?: string;
   domains?: string;
   from?: string;
   to?: string;
   language?: string;
-  sortBy?: 'relevancy' | 'popularity' | 'publishedAt';
+  sortBy?: TSortBy;
   pageSize?: number;
   page?: number;
   category?: string;
 }
-
-export interface SearchSourceParams {
+export interface INewsReqSourceQParam {
   country?: string;
   language?: string;
   category?: string;

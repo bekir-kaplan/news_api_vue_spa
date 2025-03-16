@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news';
 import { defineStore } from 'pinia';
 
 export interface ILikedArticlesByCategory {
@@ -12,15 +12,15 @@ export interface ILikedArticlesByCategory {
 export const useLikedNewsStore = defineStore(
   'likedNews',
   () => {
-    const likedArticles = ref<NewsAPIArticle[]>([]);
+    const likedArticles = ref<INewsArticle[]>([]);
 
     const likedCount = computed(() => likedArticles.value.length);
 
-    const isLiked = (article: NewsAPIArticle): boolean => {
+    const isLiked = (article: INewsArticle): boolean => {
       return likedArticles.value.some((a) => a.url === article.url);
     };
 
-    const toggleLike = (article: NewsAPIArticle): void => {
+    const toggleLike = (article: INewsArticle): void => {
       const index = likedArticles.value.findIndex((a) => a.url === article.url);
       if (index === -1) {
         likedArticles.value.push(article);

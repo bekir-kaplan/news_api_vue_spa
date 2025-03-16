@@ -1,4 +1,4 @@
-export interface NewsAPIArticle {
+export interface INewsArticle {
   source: {
     id: string | null;
     name: string;
@@ -13,7 +13,7 @@ export interface NewsAPIArticle {
   category?: string;
 }
 
-export interface NewsAPISource {
+export interface INewsSource {
   id: string;
   name: string;
   description: string;

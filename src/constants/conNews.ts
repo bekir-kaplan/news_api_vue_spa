@@ -1,4 +1,4 @@
-import type { TopHeadlinesParams } from '@/api/types/requests';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import type { ICategory, ISection } from '@/types/homeView.types';
 
 export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 3;
@@ -32,7 +32,7 @@ export const CON_FETCH_PARAMS = {
   CAROUSEL: {
     pageSize: CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE,
     country: CON_NEWS_DEFAULT_COUNTRY,
-  } as TopHeadlinesParams,
+  } as INewsReqTopHeadlineQParam,
   SECTIONS: [
     {
       pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,

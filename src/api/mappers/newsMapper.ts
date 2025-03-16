@@ -1,11 +1,8 @@
-import type { NewsAPIResponse, NewsAPISourceResponse } from '@/api/types/responses';
-import type { MappedNewsResponse, MappedSourceResponse } from '@/api/types/mappedTypes';
-import type { NewsAPIArticle, NewsAPISource } from '@/api/types/news';
+import type { INewsApiRes, INewsApiResSource } from '@/api/types/responses';
+import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
+import type { INewsArticle, INewsSource } from '@/api/types/news';
 
-export function mapArticle(
-  response: NewsAPIResponse,
-  category: string | undefined
-): NewsAPIArticle[] {
+export function mapArticle(response: INewsApiRes, category: string | undefined): INewsArticle[] {
   return response.articles.map((article) => ({
     source: {
       id: article.source.id,
@@ -22,7 +19,7 @@ export function mapArticle(
   }));
 }
 
-export function mapSource(response: NewsAPISourceResponse): NewsAPISource[] {
+export function mapSource(response: INewsApiResSource): INewsSource[] {
   return response.sources.map((source) => ({
     id: source.id,
     name: source.name,
@@ -35,9 +32,9 @@ export function mapSource(response: NewsAPISourceResponse): NewsAPISource[] {
 }
 
 export function mapNewsResponse(
-  response: NewsAPIResponse,
+  response: INewsApiRes,
   category?: string | undefined
-): MappedNewsResponse {
+): INewsMapNewsRes {
   return {
     articles: mapArticle(response, category),
     totalResults: response.totalResults,
@@ -45,7 +42,7 @@ export function mapNewsResponse(
   };
 }
 
-export function mapStatusResponse(response: NewsAPISourceResponse): MappedSourceResponse {
+export function mapStatusResponse(response: INewsApiResSource): INewsMapSourceRes {
   return {
     sources: mapSource(response),
     status: response.status === 'ok' ? 'success' : 'error',

@@ -1,13 +1,13 @@
 import { HttpClient } from '@/api/lib/HttpClient';
 import { NEWS_API_BASE_URL, NEWS_API_CONFIG, NEWS_API_ENDPOINTS } from '@/api/config';
-import type { NewsAPIResponse, NewsAPISourceResponse } from '@/api/types/responses';
+import type { INewsApiRes, INewsApiResSource } from '@/api/types/responses';
 import type {
-  TopHeadlinesParams,
-  SearchNewsParams,
-  SearchSourceParams,
+  INewsReqTopHeadlineQParam,
+  INewsReqEverythingQParam,
+  INewsReqSourceQParam,
 } from '@/api/types/requests';
 import { mapNewsResponse, mapStatusResponse } from '@/api/mappers/newsMapper';
-import type { MappedNewsResponse, MappedSourceResponse } from '@/api/types/mappedTypes';
+import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
 
 class NewsService extends HttpClient {
   constructor() {
@@ -15,9 +15,9 @@ class NewsService extends HttpClient {
   }
 
   async getTopHeadlines(
-    params: TopHeadlinesParams = { country: 'us' }
-  ): Promise<MappedNewsResponse> {
-    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
+    params: INewsReqTopHeadlineQParam = { country: 'us' }
+  ): Promise<INewsMapNewsRes> {
+    const response = await this.get<INewsApiRes>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
       params: {
         ...params,
       },
@@ -26,20 +26,8 @@ class NewsService extends HttpClient {
     return mapNewsResponse(response, params.category);
   }
 
-  async getTopHeadlinesSource(
-    params: TopHeadlinesParams = { country: 'us' }
-  ): Promise<MappedNewsResponse> {
-    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.SOURCES, {
-      params: {
-        ...params,
-      },
-    });
-
-    return mapNewsResponse(response, params.category);
-  }
-
-  async searchNews(params: SearchNewsParams): Promise<MappedNewsResponse> {
-    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.EVERYTHING, {
+  async searchNews(params: INewsReqEverythingQParam): Promise<INewsMapNewsRes> {
+    const response = await this.get<INewsApiRes>(NEWS_API_ENDPOINTS.EVERYTHING, {
       params: {
         ...params,
         pageSize: params.pageSize || 20, // TODO: pagesize
@@ -54,8 +42,8 @@ class NewsService extends HttpClient {
     return mapNewsResponse(response);
   }
 
-  async getSources(params?: SearchSourceParams): Promise<MappedSourceResponse> {
-    const response = await this.get<NewsAPISourceResponse>(NEWS_API_ENDPOINTS.SOURCES, {
+  async getSources(params?: INewsReqSourceQParam): Promise<INewsMapSourceRes> {
+    const response = await this.get<INewsApiResSource>(NEWS_API_ENDPOINTS.SOURCES, {
       params: { ...params },
     });
 

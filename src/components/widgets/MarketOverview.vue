@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { MappedQuote } from '@/api/types/mappedTypes';
+import type { IFinMapQuote } from '@/api/types/mapTypes';
 
-defineProps<{ marketData: MappedQuote[] }>();
+defineProps<{ marketData: IFinMapQuote[] }>();
 defineEmits(['select-symbol']);
 
-const getQuoteClasses = (quote: MappedQuote): { [key: string]: boolean } => {
+const getQuoteClasses = (quote: IFinMapQuote): { [key: string]: boolean } => {
   return {
     'border-green-200 bg-green-50': quote.change.percent >= 0,
     'border-red-200 bg-red-50': quote.change.percent < 0,

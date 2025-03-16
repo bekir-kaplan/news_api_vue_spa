@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useFinance } from '@/composables/useFinance';
-import type { MappedQuote, MappedTimeSeriesValue } from '@/api/types/mappedTypes';
+import type { IFinMapQuote, MappedTimeSeriesValue } from '@/api/types/mapTypes';
 
 export const useFinanceStore = defineStore(
   'finance',
   () => {
     const { fetchMarketData, fetchTimeSeriesData, loading, error } = useFinance();
 
-    const marketData = ref<MappedQuote[]>([]);
+    const marketData = ref<IFinMapQuote[]>([]);
     const timeSeriesData = ref<MappedTimeSeriesValue[]>([]);
     const selectedSymbol = ref<string>('SPY');
     const selectedInterval = ref<string>('1day');

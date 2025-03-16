@@ -1,4 +1,4 @@
-import type { NewsAPIArticle, NewsAPISource } from '@/api/types/news';
+import type { INewsArticle, INewsSource } from '@/api/types/news';
 
 // Finance Types
 export interface MappedTimeSeriesValue {
@@ -18,7 +18,7 @@ export interface MappedTimeSeries {
   values: MappedTimeSeriesValue[];
 }
 
-export interface MappedQuote {
+export interface IFinMapQuote {
   symbol: string;
   name: string;
   exchange: string;
@@ -45,7 +45,7 @@ export interface MappedQuote {
   };
 }
 
-export interface MappedMarketState {
+export interface IFinMapMarketState {
   symbol: string;
   exchange: string;
   isOpen: boolean;
@@ -53,13 +53,13 @@ export interface MappedMarketState {
 
 // News Types
 
-export interface MappedNewsResponse {
+export interface INewsMapNewsRes {
   status: string;
   totalResults: number;
-  articles: NewsAPIArticle[];
+  articles: INewsArticle[];
 }
 
-export interface MappedSourceResponse {
+export interface INewsMapSourceRes {
   status: string;
-  sources: NewsAPISource[];
+  sources: INewsSource[];
 }
