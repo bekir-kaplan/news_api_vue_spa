@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 
+// News Api Config
 export const NEWS_API_CONFIG: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',
@@ -11,11 +12,12 @@ export const NEWS_API_CONFIG: AxiosRequestConfig = {
 export const NEWS_API_ENDPOINTS = {
   TOP_HEADLINES: '/v2/top-headlines',
   EVERYTHING: '/v2/everything',
-  SOURCES: '/v2/sources',
+  SOURCES: '/v2/top-headlines/sources',
 } as const;
 
 export const NEWS_API_BASE_URL = import.meta.env.VITE_NEWS_DATA_BASE_URL;
 
+// Finance Api Config
 export const TWELVE_DATA_CONFIG: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',

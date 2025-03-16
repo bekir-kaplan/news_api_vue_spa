@@ -15,7 +15,7 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-export interface NewsAPISourcesResponse {
+export interface NewsAPISourceResponse {
   status: string;
   sources: NewsAPISource[];
 }

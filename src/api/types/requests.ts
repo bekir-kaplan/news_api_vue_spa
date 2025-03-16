@@ -22,8 +22,8 @@ export interface SearchNewsParams {
   category?: string;
 }
 
-export interface SourcesParams {
-  category?: string;
-  language?: string;
+export interface SearchSourceParams {
   country?: string;
+  language?: string;
+  category?: string;
 }

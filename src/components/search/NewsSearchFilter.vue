@@ -30,7 +30,7 @@ function updateFilter(param: IEventSelectElementChange): void {
     <FormSelectElement
       name="category"
       label="Category"
-      selected="all"
+      default-value="all"
       :options="Object.values(categories)"
       @update:value="updateFilter"
     />
@@ -38,7 +38,7 @@ function updateFilter(param: IEventSelectElementChange): void {
     <FormSelectElement
       name="country"
       label="Country"
-      selected="all"
+      default-value="all"
       :map="{ key: 'key', value: 'text' }"
       :options="Object.values(CON_COUNTRY_CODES)"
       @update:value="updateFilter"
@@ -47,7 +47,7 @@ function updateFilter(param: IEventSelectElementChange): void {
     <FormSelectElement
       name="pageSize"
       label="Page Size"
-      selected="all"
+      default-value="all"
       :options="pageSizes"
       @update:value="updateFilter"
     />

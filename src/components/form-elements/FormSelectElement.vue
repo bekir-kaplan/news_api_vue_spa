@@ -12,9 +12,9 @@ const props = defineProps<{
   id?: string;
   name: string;
   label?: string;
-  selected?: string | number;
   map?: { key: string | number; value: string };
   options: any | { [key: string | number]: string }[];
+  defaultValue?: string | number;
 }>();
 
 const emit = defineEmits(['update:value']);
@@ -25,13 +25,10 @@ const handleChange = (key: string, event: Event): void => {
 };
 
 const checkIfSelected = (value: string): boolean => {
-  if (!props.selected) {
+  if (!props.defaultValue) {
     return false;
   }
-  if (props.selected === value) {
-    emit('update:value', { key: props.name, value });
-  }
-  return props.selected === value;
+  return props.defaultValue === value;
 };
 </script>
 
@@ -43,6 +40,7 @@ const checkIfSelected = (value: string): boolean => {
         :id="id || name"
         :name="name"
         class="select-element"
+        :value="defaultValue"
         @change="(e) => handleChange(name, e)"
       >
         <option

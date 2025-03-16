@@ -1,6 +1,6 @@
-import type { NewsAPIResponse } from '@/api/types/responses';
-import type { MappedNewsResponse } from '@/api/types/mappedTypes';
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { NewsAPIResponse, NewsAPISourceResponse } from '@/api/types/responses';
+import type { MappedNewsResponse, MappedSourceResponse } from '@/api/types/mappedTypes';
+import type { NewsAPIArticle, NewsAPISource } from '@/api/types/news';
 
 export function mapArticle(
   response: NewsAPIResponse,
@@ -22,6 +22,18 @@ export function mapArticle(
   }));
 }
 
+export function mapSource(response: NewsAPISourceResponse): NewsAPISource[] {
+  return response.sources.map((source) => ({
+    id: source.id,
+    name: source.name,
+    description: source.description,
+    url: source.url,
+    category: source.category,
+    language: source.language,
+    country: source.country,
+  }));
+}
+
 export function mapNewsResponse(
   response: NewsAPIResponse,
   category?: string | undefined
@@ -29,6 +41,13 @@ export function mapNewsResponse(
   return {
     articles: mapArticle(response, category),
     totalResults: response.totalResults,
+    status: response.status === 'ok' ? 'success' : 'error',
+  };
+}
+
+export function mapStatusResponse(response: NewsAPISourceResponse): MappedSourceResponse {
+  return {
+    sources: mapSource(response),
     status: response.status === 'ok' ? 'success' : 'error',
   };
 }

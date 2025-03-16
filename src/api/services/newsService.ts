@@ -1,9 +1,13 @@
 import { HttpClient } from '@/api/lib/HttpClient';
 import { NEWS_API_BASE_URL, NEWS_API_CONFIG, NEWS_API_ENDPOINTS } from '@/api/config';
-import type { NewsAPIResponse, NewsAPISourcesResponse } from '@/api/types/responses';
-import type { TopHeadlinesParams, SearchNewsParams } from '@/api/types/requests';
-import { mapNewsResponse } from '@/api/mappers/newsMapper';
-import type { MappedNewsResponse } from '@/api/types/mappedTypes';
+import type { NewsAPIResponse, NewsAPISourceResponse } from '@/api/types/responses';
+import type {
+  TopHeadlinesParams,
+  SearchNewsParams,
+  SearchSourceParams,
+} from '@/api/types/requests';
+import { mapNewsResponse, mapStatusResponse } from '@/api/mappers/newsMapper';
+import type { MappedNewsResponse, MappedSourceResponse } from '@/api/types/mappedTypes';
 
 class NewsService extends HttpClient {
   constructor() {
@@ -14,6 +18,18 @@ class NewsService extends HttpClient {
     params: TopHeadlinesParams = { country: 'us' }
   ): Promise<MappedNewsResponse> {
     const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
+      params: {
+        ...params,
+      },
+    });
+
+    return mapNewsResponse(response, params.category);
+  }
+
+  async getTopHeadlinesSource(
+    params: TopHeadlinesParams = { country: 'us' }
+  ): Promise<MappedNewsResponse> {
+    const response = await this.get<NewsAPIResponse>(NEWS_API_ENDPOINTS.SOURCES, {
       params: {
         ...params,
       },
@@ -38,15 +54,12 @@ class NewsService extends HttpClient {
     return mapNewsResponse(response);
   }
 
-  async getSources(category?: string): Promise<string[]> {
-    const response = await this.get<NewsAPISourcesResponse>(NEWS_API_ENDPOINTS.SOURCES, {
-      params: {
-        category,
-        language: 'en',
-      },
+  async getSources(params?: SearchSourceParams): Promise<MappedSourceResponse> {
+    const response = await this.get<NewsAPISourceResponse>(NEWS_API_ENDPOINTS.SOURCES, {
+      params: { ...params },
     });
 
-    return response.sources?.map((source: any) => source.id);
+    return mapStatusResponse(response);
   }
 }
 

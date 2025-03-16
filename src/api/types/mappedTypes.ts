@@ -1,4 +1,4 @@
-import type { NewsAPIArticle } from '@/api/types/news';
+import type { NewsAPIArticle, NewsAPISource } from '@/api/types/news';
 
 // Finance Types
 export interface MappedTimeSeriesValue {
@@ -57,4 +57,9 @@ export interface MappedNewsResponse {
   status: string;
   totalResults: number;
   articles: NewsAPIArticle[];
+}
+
+export interface MappedSourceResponse {
+  status: string;
+  sources: NewsAPISource[];
 }
