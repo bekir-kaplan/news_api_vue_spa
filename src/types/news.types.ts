@@ -1,3 +1,9 @@
+import type {
+  INewsReqEverythingQParam,
+  INewsReqSourceQParam,
+  INewsReqTopHeadlineQParam,
+} from '@/api/types/requests';
+
 export type ICategoryKey =
   | 'all'
   | 'business'
@@ -8,3 +14,8 @@ export type ICategoryKey =
   | 'technology'
   | 'politics'
   | 'general';
+
+export type IFilterOption =
+  | keyof INewsReqSourceQParam
+  | keyof INewsReqEverythingQParam
+  | keyof INewsReqTopHeadlineQParam;

@@ -1,0 +1,23 @@
+.sources-layout-container {
+  @apply min-h-screen bg-gray-100;
+}
+
+.sources-layout-inner {
+  @apply container mx-auto px-4 py-6;
+}
+
+.sources-layout-grid {
+  @apply grid grid-cols-12 gap-6;
+}
+
+.sources-layout-main {
+  @apply col-span-12 lg:col-span-8;
+}
+
+.sources-layout-sidebar {
+  @apply col-span-12 lg:col-span-4;
+}
+
+.sources-layout-filter-bar {
+  @apply container mx-auto px-4 py-6 bg-white;
+}

@@ -1,10 +1,10 @@
 export type TNewsReqTopHeadlineQParam = keyof INewsReqTopHeadlineQParam;
 export type TSortBy = 'relevancy' | 'popularity' | 'publishedAt';
 export interface INewsReqTopHeadlineQParam {
+  q?: string;
   country?: string;
   category?: string;
   sources?: string;
-  q?: string;
   pageSize?: number;
   page?: number;
 }

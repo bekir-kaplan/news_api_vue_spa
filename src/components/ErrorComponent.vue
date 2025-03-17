@@ -6,6 +6,7 @@ import { computed } from 'vue';
 const errorStore = useErrorStore();
 
 const props = defineProps<{
+  title?: string;
   customError?: string;
   class?: string;
 }>();
@@ -20,8 +21,8 @@ const storeErrors = computed(() => errorStore.error);
         <XCircleIcon class="error-close-icon" />
       </button>
       <div v-for="(err, idx) in storeErrors" :key="idx">
-        <p class="error-title">Error</p>
-        <p class="error-message">{{ err || customError }}</p>
+        <p class="error-title">{{ props.title || 'Error' }}</p>
+        <p class="error-message">{{ err || props.customError }}</p>
       </div>
     </div>
   </div>

@@ -50,6 +50,12 @@
       ]
     },
     {
+      "id": "sources",
+      "label": "Sources",
+      "path": "/sources",
+      "icon": "source"
+    },
+    {
       "id": "liked",
       "label": "Liked Articles",
       "path": "/liked",

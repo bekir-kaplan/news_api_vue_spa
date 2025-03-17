@@ -25,16 +25,11 @@ export function useNews(): any {
   };
 
   // Search News
-  const fetchEverything = async (query: INewsReqEverythingQParam): Promise<INewsArticle[]> => {
+  const fetchEverything = async (params: INewsReqEverythingQParam): Promise<INewsArticle[]> => {
     try {
       loading.value = true;
       error.value = null;
-
-      const params = {
-        ...query,
-      };
-
-      const result = await newsService.searchNews(params);
+      const result = await newsService.searchNews({ ...params });
       return result.articles;
     } finally {
       loading.value = false;

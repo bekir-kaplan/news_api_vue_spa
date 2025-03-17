@@ -10,10 +10,10 @@ import type { INewsMapNewsRes } from '@/api/types/mapTypes';
 export const useNewsStore = defineStore(
   'news',
   () => {
-    const filterStore = useNewsFilterStore();
-    const { newsFilters } = storeToRefs(filterStore);
     const newsComposable = useNews();
-    const { loading, error } = newsComposable;
+    const { loading, error } = newsComposable; // check if needed storeToRefs
+    const filterStore = useNewsFilterStore();
+    const { newsFilters } = storeToRefs(filterStore); // check if needed storeToRefs
     const articles = ref<INewsArticle[]>([]);
     const carouselArticles = ref<INewsArticle[]>([]);
     const categoryArticles = ref<Record<string, INewsArticle[]>>({});

@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { useNewsFilterStore } from '@/stores/newsFilterStore';
-import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
-import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
 import { computed } from 'vue';
-import type { IEventSelectElementChange } from '@/components/form-elements/FormSelectElement.vue';
 import FormSelectElement from '@/components/form-elements/FormSelectElement.vue';
+import { useNewsFilterStore } from '@/stores/newsFilterStore';
+import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
+import type { IEventSelectElementChange } from '@/components/form-elements/FormSelectElement.vue';
+import type { IFilterOption } from '@/types/news.types';
+
+const props = defineProps<{
+  filterOptions?: IFilterOption[];
+}>();
 
 const filterStore = useNewsFilterStore();
 const categories = computed(() => CON_NEWS_CATEGORIES);
@@ -23,11 +28,19 @@ function updateFilter(param: IEventSelectElementChange): void {
   }
   filterStore.setFilter(param.key as keyof INewsReqTopHeadlineQParam, filterValue);
 }
+
+const checkIfNeeded = (type: IFilterOption): boolean => {
+  if (Array.isArray(props.filterOptions)) {
+    return props.filterOptions.includes(type);
+  }
+  return true;
+};
 </script>
 
 <template>
   <div class="filter-container">
     <FormSelectElement
+      v-if="checkIfNeeded('category')"
       name="category"
       label="Category"
       default-value="all"
@@ -36,6 +49,7 @@ function updateFilter(param: IEventSelectElementChange): void {
     />
 
     <FormSelectElement
+      v-if="checkIfNeeded('country')"
       name="country"
       label="Country"
       default-value="all"
@@ -45,6 +59,7 @@ function updateFilter(param: IEventSelectElementChange): void {
     />
 
     <FormSelectElement
+      v-if="checkIfNeeded('pageSize')"
       name="pageSize"
       label="Page Size"
       default-value="all"
