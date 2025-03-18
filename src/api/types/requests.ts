@@ -1,4 +1,3 @@
-export type TNewsReqTopHeadlineQParam = keyof INewsReqTopHeadlineQParam;
 export type TSortBy = 'relevancy' | 'popularity' | 'publishedAt';
 export interface INewsReqTopHeadlineQParam {
   q?: string;
@@ -9,7 +8,7 @@ export interface INewsReqTopHeadlineQParam {
   page?: number;
 }
 export interface INewsReqEverythingQParam {
-  q: string;
+  q?: string;
   searchIn?: string; // title, description, content,
   sources?: string;
   excludeDomains?: string;
@@ -27,3 +26,15 @@ export interface INewsReqSourceQParam {
   language?: string;
   category?: string;
 }
+
+export interface INewsFilterParam {
+  groupBy?: 'category' | 'country' | 'language';
+}
+
+export interface INewsFilterOptions
+  extends INewsReqTopHeadlineQParam,
+    INewsReqEverythingQParam,
+    INewsReqSourceQParam,
+    INewsFilterParam {}
+
+export type TNewsFilterOptions = keyof INewsFilterOptions;

@@ -81,15 +81,15 @@ onUnmounted(() => {
             class="news-carousel-image"
           />
           <div class="news-carousel-content">
-            <h3 class="news-carousel-title">
-              {{ article.title }}
-            </h3>
-            <p class="news-carousel-description">
-              {{ article.description }}
-            </p>
             <button @click="() => viewArticle(article)" class="news-carousel-link">
               Read More
             </button>
+            <h4 class="news-carousel-title short-text">
+              {{ article.title }}
+            </h4>
+            <p class="news-carousel-description short-text">
+              {{ article.description }}
+            </p>
           </div>
         </div>
       </div>

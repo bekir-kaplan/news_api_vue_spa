@@ -19,21 +19,21 @@
 }
 
 .news-carousel-content {
-  @apply absolute bottom-0 left-0 right-0 p-6 pb-24 bg-gradient-to-t 
+  @apply absolute bottom-0 left-0 right-0 p-6 pb-16 bg-gradient-to-t 
   from-black/80 to-transparent text-white;
 }
 
 .news-carousel-title {
-  @apply text-2xl font-bold mb-2;
+  @apply text-2xl font-bold bg-blue-600 p-2 rounded-t-md;
 }
 
 .news-carousel-description {
-  @apply text-sm line-clamp-2;
+  @apply text-sm p-2 bg-gray-200 text-gray-900 opacity-75 rounded-b-md mb-0;
 }
 
 .news-carousel-link {
   @apply inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded 
-  hover:bg-blue-700 transition-colors cursor-pointer;
+  hover:bg-blue-700 transition-colors cursor-pointer mb-2;
 }
 
 .news-carousel-controls {

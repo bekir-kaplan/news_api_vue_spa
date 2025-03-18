@@ -35,12 +35,13 @@ const imageErrorHandler = (e: Event): void => {
   <article class="news-card-container">
     <!-- Header -->
     <header class="news-card-header">
-      <div class="news-card-source">
+      <div class="news-card-source short-text">
         {{ article.source.name }}
       </div>
       <img
         :src="article.urlToImage || 'https://placehold.co/400x300'"
         :alt="article.title"
+        :title="article.title"
         class="news-card-image"
         loading="lazy"
         :onerror="imageErrorHandler"
@@ -50,7 +51,7 @@ const imageErrorHandler = (e: Event): void => {
 
     <!-- Content -->
     <div class="news-card-content">
-      <h2 class="news-card-title">
+      <h2 class="news-card-title" :title="article.title">
         {{ article.title }}
       </h2>
       <p class="news-card-description">

@@ -3,11 +3,11 @@
 }
 
 .nav-item {
-  @apply px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-50;
+  @apply px-3 py-2 rounded-md text-gray-600 hover:text-gray-400 hover:bg-gray-50;
 }
 
 .nav-item-active {
-  @apply text-blue-600 bg-blue-50;
+  @apply text-gray-400;
 }
 
 .nav-item-icon {

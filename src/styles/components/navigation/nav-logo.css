@@ -2,5 +2,8 @@
   @apply flex-shrink-0;
 }
 .nav-logo {
-  @apply text-2xl font-bold text-blue-600;
+  @apply text-2xl font-bold text-red-500 italic flex justify-center items-center gap-2;
+}
+.nav-logo-image {
+  @apply w-10 rounded-lg;
 }

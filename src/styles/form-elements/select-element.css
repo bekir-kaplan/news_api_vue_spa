@@ -3,7 +3,7 @@
 }
 
 .select-element-label {
-  @apply block text-sm/6 font-medium text-gray-900;
+  @apply block text-sm/6 text-gray-400;
 }
 
 .select-element-wrapper {

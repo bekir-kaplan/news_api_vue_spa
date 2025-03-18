@@ -2,17 +2,21 @@ import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import { useNews } from '@/composables/useNews';
 import type { INewsSource } from '@/api/types/news';
-import type { INewsReqSourceQParam } from '@/api/types/requests';
+import type { INewsFilterOptions, INewsReqSourceQParam } from '@/api/types/requests';
+import { useNewsFilterStore } from './newsFilterStore';
 
 export const useNewsSourceStore = defineStore(
   'newsSourceStore',
   () => {
     const newsComposable = useNews();
+    const filterStore = useNewsFilterStore();
     const { loading, error } = newsComposable;
     const sources = ref<INewsSource[]>([]);
     let queryParams = reactive<INewsReqSourceQParam>({});
 
-    const groupParam = ref<keyof INewsReqSourceQParam>('category');
+    const groupByParam = computed(() => filterStore.newsFilters.groupBy || 'category');
+
+    // const groupParam = ref<keyof INewsReqSourceQParam>('category');
 
     const fetch = {
       sources: async (): Promise<void> => {
@@ -31,7 +35,7 @@ export const useNewsSourceStore = defineStore(
       const grouped = sources.value.reduce(
         (acc: Record<string, INewsSource[]>, source: INewsSource) => {
           //source[groupParam.value] as string;
-          const groupKey = source[groupParam.value] as string;
+          const groupKey = source[groupByParam.value] as string;
           if (!acc[groupKey]) {
             acc[groupKey] = [];
           }
@@ -42,8 +46,16 @@ export const useNewsSourceStore = defineStore(
       );
 
       Object.keys(grouped).forEach((key) => {
-        grouped[key].sort((a, b) => a.name.localeCompare(b.name));
+        grouped[key].sort((a, b) => a[groupByParam.value].localeCompare(b[groupByParam.value]));
       });
+
+      // sort by object key
+      Object.keys(grouped)
+        .sort()
+        .reduce((obj: Record<string, INewsSource[]>, key) => {
+          obj[key] = grouped[key];
+          return obj;
+        }, {});
 
       return grouped;
     });
@@ -70,7 +82,7 @@ export const useNewsSourceStore = defineStore(
       { deep: true }
     );
 
-    const setQueryParams = (_queryParams: INewsReqSourceQParam): void => {
+    const setQueryParams = (_queryParams: INewsFilterOptions): void => {
       queryParams = _queryParams;
       fetch.sources();
     };
@@ -81,7 +93,7 @@ export const useNewsSourceStore = defineStore(
       error,
       sources,
       queryParams,
-      groupParam,
+      groupByParam,
 
       // Computed
       groupedSources,

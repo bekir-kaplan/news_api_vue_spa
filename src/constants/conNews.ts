@@ -16,6 +16,19 @@ export const CON_REQUEST_PARAMS = {
   },
 };
 
+export const CON_FILTER_GROUPBY_VALUES = [
+  { key: 'category', value: 'Category' },
+  { key: 'country', value: 'Country' },
+  { key: 'language', value: 'Language' },
+];
+
+export const CON_FILTER_PAGESIZE_VALUES = [
+  { key: 'all', value: 'All' },
+  { key: 5, value: 5 },
+  { key: 10, value: 10 },
+  { key: 15, value: 15 },
+];
+
 export const CON_NEWS_CATEGORIES = {
   all: { key: 'all', value: 'All' },
   general: { key: 'general', value: 'General' },
@@ -43,6 +56,11 @@ export const CON_FETCH_PARAMS = {
       pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
       category: CON_NEWS_CATEGORIES.entertainment.key,
       title: CON_NEWS_CATEGORIES.entertainment.value,
+    },
+    {
+      pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
+      category: CON_NEWS_CATEGORIES.health.key,
+      title: CON_NEWS_CATEGORIES.health.value,
     },
   ] as ISection[], // 'entertainment', 'technology', 'health'
 };

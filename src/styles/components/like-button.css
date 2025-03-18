@@ -1,5 +1,5 @@
 .like-button {
-  @apply rounded-full bg-white/80 p-[0.1rem] hover:animate-pulse transition-colors;
+  @apply rounded-t-full bg-white p-[0.3rem] hover:animate-pulse transition-colors;
 }
 
 .like-button-icon {

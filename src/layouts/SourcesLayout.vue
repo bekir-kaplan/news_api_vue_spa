@@ -1,6 +1,6 @@
 <template>
   <div class="sources-layout-container">
-    <div class="sources-layout-filter-bar">
+    <div class="sources-layout-filter-bar" v-if="$slots.filterBar">
       <slot name="filterBar" />
     </div>
     <div class="sources-layout-inner">
@@ -11,7 +11,7 @@
         </main>
 
         <!-- Sidebar -->
-        <aside class="sources-layout-sidebar">
+        <aside class="sources-layout-sidebar" v-if="$slots.sidebar">
           <slot name="sidebar" />
         </aside>
       </div>

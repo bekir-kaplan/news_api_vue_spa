@@ -11,7 +11,7 @@
 }
 
 .sources-layout-main {
-  @apply col-span-12 lg:col-span-8;
+  @apply col-span-12 sm:col-span-12 xl:col-span-12;
 }
 
 .sources-layout-sidebar {
@@ -19,5 +19,5 @@
 }
 
 .sources-layout-filter-bar {
-  @apply container mx-auto px-4 py-6 bg-white;
+  @apply container mx-auto px-4 pt-6 pb-4 bg-white rounded-b-md;
 }

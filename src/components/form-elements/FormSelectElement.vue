@@ -10,18 +10,22 @@ export interface IEventSelectElementChange {
 
 const props = defineProps<{
   id?: string;
-  name: string;
+  name?: string;
   label?: string;
   map?: { key: string | number; value: string };
   options: any | { [key: string | number]: string }[];
   defaultValue?: string | number;
+  modelValue?: string | number;
 }>();
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:modelValue']);
 
 const handleChange = (key: string, event: Event): void => {
   const target = event.target as HTMLSelectElement;
   emit('update:value', { key, value: target.value, event });
+  if (props.modelValue) {
+    emit('update:modelValue', target.value);
+  }
 };
 
 const checkIfSelected = (value: string): boolean => {
@@ -41,7 +45,7 @@ const checkIfSelected = (value: string): boolean => {
         :name="name"
         class="select-element"
         :value="defaultValue"
-        @change="(e) => handleChange(name, e)"
+        @change="(e) => handleChange(name || 'unknown', e)"
       >
         <option
           v-for="option in options"

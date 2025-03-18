@@ -8,13 +8,17 @@
   }
 
   h1 {
-    @apply text-3xl font-bold;
-    color: #f4796c;
+    @apply text-3xl font-bold text-gray-800;
   }
 
   h2 {
-    @apply text-2xl font-semibold;
-    color: #f4796c;
+    @apply text-2xl font-semibold text-gray-600;
+  }
+  h3 {
+    @apply text-lg font-semibold text-gray-400;
+  }
+  h4 {
+    @apply text-lg font-semibold text-gray-200;
   }
 
   p {

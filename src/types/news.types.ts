@@ -1,4 +1,5 @@
 import type {
+  INewsFilterParam,
   INewsReqEverythingQParam,
   INewsReqSourceQParam,
   INewsReqTopHeadlineQParam,
@@ -18,4 +19,5 @@ export type ICategoryKey =
 export type IFilterOption =
   | keyof INewsReqSourceQParam
   | keyof INewsReqEverythingQParam
-  | keyof INewsReqTopHeadlineQParam;
+  | keyof INewsReqTopHeadlineQParam
+  | keyof INewsFilterParam;

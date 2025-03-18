@@ -6,7 +6,15 @@ const emit = defineEmits<{
 
 <template>
   <div class="nav-logo-container">
-    <router-link to="/" class="nav-logo" @click="emit('click')"> NewsApp </router-link>
+    <router-link to="/" class="nav-logo" @click="emit('click')">
+      <img
+        src="/news-app-logo4.png"
+        alt="Technical Task News"
+        class="nav-logo-image"
+        loading="lazy"
+      />
+      TTNews
+    </router-link>
   </div>
 </template>
 
