@@ -1,11 +1,6 @@
 .article-view-container {
   @apply bg-white rounded-lg shadow-lg overflow-hidden;
 }
-
-.article-view-image {
-  @apply w-full h-96 object-cover;
-}
-
 .article-view-content {
   @apply p-8;
 }

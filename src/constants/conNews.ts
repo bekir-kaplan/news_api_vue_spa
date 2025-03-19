@@ -1,8 +1,8 @@
 import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import type { ICategory, ISection } from '@/types/homeView.types';
 
-export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 3;
-export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 10;
+export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 5;
+export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 12;
 export const CON_NEWS_DEFAULT_COUNTRY = 'us';
 
 export const CON_REQUEST_PARAMS = {
@@ -41,12 +41,17 @@ export const CON_NEWS_CATEGORIES = {
   politics: { key: 'politics', value: 'Politics' },
 } as ICategory;
 
-export const CON_FETCH_PARAMS = {
+export const CON_FETCH_SECTIONS_PARAMS = {
   CAROUSEL: {
     pageSize: CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE,
     country: CON_NEWS_DEFAULT_COUNTRY,
   } as INewsReqTopHeadlineQParam,
   SECTIONS: [
+    {
+      pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
+      category: CON_NEWS_CATEGORIES.politics.key,
+      title: CON_NEWS_CATEGORIES.politics.value,
+    },
     {
       pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
       category: CON_NEWS_CATEGORIES.business.key,
@@ -61,6 +66,11 @@ export const CON_FETCH_PARAMS = {
       pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
       category: CON_NEWS_CATEGORIES.health.key,
       title: CON_NEWS_CATEGORIES.health.value,
+    },
+    {
+      pageSize: CON_NEWS_DEFAULT_SECTIONS_PAGESIZE,
+      category: CON_NEWS_CATEGORIES.technology.key,
+      title: CON_NEWS_CATEGORIES.technology.value,
     },
   ] as ISection[], // 'entertainment', 'technology', 'health'
 };

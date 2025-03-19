@@ -4,6 +4,7 @@ import { useNewsSourceStore } from '@/stores/newsSourceStore';
 import { storeToRefs } from 'pinia';
 import NewsSearchFilter from '@/components/search/NewsSearchFilter.vue';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
+import { CON_NEWS_SOURCE_FILTER_OPTIONS } from '@/constants/conFilter';
 
 const newsSourceStore = useNewsSourceStore();
 const filterStore = useNewsFilterStore();
@@ -29,10 +30,7 @@ onMounted(() => {
 <template>
   <div class="filter-container">
     <div class="filter-section">
-      <NewsSearchFilter
-        title="Source Filter"
-        :filter-options="['category', 'country', 'groupBy']"
-      />
+      <NewsSearchFilter title="Source Filter" :filter-options="CON_NEWS_SOURCE_FILTER_OPTIONS" />
     </div>
   </div>
 </template>

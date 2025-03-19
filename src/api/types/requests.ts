@@ -1,8 +1,10 @@
+import type { TCategoryKey } from '@/types/news.types';
+
 export type TSortBy = 'relevancy' | 'popularity' | 'publishedAt';
 export interface INewsReqTopHeadlineQParam {
   q?: string;
   country?: string;
-  category?: string;
+  category?: TCategoryKey;
   sources?: string;
   pageSize?: number;
   page?: number;
@@ -19,12 +21,12 @@ export interface INewsReqEverythingQParam {
   sortBy?: TSortBy;
   pageSize?: number;
   page?: number;
-  category?: string;
+  category?: TCategoryKey;
 }
 export interface INewsReqSourceQParam {
   country?: string;
   language?: string;
-  category?: string;
+  category?: TCategoryKey;
 }
 
 export interface INewsFilterParam {

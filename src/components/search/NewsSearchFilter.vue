@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import FormSelectElement from '@/components/form-elements/FormSelectElement.vue';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
 import {
@@ -11,6 +11,8 @@ import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
 import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import type { IEventSelectElementChange } from '@/components/form-elements/FormSelectElement.vue';
 import type { IFilterOption } from '@/types/news.types';
+import { useNewsSourceStore } from '@/stores/newsSourceStore';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   title?: string;
@@ -21,6 +23,8 @@ const groupSelectValues = CON_FILTER_GROUPBY_VALUES;
 const filterStore = useNewsFilterStore();
 const categories = computed(() => CON_NEWS_CATEGORIES);
 const pageSizes = CON_FILTER_PAGESIZE_VALUES;
+const sourcesStore = useNewsSourceStore();
+const { sources } = storeToRefs(sourcesStore);
 
 const updateFilter = (param: IEventSelectElementChange): void => {
   let filterValue = param.value;
@@ -29,6 +33,12 @@ const updateFilter = (param: IEventSelectElementChange): void => {
   }
   filterStore.setFilter(param.key as keyof INewsReqTopHeadlineQParam, filterValue);
 };
+
+onMounted(async () => {
+  if (sources.value.length === 0) {
+    await sourcesStore.fetch.sources();
+  }
+});
 
 const checkIfNeeded = (type: IFilterOption): boolean => {
   if (Array.isArray(props.filterOptions)) {
@@ -45,6 +55,16 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
     </div>
     <div class="filter-section">
       <FormSelectElement
+        v-if="checkIfNeeded('country')"
+        name="country"
+        label="Country"
+        default-value="all"
+        :map="{ key: 'key', value: 'text' }"
+        :options="Object.values(CON_COUNTRY_CODES)"
+        @update:value="updateFilter"
+      />
+
+      <FormSelectElement
         v-if="checkIfNeeded('category')"
         name="category"
         label="Category"
@@ -54,12 +74,12 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
       />
 
       <FormSelectElement
-        v-if="checkIfNeeded('country')"
-        name="country"
-        label="Country"
+        v-if="checkIfNeeded('sources')"
+        name="sources"
+        label="Sources"
         default-value="all"
-        :map="{ key: 'key', value: 'text' }"
-        :options="Object.values(CON_COUNTRY_CODES)"
+        :map="{ key: 'id', value: 'name' }"
+        :options="sources"
         @update:value="updateFilter"
       />
 

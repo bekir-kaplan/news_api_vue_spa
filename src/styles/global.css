@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* Common Button Styles */
 .grid-template {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-4;
@@ -15,7 +17,7 @@
 }
 
 .text-icon {
-  @apply w-3 h-3;
+  @apply w-4 h-4 md:w-3 md:h-3;
 }
 
 .link {
@@ -36,4 +38,8 @@
 }
 .short-text {
   @apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+.global-news-card-image {
+  @apply w-full h-48 object-cover;
 }

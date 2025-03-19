@@ -1,0 +1,59 @@
+.x-mark-icon {
+  @apply w-4 h-4;
+}
+.sidebar-flag-img {
+  @apply w-full max-w-[372px] max-h-[372px] rounded-b-xl overflow-hidden;
+}
+.sidebar-backdrop-container {
+  @apply fixed bg-gray-800 w-1/4 sm:w-2/4 md:w-3/5 opacity-95 h-full left-0 top-0 z-[110]
+  flex justify-center;
+}
+
+.sidebar-container {
+  @apply fixed top-0 right-0 w-3/4 sm:w-2/4 md:w-2/5 h-full bg-white border-r border-gray-200 z-[110];
+}
+
+.sidebar-content {
+  @apply flex flex-col h-full p-4;
+}
+
+.sidebar-header {
+  @apply flex justify-between items-center;
+}
+
+.sidebar-brand {
+  @apply text-xl font-semibold text-black;
+}
+
+.sidebar-close-button {
+  @apply bg-white border border-gray-200 text-sm 
+  text-gray-600 hover:bg-gray-100 rounded-full p-2;
+}
+
+.sidebar-close-icon {
+  @apply w-4 h-4;
+}
+
+.sidebar-body {
+  @apply mt-4 space-y-3 text-gray-600;
+}
+
+.sidebar-description {
+  @apply p-0;
+}
+
+.sidebar-info {
+  @apply space-y-2 text-sm;
+}
+
+.sidebar-link {
+  @apply flex text-blue-600 hover:underline justify-center items-center gap-1;
+}
+
+.sidebar-info-list {
+  @apply flex gap-2;
+}
+
+.sidebar-info-key {
+  @apply font-semibold min-w-20;
+}

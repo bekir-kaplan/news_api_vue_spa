@@ -1,5 +1,8 @@
 import type { ICountryCodes } from '@/types/countryCode.types';
 
+export const CON_COUNTRY_FLAG_URL = 'https://newsapi.org/images/flags';
+export const CON_COUNTRY_FLAG_IMAGE_EXTENSION = '.svg';
+
 export const CON_COUNTRY_CODES: ICountryCodes = {
   all: { text: 'All', key: 'all' },
   af: { text: 'Afghanistan', key: 'af' },

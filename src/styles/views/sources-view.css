@@ -1,0 +1,30 @@
+.sources-view-header {
+  @apply mb-8;
+}
+.sources-view-container {
+  @apply grid gap-4 flex-wrap
+  grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+.sources-view-card {
+  @apply bg-white rounded-md p-4;
+}
+
+.sources-view-title {
+  @apply text-lg font-bold mb-6 uppercase;
+}
+
+.sources-view-li {
+  @apply flex gap-2 justify-between pb-2 items-center mr-2;
+}
+
+.source-view-li-options {
+  @apply flex gap-1;
+}
+
+.source-view-li-options-item {
+  @apply bg-slate-200 rounded-md;
+}
+
+.sources-view-ul {
+  @apply max-h-52 overflow-auto;
+}

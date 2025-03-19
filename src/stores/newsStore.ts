@@ -6,21 +6,20 @@ import { useNewsFilterStore } from './newsFilterStore';
 import type { INewsArticle } from '@/api/types/news';
 import type { INewsReqEverythingQParam, INewsReqTopHeadlineQParam } from '@/api/types/requests';
 import type { INewsMapNewsRes } from '@/api/types/mapTypes';
+import { CON_NEWS_DEFAULT_SECTIONS_PAGESIZE } from '@/constants/conNews';
 
 export const useNewsStore = defineStore(
-  'news',
+  'newsStore',
   () => {
     const newsComposable = useNews();
     const { loading, error } = newsComposable; // check if needed storeToRefs
     const filterStore = useNewsFilterStore();
     const { newsFilters } = storeToRefs(filterStore); // check if needed storeToRefs
-    const articles = ref<INewsArticle[]>([]);
     const carouselArticles = ref<INewsArticle[]>([]);
     const categoryArticles = ref<Record<string, INewsArticle[]>>({});
     const selectedArticle = ref<INewsArticle | null>(null);
     const searchResults = ref<INewsArticle[]>([]);
 
-    const hasArticles = computed(() => articles.value.length > 0);
     const hasSearchResults = computed(() => searchResults.value.length > 0);
 
     const fetch = {
@@ -46,7 +45,11 @@ export const useNewsStore = defineStore(
               category: params.category,
               pageSize: params.pageSize,
             });
-            categoryArticles.value[params.category] = result.articles;
+
+            // Show articles which has minimum 3 records
+            if (result.articles.length >= CON_NEWS_DEFAULT_SECTIONS_PAGESIZE - 2) {
+              categoryArticles.value[params.category] = result.articles.slice(0, 3);
+            }
           }
         },
 
@@ -94,7 +97,6 @@ export const useNewsStore = defineStore(
 
     return {
       // State
-      articles,
       categoryArticles,
       selectedArticle,
       searchResults,
@@ -103,7 +105,6 @@ export const useNewsStore = defineStore(
       error,
 
       // Computed
-      hasArticles,
       hasSearchResults,
 
       // Actions

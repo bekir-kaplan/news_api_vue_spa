@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import { useNewsStore } from '@/stores/newsStore';
 import { useRouter } from 'vue-router';
 import type { INewsArticle } from '@/api/types/news';
+import BaseImage from '../BaseImage.vue';
 
 const props = defineProps<{
   articles: INewsArticle[];
@@ -57,12 +58,30 @@ const stopAutoplay = (): void => {
   }
 };
 
+const handleMouseOver = (): void => {
+  stopAutoplay();
+};
+
+const handleMouseOut = (): void => {
+  startAutoplay();
+};
+
 onMounted(() => {
   startAutoplay();
+
+  if (carouselRef.value) {
+    carouselRef.value.addEventListener('mouseenter', handleMouseOver);
+    carouselRef.value.addEventListener('mouseleave', handleMouseOut);
+  }
 });
 
 onUnmounted(() => {
   stopAutoplay();
+
+  if (carouselRef.value) {
+    carouselRef.value.removeEventListener('mouseenter', handleMouseOver);
+    carouselRef.value.removeEventListener('mouseleave', handleMouseOut);
+  }
 });
 </script>
 
@@ -74,11 +93,10 @@ onUnmounted(() => {
         :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
       >
         <div v-for="article in articles" :key="article.url" class="news-carousel-slide">
-          <img
-            v-if="article.urlToImage"
-            :src="article.urlToImage"
+          <BaseImage
+            :src="article.urlToImage || ''"
             :alt="article.title"
-            class="news-carousel-image"
+            class-name="w-full h-[500px] object-cover"
           />
           <div class="news-carousel-content">
             <button @click="() => viewArticle(article)" class="news-carousel-link">

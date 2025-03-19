@@ -16,10 +16,6 @@
   text-sm font-medium px-3 py-1 rounded-md z-10 max-w-[18ch];
 }
 
-.news-card-image {
-  @apply w-full h-48 object-cover rounded-t-lg;
-}
-
 .news-card-content {
   @apply p-6 flex-grow;
 }

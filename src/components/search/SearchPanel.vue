@@ -5,6 +5,7 @@ import SearchInput from '@/components/search/SearchInput.vue';
 import NewsSearchFilter from './NewsSearchFilter.vue';
 import SourceSearchFilter from './SourceSearchFilter.vue';
 import type { INewsArticle } from '@/api/types/news';
+import { CON_NEWS_SEARCH_FILTER_OPTIONS } from '@/constants/conFilter';
 
 defineProps<{
   isOpen: boolean;
@@ -27,10 +28,7 @@ const newsStore = useNewsStore();
   >
     <div v-show="isOpen" class="search-panel-inner">
       <div v-if="router.currentRoute.value.name !== 'sources'">
-        <NewsSearchFilter
-          title="News Filter"
-          :filter-options="['category', 'country', 'pageSize']"
-        />
+        <NewsSearchFilter title="News Filter" :filter-options="CON_NEWS_SEARCH_FILTER_OPTIONS" />
         <!-- Search Input -->
         <SearchInput
           placeholder="Search news articles..."

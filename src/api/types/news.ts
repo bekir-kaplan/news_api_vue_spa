@@ -1,3 +1,5 @@
+import type { TCategoryKey } from '@/types/news.types';
+
 export interface INewsArticle {
   source: {
     id: string | null;
@@ -10,7 +12,7 @@ export interface INewsArticle {
   urlToImage: string | null;
   publishedAt: Date;
   content: string | null;
-  category?: string;
+  category?: TCategoryKey;
 }
 
 export interface INewsSource {

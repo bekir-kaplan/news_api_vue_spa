@@ -5,7 +5,7 @@ import type {
   INewsReqTopHeadlineQParam,
 } from '@/api/types/requests';
 
-export type ICategoryKey =
+export type TCategoryKey =
   | 'all'
   | 'business'
   | 'entertainment'

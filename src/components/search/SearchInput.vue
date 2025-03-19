@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 import { useSearch } from '@/composables/useSearch';
 import type { INewsArticle } from '@/api/types/news';
+import BaseImage from '../BaseImage.vue';
 
 const props = defineProps<{
   placeholder?: string;
@@ -50,11 +51,10 @@ const onSelect = (article: INewsArticle): void => {
           @mousedown="onSelect(article)"
         >
           <div class="search-result-item-content">
-            <img
-              v-if="article.urlToImage"
-              :src="article.urlToImage"
+            <BaseImage
+              :src="article.urlToImage || ''"
               :alt="article.title"
-              class="search-result-item-image"
+              class-name="w-12 h-12 object-cover rounded"
             />
             <div class="search-result-item-text">
               <p class="search-result-item-title">{{ article.title }}</p>

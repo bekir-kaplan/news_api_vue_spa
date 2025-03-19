@@ -1,8 +1,12 @@
 import type { INewsApiRes, INewsApiResSource } from '@/api/types/responses';
 import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
 import type { INewsArticle, INewsSource } from '@/api/types/news';
+import type { TCategoryKey } from '@/types/news.types';
 
-export function mapArticle(response: INewsApiRes, category: string | undefined): INewsArticle[] {
+export function mapArticle(
+  response: INewsApiRes,
+  category: TCategoryKey | undefined
+): INewsArticle[] {
   return response.articles.map((article) => ({
     source: {
       id: article.source.id,
@@ -33,7 +37,7 @@ export function mapSource(response: INewsApiResSource): INewsSource[] {
 
 export function mapNewsResponse(
   response: INewsApiRes,
-  category?: string | undefined
+  category?: TCategoryKey | undefined
 ): INewsMapNewsRes {
   return {
     articles: mapArticle(response, category),

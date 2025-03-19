@@ -7,7 +7,7 @@
 }
 
 .nav-item-active {
-  @apply text-gray-400;
+  @apply text-gray-400 border-b-[1px] border-b-gray-200;
 }
 
 .nav-item-icon {

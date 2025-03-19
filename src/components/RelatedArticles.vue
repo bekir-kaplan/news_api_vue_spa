@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 import type { INewsArticle } from '@/api/types/news';
 import { useRouter } from 'vue-router';
+import BaseImage from './BaseImage.vue';
 
 const newsStore = useNewsStore();
 const router = useRouter();
@@ -31,11 +32,10 @@ const handleArticleClick = (article: INewsArticle): void => {
           :to="`/article/${encodeURIComponent(article.title)}`"
           @click="handleArticleClick(article)"
         >
-          <img
-            v-if="article.urlToImage"
-            :src="article.urlToImage"
+          <BaseImage
+            :src="article.urlToImage || ''"
             :alt="article.title"
-            class="related-articles-image"
+            class-name="global-news-card-image rounded-lg mb-2"
           />
           <h3 class="related-articles-item-title group-hover:text-blue-600">
             {{ article.title }}

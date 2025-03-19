@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { MenuItem } from '@/types/navigation';
+import type { IMenuItem } from '@/types/navigation.types';
 import { ref } from 'vue';
 
 defineProps<{
-  items: MenuItem[];
+  items: IMenuItem[];
   isOpen: boolean;
 }>();
 

@@ -15,7 +15,6 @@ const categoryStore = useCategoryStore();
 const { category, categoryArticlesPaginated, loading } = storeToRefs(categoryStore);
 
 const observer = ref<IntersectionObserver | null>(null);
-
 const loadMoreArticles = async (): Promise<void> => {
   await categoryStore.loadMoreArticles();
 };
@@ -51,6 +50,7 @@ onMounted(() => {
   observer.value = new IntersectionObserver(
     async (entries) => {
       if (entries[0].isIntersecting) {
+        console.log('load articles');
         await throttledLoadMoreArticles();
       }
     },

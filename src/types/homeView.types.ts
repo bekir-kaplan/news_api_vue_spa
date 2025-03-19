@@ -1,5 +1,5 @@
 import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
-import type { ICategoryKey } from './news.types';
+import type { TCategoryKey } from './news.types';
 
 export interface ISection extends INewsReqTopHeadlineQParam {
   pageSize?: number;
@@ -7,10 +7,10 @@ export interface ISection extends INewsReqTopHeadlineQParam {
 }
 
 export interface ICategoryElement {
-  key: ICategoryKey;
+  key: TCategoryKey;
   value: string;
 }
 
 export type ICategory = {
-  [key in ICategoryKey]: ICategoryElement;
+  [key in TCategoryKey]: ICategoryElement;
 };

@@ -1,13 +1,13 @@
 import { ref, watch } from 'vue';
 import { useNewsStore } from '@/stores/newsStore';
-import { debounce } from '@/utils/debounce';
+import utils from '@/utils/index';
 
 export function useSearch(minChars = 3): any {
   const newsStore = useNewsStore();
   const searchQuery = ref('');
   const showResults = ref(false);
 
-  const debouncedSearch = debounce(async (query: string) => {
+  const debouncedSearch = utils.debounce(async (query: string) => {
     if (query.length >= minChars) {
       await newsStore.fetch.topHeadlines.search(query);
       showResults.value = true;

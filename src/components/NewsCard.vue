@@ -5,6 +5,7 @@ import { ArrowRightIcon } from '@heroicons/vue/24/outline';
 import { useNewsStore } from '@/stores/newsStore';
 import LikeButton from '@/components/LikeButton.vue';
 import type { INewsArticle } from '@/api/types/news';
+import BaseImage from './BaseImage.vue';
 
 const props = defineProps<{
   article: INewsArticle;
@@ -24,11 +25,6 @@ const viewArticle = (): void => {
   newsStore.setSelectedArticle(props.article);
   router.push(`/article/${encodeURIComponent(props.article.title)}`);
 };
-
-const imageErrorHandler = (e: Event): void => {
-  const target = e.target as HTMLImageElement;
-  target.src = 'https://placehold.co/400x300';
-};
 </script>
 
 <template>
@@ -38,13 +34,10 @@ const imageErrorHandler = (e: Event): void => {
       <div class="news-card-source short-text">
         {{ article.source.name }}
       </div>
-      <img
-        :src="article.urlToImage || 'https://placehold.co/400x300'"
+      <BaseImage
+        :src="article.urlToImage || ''"
         :alt="article.title"
-        :title="article.title"
-        class="news-card-image"
-        loading="lazy"
-        :onerror="imageErrorHandler"
+        class-name="global-news-card-image rounded-t-lg"
       />
       <LikeButton :article="article" />
     </header>

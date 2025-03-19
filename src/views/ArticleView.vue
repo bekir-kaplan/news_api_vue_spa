@@ -7,6 +7,7 @@ import RelatedArticles from '@/components/RelatedArticles.vue';
 import ShareButtons from '@/components/ShareButtons.vue';
 import LikeButton from '@/components/LikeButton.vue';
 import GoBackButton from '@/components/GoBackButton.vue';
+import BaseImage from '@/components/BaseImage.vue';
 
 const newsStore = useNewsStore();
 const { selectedArticle } = storeToRefs(newsStore);
@@ -31,11 +32,10 @@ const formattedDate = computed(() => {
       <GoBackButton />
 
       <article v-if="selectedArticle" class="article-view-container">
-        <img
-          v-if="selectedArticle.urlToImage"
-          :src="selectedArticle.urlToImage"
+        <BaseImage
+          :src="selectedArticle.urlToImage || ''"
           :alt="selectedArticle.title"
-          class="article-view-image"
+          class-name="w-full h-96 object-cover"
         />
 
         <div class="article-view-content">

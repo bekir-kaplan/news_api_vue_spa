@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/24/solid';
-import type { MenuItem } from '@/types/navigation';
+import type { IMenuItem } from '@/types/navigation.types';
 
 defineProps<{
-  items: MenuItem[];
+  items: IMenuItem[];
 }>();
 
 const activeDropdown = ref<string | null>(null);

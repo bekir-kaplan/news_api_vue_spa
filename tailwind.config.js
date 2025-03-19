@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+      },
       keyframes: {
         'move-right-and-back': {
           '0%, 100%': { transform: 'translateX(0)' },
