@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useFinance } from '@/composables/useFinance';
-import type { IFinMapQuote, MappedTimeSeriesValue } from '@/api/types/mapTypes';
+import type { IFinMapQuote, IFinMapTimeSeries } from '@/api/types/finance/financeMap';
 
 export const useFinanceStore = defineStore(
   'finance',
@@ -9,7 +9,7 @@ export const useFinanceStore = defineStore(
     const { fetchMarketData, fetchTimeSeriesData, loading, error } = useFinance();
 
     const marketData = ref<IFinMapQuote[]>([]);
-    const timeSeriesData = ref<MappedTimeSeriesValue[]>([]);
+    const timeSeriesData = ref<IFinMapTimeSeries[]>([]);
     const selectedSymbol = ref<string>('SPY');
     const selectedInterval = ref<string>('1day');
 
@@ -62,7 +62,7 @@ export const useFinanceStore = defineStore(
 
         if (data) {
           timeSeriesData.value = data.sort(
-            (a: MappedTimeSeriesValue, b: MappedTimeSeriesValue) =>
+            (a: IFinMapTimeSeries, b: IFinMapTimeSeries) =>
               a.datetime.getTime() - b.datetime.getTime()
           );
         }

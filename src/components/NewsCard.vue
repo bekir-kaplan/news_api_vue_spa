@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { ArrowRightIcon } from '@heroicons/vue/24/outline';
 import { useNewsStore } from '@/stores/newsStore';
 import LikeButton from '@/components/LikeButton.vue';
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 import BaseImage from './BaseImage.vue';
 
 const props = defineProps<{

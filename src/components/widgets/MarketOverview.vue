@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IFinMapQuote } from '@/api/types/mapTypes';
+import type { IFinMapQuote } from '@/api/types/finance/financeMap';
 
 defineProps<{ marketData: IFinMapQuote[] }>();
 defineEmits(['select-symbol']);

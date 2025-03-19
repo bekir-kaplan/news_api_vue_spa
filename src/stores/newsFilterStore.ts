@@ -1,4 +1,4 @@
-import type { INewsFilterOptions, TNewsFilterOptions } from '@/api/types/requests';
+import type { INewsFilterOptions, TNewsFilterOptions } from '@/api/types/news/newsRequests';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 

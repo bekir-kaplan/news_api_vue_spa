@@ -1,12 +1,38 @@
-import type {
-  IFinResTimeSeries,
-  IFinTimeSeriesValue,
-  IFinResQuote,
-  IFinResMarketState,
-} from '@/api/types/finance';
-import type { MappedTimeSeries, IFinMapQuote, IFinMapMarketState } from '@/api/types/mapTypes';
+/**
+ * Finance API Mappers
+ * --------------------------
+ * This module provides functions to transform raw API responses
+ * from the Finance API into structured, application-friendly formats.
+ *
+ * Features:
+ * - `mapTimeSeries`: Converts time series response data into a mapped object.
+ * - `mapTimeSeriesValue`: Parses individual time series entries.
+ * - `mapQuote`: Maps quote response data with structured price and volume details.
+ * - `mapMarketState`: Converts market state response into a readable format.
+ *
+ * Dependencies:
+ * - Uses financial response interfaces (`IFinResTimeSeries`, etc.).
+ * - Outputs mapped data structures (`IFinMapResTimeSeries`, `IFinMapQuote`, etc.).
+ */
 
-export function mapTimeSeries(response: IFinResTimeSeries): MappedTimeSeries {
+import type {
+  IFinResMarketState,
+  IFinResQuote,
+  IFinResTimeSeries,
+} from '@/api/types/finance/financeResponses';
+import type { IFinTimeSeriesValue } from '@/api/types/finance/finance';
+import type {
+  IFinMapMarketState,
+  IFinMapQuote,
+  IFinMapResTimeSeries,
+} from '@/api/types/finance/financeMap';
+
+/**
+ * Maps raw time series response to a structured time series object.
+ * @param {IFinResTimeSeries} response - The raw API response.
+ * @returns {IFinMapResTimeSeries} - The mapped time series data.
+ */
+export function mapTimeSeries(response: IFinResTimeSeries): IFinMapResTimeSeries {
   return {
     symbol: response.meta?.symbol,
     interval: response.meta?.interval,
@@ -16,7 +42,12 @@ export function mapTimeSeries(response: IFinResTimeSeries): MappedTimeSeries {
   };
 }
 
-export function mapTimeSeriesValue(value: IFinTimeSeriesValue): MappedTimeSeries['values'][0] {
+/**
+ * Maps an individual time series value entry.
+ * @param {IFinTimeSeriesValue} value - Raw time series entry.
+ * @returns {IFinMapResTimeSeries['values'][0]} - Parsed time series value.
+ */
+export function mapTimeSeriesValue(value: IFinTimeSeriesValue): IFinMapResTimeSeries['values'][0] {
   return {
     datetime: new Date(value.datetime),
     open: parseFloat(value.open),
@@ -27,6 +58,11 @@ export function mapTimeSeriesValue(value: IFinTimeSeriesValue): MappedTimeSeries
   };
 }
 
+/**
+ * Maps a financial quote response into a structured format.
+ * @param {IFinResQuote} response - The raw API response for a financial quote.
+ * @returns {IFinMapQuote | null} - The mapped quote data, or null if invalid.
+ */
 export function mapQuote(response: IFinResQuote): IFinMapQuote | null {
   return {
     symbol: response.symbol,
@@ -56,6 +92,11 @@ export function mapQuote(response: IFinResQuote): IFinMapQuote | null {
   };
 }
 
+/**
+ * Maps market state response into a structured object.
+ * @param {IFinResMarketState} response - The raw API response for market state.
+ * @returns {IFinMapMarketState} - The market state data.
+ */
 export function mapMarketState(response: IFinResMarketState): IFinMapMarketState {
   return {
     symbol: response.symbol,

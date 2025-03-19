@@ -1,11 +1,18 @@
-export interface IFinTimeSeriesValue {
-  datetime: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
-}
+/**
+ * Finance API Response Types
+ * ----------------------------------
+ * These interfaces define the structure of **responses** returned
+ * after querying the Finance API.
+ *
+ * Features:
+ * - `IFinResTimeSeries`: Represents a time series response containing metadata and values.
+ * - `IFinResQuote`: Defines the structure of a stock or currency quote response.
+ * - `IFinResMarketState`: Represents the market state (open/closed) response.
+ *
+ * Dependencies:
+ * - Uses `IFinTimeSeriesValue` for OHLC (Open, High, Low, Close) price data.
+ */
+import type { IFinTimeSeriesValue } from './finance';
 
 export interface IFinResTimeSeries {
   meta: {
@@ -17,7 +24,7 @@ export interface IFinResTimeSeries {
     mic_code: string;
     type: string;
   };
-  values: Array<IFinTimeSeriesValue>;
+  values: IFinTimeSeriesValue[];
   status: string;
   message?: string;
 }

@@ -7,6 +7,7 @@ defineProps<{
 }>();
 </script>
 
+<!-- TODO: bu bir layout duzenle layoutlara tasi -->
 <template>
   <section class="news-section">
     <div class="news-section-header">

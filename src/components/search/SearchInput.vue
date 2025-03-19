@@ -1,9 +1,30 @@
+<!--
+  SearchInput.vue
+  -----------------
+  This component provides a search input field with autocomplete functionality.
+  It integrates with Pinia for state management, supports search queries,
+  and displays search results dynamically.
+
+  Props:
+    - placeholder (string, optional): Placeholder text for the input field.
+    - minChars (number, optional): Minimum characters required to trigger a search.
+
+  Emits:
+    - select (INewsArticle): Emits an event when a news article is selected from the results.
+
+  Dependencies:
+    - Pinia (useNewsStore): Manages search state and results.
+    - useSearch composable: Handles search-related logic.
+    - BaseImage component: Displays images for search results.
+-->
+
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
 import { useSearch } from '@/composables/useSearch';
-import type { INewsArticle } from '@/api/types/news';
 import BaseImage from '../BaseImage.vue';
+import API_CONFIG from '@/api/config/index';
+import type { INewsArticle } from '@/api/types/news/news';
 
 const props = defineProps<{
   placeholder?: string;
@@ -33,7 +54,7 @@ const onSelect = (article: INewsArticle): void => {
       type="text"
       :placeholder="placeholder || 'Search...'"
       class="search-input"
-      maxlength="500"
+      :maxlength="API_CONFIG.CONFIG_NEWS.REQUEST_DEFAULTS.MAX_SEARCH_INPUT_CHARACTER"
       @blur="handleBlur"
       @focus="handleFocus"
     />

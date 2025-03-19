@@ -31,6 +31,6 @@ watch(
       loading="lazy"
       @error="handleError"
     />
-    <PhotoIcon v-else class="w-16 h-16 bg-slate-200 text-gray-100 mx-auto" :class="className" />
+    <PhotoIcon v-else class="bg-slate-200 text-gray-100 mx-auto" :class="className" />
   </div>
 </template>

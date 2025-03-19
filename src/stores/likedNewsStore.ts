@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 import { defineStore } from 'pinia';
 
 export interface ILikedArticlesByCategory {

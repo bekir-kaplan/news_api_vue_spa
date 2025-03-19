@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useNews } from '@/composables/useNews';
-import type { INewsArticle } from '@/api/types/news';
-import type { INewsMapNewsRes } from '@/api/types/mapTypes';
+import type { INewsArticle } from '@/api/types/news/news';
+import type { INewsMapNewsRes } from '@/api/types/news/newsMap';
 
 export const useCategoryStore = defineStore('category', () => {
   const { fetchTopHeadlines, loading } = useNews();

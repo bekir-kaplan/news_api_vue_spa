@@ -1,6 +1,6 @@
 import { ref } from 'vue';
+import type { IFinMapQuote, IFinMapTimeSeries } from '@/api/types/finance/financeMap';
 import { financeService } from '@/api/services/financeService';
-import type { IFinMapQuote, MappedTimeSeriesValue } from '@/api/types/mapTypes';
 
 export function useFinance(): any {
   const loading = ref(false);
@@ -13,7 +13,7 @@ export function useFinance(): any {
 
       const quotes = await Promise.all(
         symbols.map(async (symbol) => {
-          return await financeService.getQuote(symbol);
+          return await financeService.getQuote({ symbol });
         })
       );
 
@@ -27,12 +27,12 @@ export function useFinance(): any {
   const fetchTimeSeriesData = async (
     symbol: string,
     interval: string = '1day'
-  ): Promise<MappedTimeSeriesValue[] | null> => {
+  ): Promise<IFinMapTimeSeries[] | null> => {
     try {
       loading.value = true;
       error.value = null;
 
-      const response = await financeService.getTimeSeries(symbol, interval);
+      const response = await financeService.getTimeSeries({ symbol, interval });
       return response.values;
     } finally {
       loading.value = false;

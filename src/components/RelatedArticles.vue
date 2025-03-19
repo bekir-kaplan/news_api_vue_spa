@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 import { useRouter } from 'vue-router';
 import BaseImage from './BaseImage.vue';
 

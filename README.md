@@ -67,7 +67,7 @@ src/
 ### API Integration
 
 The project uses a robust API integration layer:
-- `HttpClient`: Abstract base class for HTTP requests
+- `BaseService`: Abstract base class for HTTP requests
 - `NewsService`: Handles all news-related API calls
 - Type-safe responses with TypeScript interfaces
 - Data transformation with dedicated mappers

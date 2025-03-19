@@ -1,41 +1,91 @@
-import { HttpClient } from '@/api/lib/HttpClient';
-import { TWELVE_DATA_BASE_URL, TWELVE_DATA_CONFIG, TWELVE_DATA_ENDPOINTS } from '@/api/config';
-import type { IFinResTimeSeries, IFinResQuote, IFinResMarketState } from '@/api/types/finance';
-import { mapTimeSeries, mapQuote, mapMarketState } from '@/api/mappers/financeMapper';
-import type { MappedTimeSeries, IFinMapQuote, IFinMapMarketState } from '@/api/types/mapTypes';
+/**
+ * Finance Service (Twelve Data API)
+ * -----------------------------------
+ * This service interacts with the Twelve Data API to fetch financial data,
+ * including time series data, stock quotes, and market states.
+ *
+ * Features:
+ * - Fetch historical time series data with configurable intervals.
+ * - Retrieve real-time stock or currency quotes.
+ * - Check the market state for a given symbol.
+ *
+ * Dependencies:
+ * - `BaseService`: A base class for API interactions.
+ * - `API_CONFIGS.CONFIG_FINANCE`: Stores API configuration details.
+ * - `financeMapper`: Maps API responses to structured data types.
+ *
+ * Usage:
+ * Import `financeService` and call methods like `financeService.getTimeSeries(symbol, interval)`.
+ */
 
-class FinanceService extends HttpClient {
+import { BaseService } from '@/api/core/BaseService';
+import API_CONFIGS from '@/api/config/index';
+import { mapTimeSeries, mapQuote, mapMarketState } from '@/api/mappers/financeMapper';
+import type {
+  IFinResMarketState,
+  IFinResQuote,
+  IFinResTimeSeries,
+} from '@/api/types/finance/financeResponses';
+import type {
+  IFinMapMarketState,
+  IFinMapQuote,
+  IFinMapResTimeSeries,
+} from '@/api/types/finance/financeMap';
+import type {
+  IFinReqMarketState,
+  IFinReqQuote,
+  IFinReqTimeSeries,
+} from '@/api/types/finance/financeRequests';
+
+class FinanceService extends BaseService {
+  private apiConfig = API_CONFIGS.CONFIG_FINANCE;
   constructor() {
-    super(TWELVE_DATA_BASE_URL, TWELVE_DATA_CONFIG);
+    super(API_CONFIGS.CONFIG_FINANCE.BASE_URL, API_CONFIGS.CONFIG_FINANCE.AXIOS);
   }
 
-  async getTimeSeries(
-    symbol: string,
-    interval: string = '1day',
-    outputsize: number = 30
-  ): Promise<MappedTimeSeries> {
-    const response = await this.get<IFinResTimeSeries>(TWELVE_DATA_ENDPOINTS.TIME_SERIES, {
-      params: {
-        symbol,
-        interval,
-        outputsize,
-      },
-    });
-
+  /**
+   * Fetches historical time series data.
+   * @param {IFinReqTimeSeries} params - Request parameters for time series.
+   * @returns {Promise<IFinMapResTimeSeries>}
+   */
+  async getTimeSeries(params: IFinReqTimeSeries): Promise<IFinMapResTimeSeries> {
+    const response = await this.get<IFinResTimeSeries>(
+      API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.TIME_SERIES,
+      {
+        params: {
+          ...params,
+          interval: params.interval || this.apiConfig.REQUEST_DEFAULTS.INTERVAL,
+          outputsize: params.outputsize || this.apiConfig.REQUEST_DEFAULTS.OUTPUT_SIZE,
+        },
+      }
+    );
     return mapTimeSeries(response);
   }
 
-  async getQuote(symbol: string): Promise<IFinMapQuote | null> {
-    const response = await this.get<IFinResQuote>(TWELVE_DATA_ENDPOINTS.QUOTE, {
+  /**
+   * Fetches the latest stock or currency quote for a given symbol.
+   * @param {string} symbol - The financial symbol (e.g., "AAPL", "BTC/USD").
+   * @returns {Promise<IFinMapQuote | null>}
+   */
+  async getQuote(symbol: IFinReqQuote): Promise<IFinMapQuote | null> {
+    const response = await this.get<IFinResQuote>(API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.QUOTE, {
       params: { symbol },
     });
     return mapQuote(response);
   }
 
-  async getMarketState(symbol: string): Promise<IFinMapMarketState> {
-    const response = await this.get<IFinResMarketState>(TWELVE_DATA_ENDPOINTS.MARKET_STATE, {
-      params: { symbol },
-    });
+  /**
+   * Retrieves the current market state (open/closed) for a given symbol.
+   * @param {string} symbol - The financial symbol.
+   * @returns {Promise<IFinMapMarketState>}
+   */
+  async getMarketState(symbol: IFinReqMarketState): Promise<IFinMapMarketState> {
+    const response = await this.get<IFinResMarketState>(
+      API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.MARKET_STATE,
+      {
+        params: { symbol },
+      }
+    );
     return mapMarketState(response);
   }
 }

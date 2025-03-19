@@ -1,3 +1,16 @@
+/**
+ * News API Interfaces
+ * --------------------------
+ * These interfaces define the structure of **news articles** and **news sources**
+ * received from the News API.
+ *
+ * Features:
+ * - `INewsArticle`: Represents a single news article with structured properties.
+ * - `INewsSource`: Defines a news source (publisher) with metadata.
+ *
+ * Dependencies:
+ * - Uses `TCategoryKey` to categorize news articles.
+ */
 import type { TCategoryKey } from '@/types/news.types';
 
 export interface INewsArticle {

@@ -3,8 +3,8 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import { useNewsStore } from '@/stores/newsStore';
 import { useRouter } from 'vue-router';
-import type { INewsArticle } from '@/api/types/news';
 import BaseImage from '../BaseImage.vue';
+import type { INewsArticle } from '@/api/types/news/news';
 
 const props = defineProps<{
   articles: INewsArticle[];

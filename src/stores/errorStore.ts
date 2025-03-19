@@ -16,6 +16,8 @@ export const useErrorStore = defineStore('error', () => {
       setTimeout(() => {
         tmpArr.shift();
         error.value = [...tmpArr];
+        errorList.delete(errCode);
+        time -= 4000;
       }, time);
       time += 4000;
     }

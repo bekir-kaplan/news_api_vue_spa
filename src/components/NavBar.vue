@@ -10,7 +10,7 @@ import NavLogo from '@/components/navigation/NavLogo.vue';
 import DesktopMenu from '@/components/navigation/DesktopMenu.vue';
 import MobileMenu from '@/components/navigation/MobileMenu.vue';
 import SearchPanel from '@/components/search/SearchPanel.vue';
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 
 const router = useRouter();
 const navigationStore = useNavigationStore();

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 import router from '@/router';
 
 const newsStore = useNewsStore();

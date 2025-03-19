@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 import { newsService } from '@/api/services/newsService';
-import type { INewsArticle } from '@/api/types/news';
-import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
+import type { INewsArticle } from '@/api/types/news/news';
+import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/news/newsMap';
 import type {
+  INewsReqTopHeadlineQParam,
   INewsReqEverythingQParam,
   INewsReqSourceQParam,
-  INewsReqTopHeadlineQParam,
-} from '@/api/types/requests';
+} from '@/api/types/news/newsRequests';
 
 export function useNews(): any {
   const loading = ref(false);

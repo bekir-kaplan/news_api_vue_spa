@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import { useNews } from '@/composables/useNews';
-import type { INewsSource } from '@/api/types/news';
+import type { INewsSource } from '@/api/types/news/news';
 import type { INewsFilterOptions, INewsReqSourceQParam } from '@/api/types/requests';
 import { useNewsFilterStore } from './newsFilterStore';
 

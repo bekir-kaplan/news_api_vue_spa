@@ -1,10 +1,23 @@
+<!--
+  SourceSearchFilter.vue
+  -----------------
+  This component provides filtering options for news sources.
+  It manages state with Pinia, watches query parameters, and updates the news source store.
+
+  Dependencies:
+    - Pinia (useNewsSourceStore, useNewsFilterStore): Manages state for news sources and filters.
+    - Computed Properties: Generates query parameters dynamically based on selected filters.
+    - Lifecycle Hooks: Uses onMounted to fetch news sources on component mount.
+    - NewsSearchFilter Component: Renders the filter UI.
+-->
+
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue';
-import { useNewsSourceStore } from '@/stores/newsSourceStore';
 import { storeToRefs } from 'pinia';
-import NewsSearchFilter from '@/components/search/NewsSearchFilter.vue';
+import { useNewsSourceStore } from '@/stores/newsSourceStore';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
 import { CON_NEWS_SOURCE_FILTER_OPTIONS } from '@/constants/conFilter';
+import NewsSearchFilter from '@/components/search/NewsSearchFilter.vue';
 
 const newsSourceStore = useNewsSourceStore();
 const filterStore = useNewsFilterStore();
@@ -27,6 +40,7 @@ onMounted(() => {
 });
 </script>
 
+<!-- TODO: parametrik olarak zaten aliniyor neden ayri bir component olusturdun ??? duzenle -->
 <template>
   <div class="filter-container">
     <div class="filter-section">

@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
 import { ArrowTopRightOnSquareIcon, InformationCircleIcon } from '@heroicons/vue/24/outline';
 import SideBar from '@/components/SideBar.vue';
-import type { INewsSource } from '@/api/types/news';
+import type { INewsSource } from '@/api/types/news/news';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
 
@@ -31,11 +31,10 @@ watch(queryParams, (newParams) => {
   newsSourceStore.setQueryParams(newParams);
 });
 
-onMounted(() => {
-  newsSourceStore.fetch.sources();
+onMounted(async () => {
+  await newsSourceStore.fetch.sources();
   filterStore.resetFilter();
 });
-
 onUnmounted(() => {
   filterStore.resetFilter();
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INewsSource } from '@/api/types/news';
+import type { INewsSource } from '@/api/types/news/news';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import BaseImage from './BaseImage.vue';

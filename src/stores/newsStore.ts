@@ -3,9 +3,12 @@ import { ref, computed } from 'vue';
 import { useNews } from '@/composables/useNews';
 import { newsService } from '@/api/services/newsService';
 import { useNewsFilterStore } from './newsFilterStore';
-import type { INewsArticle } from '@/api/types/news';
-import type { INewsReqEverythingQParam, INewsReqTopHeadlineQParam } from '@/api/types/requests';
-import type { INewsMapNewsRes } from '@/api/types/mapTypes';
+import type { INewsArticle } from '@/api/types/news/news';
+import type { INewsMapNewsRes } from '@/api/types/news/newsMap';
+import type {
+  INewsReqTopHeadlineQParam,
+  INewsReqEverythingQParam,
+} from '@/api/types/news/newsRequests';
 import { CON_NEWS_DEFAULT_SECTIONS_PAGESIZE } from '@/constants/conNews';
 
 export const useNewsStore = defineStore(
@@ -77,6 +80,7 @@ export const useNewsStore = defineStore(
               ...query,
             };
 
+            // TODO: comosable uzerinden git
             const result = await newsService.searchNews(params);
 
             searchResults.value = result.articles;

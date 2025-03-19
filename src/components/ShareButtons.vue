@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INewsArticle } from '@/api/types/news';
+import type { INewsArticle } from '@/api/types/news/news';
 import { ShareIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
 

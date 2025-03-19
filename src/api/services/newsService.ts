@@ -1,49 +1,86 @@
-import { HttpClient } from '@/api/lib/HttpClient';
-import { NEWS_API_BASE_URL, NEWS_API_CONFIG, NEWS_API_ENDPOINTS } from '@/api/config';
-import type { INewsApiRes, INewsApiResSource } from '@/api/types/responses';
+/**
+ * News Service (News API)
+ * -----------------------------------
+ * This service interacts with the News API to fetch top headlines,
+ * search for news articles, and retrieve news sources.
+ *
+ * Features:
+ * - Fetch top headlines with optional filters (country, category, etc.).
+ * - Search for news articles based on keywords, language, and sorting preferences.
+ * - Retrieve a list of available news sources.
+ *
+ * Dependencies:
+ * - `BaseService`: A base class for API requests.
+ * - `API_CONFIGS.CONFIG_NEWS`: Stores API configuration details.
+ * - `newsMapper`: Maps API responses into structured data.
+ * - `utils`: Provides utility functions like date formatting.
+ *
+ * Usage:
+ * Import `newsService` and call methods like `newsService.getTopHeadlines()`.
+ */
+
+import { BaseService } from '@/api/core/BaseService';
+import API_CONFIGS from '@/api/config/index';
+import { mapNewsResponse, mapStatusResponse } from '@/api/mappers/newsMapper';
+import utils from '@/utils';
+import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/news/newsMap';
 import type {
   INewsReqTopHeadlineQParam,
   INewsReqEverythingQParam,
   INewsReqSourceQParam,
-} from '@/api/types/requests';
-import { mapNewsResponse, mapStatusResponse } from '@/api/mappers/newsMapper';
-import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/mapTypes';
+} from '@/api/types/news/newsRequests';
+import type { INewsApiRes, INewsApiResSource } from '@/api/types/news/newsResponses';
 
-class NewsService extends HttpClient {
+class NewsService extends BaseService {
+  private apiConfig = API_CONFIGS.CONFIG_NEWS;
   constructor() {
-    super(NEWS_API_BASE_URL, NEWS_API_CONFIG);
+    super(API_CONFIGS.CONFIG_NEWS.BASE_URL, API_CONFIGS.CONFIG_NEWS.AXIOS);
   }
 
-  async getTopHeadlines(
-    params: INewsReqTopHeadlineQParam = { country: 'us' }
-  ): Promise<INewsMapNewsRes> {
-    const response = await this.get<INewsApiRes>(NEWS_API_ENDPOINTS.TOP_HEADLINES, {
+  /**
+   * Fetches top headlines based on query parameters.
+   * @param {INewsReqTopHeadlineQParam} [params={ country: 'us' }] - For filtering news.
+   * @returns {Promise<INewsMapNewsRes>}
+   */
+  async getTopHeadlines(params: INewsReqTopHeadlineQParam): Promise<INewsMapNewsRes> {
+    const requestDefaults = this.apiConfig.REQUEST_DEFAULTS;
+    const response = await this.get<INewsApiRes>(API_CONFIGS.CONFIG_NEWS.ENDPOINTS.TOP_HEADLINES, {
       params: {
         ...params,
+        country: params.country || requestDefaults.HEADLINE_DEFAULT_COUNTRY,
       },
     });
 
     return mapNewsResponse(response, params.category);
   }
 
+  /**
+   * Searches for news articles based on provided parameters.
+   * @param {INewsReqEverythingQParam} params - Query parameters for searching news.
+   * @returns {Promise<INewsMapNewsRes>}
+   */
   async searchNews(params: INewsReqEverythingQParam): Promise<INewsMapNewsRes> {
-    const response = await this.get<INewsApiRes>(NEWS_API_ENDPOINTS.EVERYTHING, {
+    const requestDefaults = this.apiConfig.REQUEST_DEFAULTS;
+    const response = await this.get<INewsApiRes>(this.apiConfig.ENDPOINTS.EVERYTHING, {
       params: {
         ...params,
-        pageSize: params.pageSize || 20, // TODO: pagesize
-        language: params.language || 'en',
-        sortBy: params.sortBy || 'publishedAt',
-        from:
-          params.from ||
-          new Date(Date.now() - 30 * 12 * 60 * 60 * 1000).toISOString().split('T')[0],
+        pageSize: params.pageSize || requestDefaults.MAX_RESULT_PER_REQUEST,
+        language: params.language || requestDefaults.DEFAULT_LANG,
+        sortBy: params.sortBy || requestDefaults.DEFAULT_SORT,
+        from: params.from || utils.getDate({ currentDate: Date.now(), dayBefore: 1 }),
       },
     });
 
     return mapNewsResponse(response);
   }
 
+  /**
+   * Retrieves a list of news sources based on optional parameters.
+   * @param {INewsReqSourceQParam} [params] - Optional query parameters for filtering sources.
+   * @returns {Promise<INewsMapSourceRes>} - Resolving to the mapped news sources response.
+   */
   async getSources(params?: INewsReqSourceQParam): Promise<INewsMapSourceRes> {
-    const response = await this.get<INewsApiResSource>(NEWS_API_ENDPOINTS.SOURCES, {
+    const response = await this.get<INewsApiResSource>(API_CONFIGS.CONFIG_NEWS.ENDPOINTS.SOURCES, {
       params: { ...params },
     });
 

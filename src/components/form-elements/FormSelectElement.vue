@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineEmits } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/24/outline';
 
 export interface IEventSelectElementChange {
