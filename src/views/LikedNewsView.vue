@@ -4,9 +4,27 @@ import { useLikedNewsStore } from '@/stores/likedNewsStore';
 import NewsLayout from '@/layouts/NewsLayout.vue';
 import NewsCard from '@/components/NewsCard.vue';
 import GoBackButton from '@/components/GoBackButton.vue';
+import { computed, ref } from 'vue';
+import type { TCategoryKey } from '@/types/news.types';
 
 const likedNewsStore = useLikedNewsStore();
-const { likedArticles, likedArticlesByCategory } = storeToRefs(likedNewsStore);
+const { likedArticles, likedArticlesByCategory, likedCount } = storeToRefs(likedNewsStore);
+
+const selectedCategory = ref<TCategoryKey | 'Uncategorized'>('Uncategorized');
+
+// Computed property to filter articles based on selected category
+const filteredLikedArticles = computed(() => {
+  if (!selectedCategory.value) {
+    return likedArticles.value; // Return all articles if no filter is applied
+  }
+  return likedArticles.value.filter((article) =>
+    selectedCategory.value !== 'all' ? article.category === selectedCategory.value : article
+  );
+});
+
+const filterLikedArticles = (type: TCategoryKey | 'Uncategorized'): void => {
+  selectedCategory.value = type;
+};
 </script>
 
 <template>
@@ -23,7 +41,7 @@ const { likedArticles, likedArticlesByCategory } = storeToRefs(likedNewsStore);
       </div>
 
       <div v-else class="grid-template">
-        <NewsCard v-for="article in likedArticles" :key="article.url" :article="article" />
+        <NewsCard v-for="article in filteredLikedArticles" :key="article.url" :article="article" />
       </div>
     </template>
 
@@ -31,21 +49,24 @@ const { likedArticles, likedArticlesByCategory } = storeToRefs(likedNewsStore);
       <div class="liked-news-view-sidebar">
         <h2 class="liked-news-view-sidebar-title">Your Collection</h2>
         <p class="liked-news-view-sidebar-text">
-          You have liked {{ likedArticles.length }} article{{
-            likedArticles.length !== 1 ? 's' : ''
-          }}
+          You have liked {{ likedArticles.length }} article
+          {{ likedArticles.length !== 1 ? 's' : '' }}
         </p>
 
         <div class="badge-container">
-          <router-link
+          <button @click="filterLikedArticles('all')" class="badge-link badge-link-full">
+            All
+            <span class="badge-count">{{ likedCount }}</span>
+          </button>
+          <button
             v-for="(likedArticle, idx) in likedArticlesByCategory"
             :key="idx"
-            :to="`/category/${likedArticle.name.toLowerCase()}`"
+            @click="filterLikedArticles(likedArticle.category)"
             class="badge-link"
           >
-            {{ likedArticle.name }}
+            {{ likedArticle.category }}
             <span class="badge-count">{{ likedArticle.count }}</span>
-          </router-link>
+          </button>
         </div>
       </div>
     </template>

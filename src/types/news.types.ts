@@ -29,3 +29,10 @@ export type IFilterOption =
   | keyof INewsReqEverythingQParam
   | keyof INewsReqTopHeadlineQParam
   | keyof INewsFilterParam;
+
+export interface ILikedArticlesByCategory {
+  [key: string]: {
+    category: TCategoryKey | 'Uncategorized';
+    count: number;
+  };
+}

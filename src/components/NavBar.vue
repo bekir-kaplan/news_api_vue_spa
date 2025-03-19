@@ -1,3 +1,50 @@
+<!--
+  Navbar.vue
+  --------------------
+  This component serves as the main navigation bar for the news application.
+  It includes a logo, desktop and mobile navigation menus, a search toggle,
+  and an icon for accessing liked news.
+
+  Dependencies:
+    - Pinia Stores:
+      - useNavigationStore: Manages menu items.
+      - useLikedNewsStore: Tracks liked news count.
+      - useNewsStore: Handles news article selection.
+    - Vue Router:
+      - useRouter: Manages navigation between pages.
+    - Heroicons:
+      - MagnifyingGlassIcon: Search icon.
+      - XMarkIcon: Close button icon.
+      - Bars3Icon: Mobile menu icon.
+      - HeartIcon: Liked news icon.
+    - Components:
+      - NavLogo: Displays the application logo.
+      - DesktopMenu: Handles desktop navigation.
+      - MobileMenu: Handles mobile navigation.
+      - SearchPanel: Provides search functionality.
+
+  Reactive State:
+    - isMobileMenuOpen (boolean): Tracks whether the mobile menu is open.
+    - isSearchOpen (boolean): Tracks whether the search panel is open.
+
+  Methods:
+    - toggleMobileMenu(): Toggles visibility of the mobile menu.
+    - toggleSearch(): Toggles visibility of the search panel.
+    - handleArticleSelect(article: INewsArticle): Selects an article and navigates to its 
+    details page.
+    - closeMobileMenu(): Closes the mobile menu.
+    - goToLikedNews(): Navigates to the liked news page.
+
+  Behavior:
+    - Desktop menu is always visible on larger screens.
+    - Mobile menu opens via the menu button on smaller screens.
+    - Search can be toggled independently.
+    - Clicking an article in the search panel navigates to the article details page.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`navbar.css`) for layout and styling.
+-->
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -15,17 +62,25 @@ import type { INewsArticle } from '@/api/types/news/news';
 const router = useRouter();
 const navigationStore = useNavigationStore();
 const likedNewsStore = useLikedNewsStore();
-const { menuItems } = storeToRefs(navigationStore);
-const { likedCount } = storeToRefs(likedNewsStore);
 const newsStore = useNewsStore();
 
+// Extract state from stores
+const { menuItems } = storeToRefs(navigationStore);
+const { likedCount } = storeToRefs(likedNewsStore);
 const isMobileMenuOpen = ref(false);
 const isSearchOpen = ref(false);
 
+/**
+ * Toggles the mobile navigation menu visibility.
+ */
 const toggleMobileMenu = (): void => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
 
+/**
+ * Toggles the search panel visibility.
+ * Closes the mobile menu when search panel is closed.
+ */
 const toggleSearch = (): void => {
   isSearchOpen.value = !isSearchOpen.value;
   if (!isSearchOpen.value) {
@@ -33,6 +88,11 @@ const toggleSearch = (): void => {
   }
 };
 
+/**
+ * Handles the selection of a news article from the search panel.
+ * Stores the selected article and navigates to the article details page.
+ * @param article - The selected news article
+ */
 const handleArticleSelect = (article: INewsArticle): void => {
   newsStore.setSelectedArticle(article);
   router.push(`/article/${encodeURIComponent(article.title)}`);
@@ -108,5 +168,6 @@ const goToLikedNews = (): void => {
 </template>
 
 <style scoped>
+/* Imports styles from the external CSS file */
 @import '@/styles/components/navbar.css';
 </style>

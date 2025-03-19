@@ -11,7 +11,7 @@
 }
 
 .sources-layout-main {
-  @apply col-span-12 sm:col-span-12 xl:col-span-12;
+  @apply col-span-12 sm:col-span-12 xl:col-span-12 min-h-3.5;
 }
 
 .sources-layout-sidebar {

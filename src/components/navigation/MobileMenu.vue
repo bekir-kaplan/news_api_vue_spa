@@ -1,3 +1,29 @@
+<!--
+  MobileMenu.vue
+  --------------------
+  This component renders a responsive mobile navigation menu.
+  It supports nested dropdowns for submenu items and provides smooth navigation.
+
+  Props:
+    - items (IMenuItem[]): An array of menu items, each containing a label, path, 
+    and optional submenu.
+    - isOpen (boolean): Controls the visibility of the mobile menu.
+
+  Emits:
+    - close: Emitted when a menu item is clicked to close the mobile menu.
+
+  Dependencies:
+    - Vue Router
+    - Vue Refs:
+      - activeDropdown (string | null): Stores the currently open dropdown menu.
+
+  Methods:
+    - toggleDropdown(menuId: string): Toggles the visibility of the dropdown for a submenu.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`mobile-menu.css`) for styling.
+-->
+
 <script setup lang="ts">
 import type { IMenuItem } from '@/types/navigation.types';
 import { ref } from 'vue';

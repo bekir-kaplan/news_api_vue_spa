@@ -1,5 +1,25 @@
+<!--
+  NavLogo.vue
+  --------------------
+  This component represents the navigation logo for the news application.
+  It displays the application logo and name, acting as a clickable link to the homepage.
+
+  Emits:
+    - click: Triggered when the logo is clicked, allowing parent components to handle navigation 
+    interactions.
+
+  Dependencies:
+    - BaseImage: A reusable image component used for rendering the application logo.
+    - Vue Router: Provides navigation functionality via <router-link>.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`nav-logo.css`) to style the component.
+
+  Methods:
+    - Emits 'click' event when the logo is clicked to notify the parent component.
+-->
 <script setup lang="ts">
-import BaseImage from '../BaseImage.vue';
+import BaseImage from '@/components/BaseImage.vue';
 
 const emit = defineEmits<{
   (e: 'click'): void;

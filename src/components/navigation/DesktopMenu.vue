@@ -1,3 +1,32 @@
+<!--
+  DesktopMenu.vue
+  --------------------
+  This component renders a desktop navigation menu with support for dropdown submenus.
+  It provides a structured layout for navigation items and improves usability with 
+  interactive dropdowns.
+
+  Props:
+    - items (IMenuItem[]): An array of navigation menu items, each containing a label, path, 
+    and optional submenu.
+
+  Dependencies:
+    - Vue Refs:
+      - activeDropdown (string | null): Stores the currently active dropdown menu.
+    - Heroicons:
+      - ChevronDownIcon: Used to indicate expandable menu items.
+    - Vue Router
+
+  Methods:
+    - toggleDropdown(menuId: string): Toggles visibility of a submenu dropdown.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`desktop-menu.css`) to style the menu.
+
+  Behavior:
+    - Clicking a menu item with a submenu toggles its visibility.
+    - Clicking a submenu item closes the dropdown.
+-->
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/24/solid';

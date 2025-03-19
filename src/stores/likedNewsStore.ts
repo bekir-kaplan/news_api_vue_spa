@@ -1,13 +1,7 @@
 import { ref, computed } from 'vue';
 import type { INewsArticle } from '@/api/types/news/news';
 import { defineStore } from 'pinia';
-
-export interface ILikedArticlesByCategory {
-  [key: string]: {
-    name: string;
-    count: number;
-  };
-}
+import type { ILikedArticlesByCategory } from '@/types/news.types';
 
 export const useLikedNewsStore = defineStore(
   'likedNews',
@@ -34,11 +28,11 @@ export const useLikedNewsStore = defineStore(
         const category = article.category || 'Uncategorized';
         if (!acc[category]) {
           acc[category] = {
-            name: category,
+            category,
             count: 0,
           };
         }
-        acc[category].name = category;
+        acc[category].category = category;
         acc[category].count++;
         return acc;
       }, {});

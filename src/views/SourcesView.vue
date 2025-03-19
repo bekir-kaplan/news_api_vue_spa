@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import GoBackButton from '@/components/GoBackButton.vue';
 import SourcesLayout from '@/layouts/SourcesLayout.vue';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useNewsSourceStore } from '@/stores/newsSourceStore';
 import { storeToRefs } from 'pinia';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
@@ -10,26 +10,13 @@ import SideBar from '@/components/SideBar.vue';
 import type { INewsSource } from '@/api/types/news/news';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
+import NoDataFound from '@/components/NoDataFound.vue';
 
 const newsSourceStore = useNewsSourceStore();
-const searchFilter = useNewsFilterStore();
 const filterStore = useNewsFilterStore();
-const { newsFilters } = storeToRefs(searchFilter);
 const { groupedSources, groupByParam, loading } = storeToRefs(newsSourceStore);
 const sideBarContentRef = ref<INewsSource>();
 const isSidebarOpenRef = ref(false);
-
-const queryParams = computed(() => {
-  return {
-    category: newsFilters.value.category,
-    language: '',
-    country: newsFilters.value.country,
-  };
-});
-
-watch(queryParams, (newParams) => {
-  newsSourceStore.setQueryParams(newParams);
-});
 
 onMounted(async () => {
   await newsSourceStore.fetch.sources();
@@ -60,7 +47,7 @@ const showSideBarInfo = (content: INewsSource): void => {
         <GoBackButton />
         <h1>News Sources</h1>
       </div>
-      <div class="sources-view-container">
+      <div v-if="Object.keys(groupedSources).length !== 0" class="sources-view-container">
         <div class="sources-view-card" v-for="(group, letter) in groupedSources" :key="letter">
           <h2 class="sources-view-title">{{ getSourceViewTitle(letter) }}</h2>
           <ul class="sources-view-ul">
@@ -79,6 +66,7 @@ const showSideBarInfo = (content: INewsSource): void => {
           </ul>
         </div>
       </div>
+      <NoDataFound v-else />
       <SideBar
         :content="sideBarContentRef"
         :toggle="isSidebarOpenRef"

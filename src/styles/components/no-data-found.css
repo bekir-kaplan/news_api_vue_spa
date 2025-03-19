@@ -1,0 +1,8 @@
+.no-data-found-container {
+  @apply flex flex-col items-center justify-center text-center p-6 border border-dashed 
+    border-gray-300 rounded-lg bg-gray-50 text-gray-600 mx-auto relative top-[calc(50%-55px)];
+}
+
+.no-data-found-message {
+  @apply text-lg font-medium m-0 p-4;
+}

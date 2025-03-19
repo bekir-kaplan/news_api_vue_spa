@@ -1,5 +1,38 @@
+<!--
+  SelectElement.vue
+  --------------------
+  This component provides a customizable select (dropdown) input field.
+  It allows dynamic mapping of options and supports two-way binding with `v-model`.
+
+  Props:
+    - id (string, optional): The ID attribute for the select element.
+    - name (string, optional): The name attribute for the select element.
+    - label (string, optional): The label text displayed above the select field.
+    - map ({ key: string | number; value: string }, optional): Defines the keys used in the 
+    options array.
+    - options (any | { [key: string | number]: string }[]): An array of selectable options.
+    - defaultValue (string | number, optional): The default selected value.
+    - modelValue (string | number, optional): The selected value for v-model support.
+
+  Emits:
+    - update:value: Emitted when the selected value changes.
+    - update:modelValue: Emitted when using `v-model` for two-way binding.
+
+  Dependencies:
+    - Heroicons:
+      - ChevronDownIcon: Provides a dropdown arrow icon.
+    - Vue:
+      - `defineProps`: Defines the component props.
+      - `defineEmits`: Defines event emitters.
+
+  Methods:
+    - handleChange(key: string, event: Event): Emits the selected value when the dropdown changes.
+    - checkIfSelected(value: string): Checks if an option should be marked as selected.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`select-element.css`) for styling.
+-->
 <script setup lang="ts">
-import { defineEmits } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/24/outline';
 
 export interface IEventSelectElementChange {
@@ -20,6 +53,12 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:value', 'update:modelValue']);
 
+/**
+ * Handles changes to the select input.
+ * Emits the selected value and updates modelValue if applicable.
+ * @param key - The key associated with the selected option
+ * @param event - The event object from the select change event
+ */
 const handleChange = (key: string, event: Event): void => {
   const target = event.target as HTMLSelectElement;
   emit('update:value', { key, value: target.value, event });
@@ -28,6 +67,11 @@ const handleChange = (key: string, event: Event): void => {
   }
 };
 
+/**
+ * Checks if a given value matches the default selected value.
+ * @param value - The value to check
+ * @returns {boolean} - True if the value matches the defaultValue, otherwise false
+ */
 const checkIfSelected = (value: string): boolean => {
   if (!props.defaultValue) {
     return false;

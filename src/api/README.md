@@ -110,7 +110,7 @@ Contains helper functions for error handling.
 To use the API services, import them in your application:
 
 ```ts
-import { financeService } from '@/api/services/financeService';
+import { financeService } from '@/api/services/FinanceService';
 import { newsService } from '@/api/services/newsService';
 
 // Fetching financial data
