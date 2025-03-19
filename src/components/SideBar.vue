@@ -1,3 +1,52 @@
+<!--
+  SideBar.vue
+  --------------------
+  This component implements a sidebar for displaying details about a news source.
+  It includes source information such as name, description, category, 
+  language, country, and website.
+
+  Props:
+    - content (INewsSource | undefined): The news source details to display.
+    - toggle (boolean, optional): Controls the visibility of the sidebar.
+
+  Emits:
+    - toggle (boolean): Emits when the sidebar is toggled open or closed.
+    - close: Emits when the sidebar is closed.
+
+  Dependencies:
+    - Vue:
+      - ref: Manages local reactive state.
+      - defineEmits: Defines custom events.
+      - watch: Listens for prop changes to toggle sidebar visibility.
+    - Heroicons:
+      - XMarkIcon: Close button icon.
+      - ArrowTopRightOnSquareIcon: External link icon.
+    - Components:
+      - BaseImage: Displays images with error handling.
+    - Utilities:
+      - utils.getCountryFlagUrl(): Fetches the flag URL for a country.
+    - Constants:
+      - CON_COUNTRY_CODES: Provides country code-to-name mappings.
+
+  Reactive State:
+    - isSidebarOpen (boolean): Controls sidebar visibility.
+    - imageFailed (boolean): Tracks whether an image has failed to load.
+
+  Methods:
+    - toggleSidebar(newValue: boolean): Updates sidebar visibility and resets image state.
+    - closeSidebar(): Closes the sidebar and emits a close event.
+
+  Watchers:
+    - Watches `toggle` prop and updates sidebar state accordingly.
+
+  Behavior:
+    - Clicking outside the sidebar closes it.
+    - Displays news source information, including category, language, and country.
+    - Provides a link to visit the source's website.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`side-bar.css`) for styling.
+-->
 <script setup lang="ts">
 import type { INewsSource } from '@/api/types/news/news';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
@@ -13,10 +62,13 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['toggle', 'close']);
-
 const isSidebarOpen = ref(false);
 const imageFailed = ref(false);
 
+/**
+ * Toggles the sidebar visibility.
+ * @param newValue - The new state of the sidebar.
+ */
 const toggleSidebar = (newValue: boolean): void => {
   isSidebarOpen.value = newValue;
   imageFailed.value = false;

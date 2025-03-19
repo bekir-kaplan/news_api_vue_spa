@@ -10,6 +10,7 @@ import type {
   INewsReqEverythingQParam,
 } from '@/api/types/news/newsRequests';
 import { CON_NEWS_DEFAULT_SECTIONS_PAGESIZE } from '@/constants/conNews';
+import router from '@/router';
 
 export const useNewsStore = defineStore(
   'newsStore',
@@ -99,6 +100,11 @@ export const useNewsStore = defineStore(
       searchResults.value = [];
     };
 
+    const handleArticleClick = (article: INewsArticle): void => {
+      setSelectedArticle(article);
+      router.push(`/article/${encodeURIComponent(article.title)}`);
+    };
+
     return {
       // State
       categoryArticles,
@@ -114,6 +120,7 @@ export const useNewsStore = defineStore(
       // Actions
       fetch,
       setSelectedArticle,
+      handleArticleClick,
       clearSearch,
     };
   },

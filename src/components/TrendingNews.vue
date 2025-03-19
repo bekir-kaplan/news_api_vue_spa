@@ -1,17 +1,33 @@
+<!--
+  TrendingNews.vue
+  --------------------
+  This component displays a list of trending news articles in a numbered format.
+  It retrieves trending articles from the news store and provides navigation to article details.
+
+  Dependencies:
+    - Pinia Store:
+      - useNewsStore: Manages news articles, including trending articles.
+    - Vue Router:
+      - router: Handles navigation to article details.
+    - Types:
+      - INewsArticle: Represents a news article data structure.
+
+  Reactive State:
+    - carouselArticles: Retrieves trending news articles from the store.
+
+  Behavior:
+    - Displays the top 5 trending news articles.
+    - Clicking an article updates the selected article and navigates to its details.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`trending-news.css`) for styling.
+-->
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
-import type { INewsArticle } from '@/api/types/news/news';
-import router from '@/router';
 
 const newsStore = useNewsStore();
 const { carouselArticles } = storeToRefs(newsStore);
-
-// TODO: move common folder to share functionality
-const handleArticleClick = (article: INewsArticle): void => {
-  newsStore.setSelectedArticle(article);
-  router.push(`/article/${encodeURIComponent(article.title)}`);
-};
 </script>
 
 <template>
@@ -26,7 +42,7 @@ const handleArticleClick = (article: INewsArticle): void => {
         <span class="trending-news-index">{{ index + 1 }}</span>
         <router-link
           :to="`/article/${encodeURIComponent(article.title)}`"
-          @click="handleArticleClick(article)"
+          @click="newsStore.handleArticleClick(article)"
           class="trending-news-link"
         >
           {{ article.title }}

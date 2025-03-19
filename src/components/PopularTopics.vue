@@ -1,3 +1,25 @@
+<!--
+  PopularTopics.vue
+  --------------------
+  This component displays a list of popular news categories as navigable links.
+  It filters out the "all" category and provides direct links to individual category pages.
+
+  Dependencies:
+    - Constants:
+      - CON_NEWS_CATEGORIES: A predefined object containing available news categories.
+    - Vue Router:
+      - <router-link>: Handles navigation to category-specific news pages.
+
+  Computed Data:
+    - filteredCategories: Extracts and filters out the "all" category from CON_NEWS_CATEGORIES.
+
+  Behavior:
+    - Each category is displayed as a clickable badge.
+    - Clicking a badge navigates to the corresponding category page.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`popular-topics.css`) for styling.
+-->
 <script setup lang="ts">
 import { CON_NEWS_CATEGORIES } from '@/constants/conNews';
 const filteredCategories = Object.values(CON_NEWS_CATEGORIES).filter(

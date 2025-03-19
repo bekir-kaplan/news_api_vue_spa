@@ -1,3 +1,23 @@
+<!--
+  WeatherWidget.vue
+  --------------------
+  This component displays a simple weather widget with location, temperature, 
+  weather condition, and an icon representing the condition.
+
+  Data:
+    - weather (object): Contains static weather details, including:
+      - location (string): The city and state of the weather report.
+      - temperature (string): The current temperature in Fahrenheit.
+      - condition (string): A brief description of the weather condition.
+      - icon (string): A Unicode symbol representing the weather condition.
+
+  Behavior:
+    - The weather information is currently static but can be extended 
+      to fetch real-time weather data from an API.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`weather-widget.css`) for styling.
+-->
 <script setup lang="ts">
 const weather = {
   location: 'New York, NY',

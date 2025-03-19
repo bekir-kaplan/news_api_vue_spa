@@ -1,26 +1,48 @@
+<!--
+  RelatedArticles.vue
+  --------------------
+  This component displays a list of related news articles based on the selected article's category.
+  It retrieves related articles from the news store and provides navigation to article details.
+
+  Dependencies:
+    - Pinia Store:
+      - useNewsStore: Manages news articles and selected article state.
+    - Vue Router:
+      - useRouter: Handles navigation to article details.
+    - Components:
+      - BaseImage: Displays article images with error handling.
+    - Computed Properties:
+      - relatedArticles: Retrieves articles from the same category as the selected article.
+
+  Computed Properties:
+    - relatedArticles: Returns articles from the selected category, or an empty array if none exist.
+
+  Behavior:
+    - If a selected article exists, related articles from the same category are displayed.
+    - Clicking a related article updates the selected article and navigates to its details.
+
+  Styling:
+    - Scoped CSS: Uses an external stylesheet (`related-articles.css`) for styling.
+-->
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNewsStore } from '@/stores/newsStore';
-import type { INewsArticle } from '@/api/types/news/news';
-import { useRouter } from 'vue-router';
 import BaseImage from './BaseImage.vue';
 
 const newsStore = useNewsStore();
-const router = useRouter();
 const { categoryArticles, selectedArticle } = storeToRefs(newsStore);
 
+/**
+ * Computes related articles based on the selected article's category.
+ * If no selected article or category exists, returns an empty array.
+ */
 const relatedArticles = computed(() => {
   if (!selectedArticle.value || !selectedArticle.value.category) {
     return [];
   }
   return categoryArticles.value[selectedArticle.value.category];
 });
-
-const handleArticleClick = (article: INewsArticle): void => {
-  newsStore.setSelectedArticle(article);
-  router.push(`/article/${encodeURIComponent(article.title)}`);
-};
 </script>
 
 <template>
@@ -30,7 +52,7 @@ const handleArticleClick = (article: INewsArticle): void => {
       <div v-for="article in relatedArticles" :key="article.url" class="related-articles-item">
         <router-link
           :to="`/article/${encodeURIComponent(article.title)}`"
-          @click="handleArticleClick(article)"
+          @click="newsStore.handleArticleClick(article)"
         >
           <BaseImage
             :src="article.urlToImage || ''"
