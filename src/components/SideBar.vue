@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { INewsSource } from '@/api/types/news/news';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { ref, defineProps, defineEmits, watch } from 'vue';
+import { ref, defineEmits, watch } from 'vue';
 import BaseImage from './BaseImage.vue';
 import utils from '@/utils/index';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline';

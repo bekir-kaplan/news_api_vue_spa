@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { PhotoIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps<{
