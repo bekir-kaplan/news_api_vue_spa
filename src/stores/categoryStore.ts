@@ -1,3 +1,13 @@
+/**
+ * News Category Store (Pinia)
+ * --------------------------------------
+ * Manages news articles fetched by category.
+ *
+ * Features:
+ * - Fetches top headlines based on the selected category.
+ * - Supports pagination with `loadMoreArticles()`.
+ * - Stores fetched articles in `categoryArticlesPaginated`.
+ */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useNews } from '@/composables/useNews';

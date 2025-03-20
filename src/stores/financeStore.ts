@@ -1,7 +1,20 @@
+/**
+ * Finance Store (Pinia)
+ * --------------------------------------
+ * Manages financial market data, including stock quotes and time series data.
+ *
+ * Features:
+ * - Fetches real-time market data for a selected watchlist.
+ * - Retrieves historical time series data for a selected symbol.
+ * - Generates formatted chart data for visualization.
+ * - Stores selected symbols and intervals for analysis.
+ * - Uses **computed properties** for dynamically updating chart data.
+ */
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useFinance } from '@/composables/useFinance';
 import type { IFinMapQuote, IFinMapTimeSeries } from '@/api/types/finance/financeMap';
+import { CON_UI_FINANCE_WATCHLIST } from '@/constants/conUiConfigs';
 
 export const useFinanceStore = defineStore(
   'finance',
@@ -13,12 +26,7 @@ export const useFinanceStore = defineStore(
     const selectedSymbol = ref<string>('SPY');
     const selectedInterval = ref<string>('1day');
 
-    const watchlist = ref([
-      'SPY', // S&P 500 ETF
-      'QQQ', // NASDAQ ETF
-      'GLD', // Gold ETF
-      'BTC/USD', // Bitcoin
-    ]);
+    const watchlist = ref(CON_UI_FINANCE_WATCHLIST);
 
     const chartData = computed(() => {
       if (!timeSeriesData.value?.length) {
@@ -49,6 +57,14 @@ export const useFinanceStore = defineStore(
       }
     };
 
+    /**
+     * Loads historical time series data for a selected symbol.
+     * Updates `timeSeriesData` with the latest price history.
+     * Ensures data is sorted in chronological order.
+     *
+     * @param symbol - Financial symbol to fetch data for.
+     * @param interval - Time interval for fetching data (e.g., '1min', '1day').
+     */
     const loadTimeSeriesData = async (symbol?: string, interval?: string): Promise<void> => {
       try {
         if (symbol) {

@@ -1,9 +1,20 @@
+/**
+ * News Source Store (Pinia)
+ * --------------------------------------
+ * Manages news sources and applies dynamic filtering.
+ *
+ * Features:
+ * - Fetches a list of available news sources.
+ * - Allows grouping sources dynamically (category, country, etc.).
+ * - Supports filtering and sorting sources based on query parameters.
+ */
 import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import { useNews } from '@/composables/useNews';
 import type { INewsSource } from '@/api/types/news/news';
 import { useNewsFilterStore } from './newsFilterStore';
 import type { INewsFilterOptions, INewsReqSourceQParam } from '@/api/types/news/newsRequests';
+import { CON_FILTER_CATEGORIES } from '@/constants/conNews';
 
 export const useNewsSourceStore = defineStore(
   'newsSourceStore',
@@ -14,9 +25,13 @@ export const useNewsSourceStore = defineStore(
     const sources = ref<INewsSource[]>([]);
     let queryParams = reactive<INewsReqSourceQParam>({});
 
-    const groupByParam = computed(() => filterStore.newsFilters.groupBy || 'category');
-
-    // const groupParam = ref<keyof INewsReqSourceQParam>('category');
+    /**
+     * Computes the grouping parameter for categorizing news sources.
+     * Defaults to 'category' if no filter is applied.
+     */
+    const groupByParam = computed(
+      () => filterStore.newsFilters.groupBy || CON_FILTER_CATEGORIES.CATEGORY
+    );
 
     const fetch = {
       sources: async (): Promise<void> => {

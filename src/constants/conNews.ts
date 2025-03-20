@@ -1,5 +1,6 @@
-import type { INewsReqTopHeadlineQParam } from '@/api/types/requests';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/news/newsRequests';
 import type { ICategory, ISection } from '@/types/homeView.types';
+import type { TNewsFilterParam } from '@/types/news.types';
 
 export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 5;
 export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 12;
@@ -14,6 +15,12 @@ export const CON_REQUEST_PARAMS = {
     pageSize: 'pageSize',
     page: 'page',
   },
+};
+
+export const CON_FILTER_CATEGORIES: Record<string, TNewsFilterParam> = {
+  CATEGORY: 'category',
+  COUNTRY: 'country',
+  LANGUAGE: 'language',
 };
 
 export const CON_FILTER_GROUPBY_VALUES = [

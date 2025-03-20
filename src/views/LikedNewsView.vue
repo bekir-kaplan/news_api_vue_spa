@@ -10,7 +10,7 @@ import type { TCategoryKey } from '@/types/news.types';
 const likedNewsStore = useLikedNewsStore();
 const { likedArticles, likedArticlesByCategory, likedCount } = storeToRefs(likedNewsStore);
 
-const selectedCategory = ref<TCategoryKey | 'Uncategorized'>('Uncategorized');
+const selectedCategory = ref<TCategoryKey | 'Uncategorized'>('all');
 
 // Computed property to filter articles based on selected category
 const filteredLikedArticles = computed(() => {
@@ -49,8 +49,9 @@ const filterLikedArticles = (type: TCategoryKey | 'Uncategorized'): void => {
       <div class="liked-news-view-sidebar">
         <h2 class="liked-news-view-sidebar-title">Your Collection</h2>
         <p class="liked-news-view-sidebar-text">
-          You have liked {{ likedArticles.length }} article
-          {{ likedArticles.length !== 1 ? 's' : '' }}
+          You have liked {{ likedArticles.length }} article{{
+            likedArticles.length !== 1 ? 's' : ''
+          }}
         </p>
 
         <div class="badge-container">

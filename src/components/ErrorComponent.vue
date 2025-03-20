@@ -38,7 +38,7 @@ const props = defineProps<{
   class?: string;
 }>();
 
-const storeErrors = computed(() => errorStore.error);
+const storeErrors = computed(() => errorStore.errorQueue);
 </script>
 
 <template>
@@ -49,7 +49,7 @@ const storeErrors = computed(() => errorStore.error);
       </button>
       <div v-for="(err, idx) in storeErrors" :key="idx">
         <p class="error-title">{{ props.title || 'Error' }}</p>
-        <p class="error-message">{{ err || props.customError }}</p>
+        <p class="error-message">{{ err.message || props.customError }}</p>
       </div>
     </div>
   </div>

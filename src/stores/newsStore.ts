@@ -1,3 +1,13 @@
+/**
+ * News Store (Pinia)
+ * --------------------------------------
+ * Manages fetching, searching, and selecting news articles.
+ *
+ * Features:
+ * - Retrieves top headlines for the carousel and category sections.
+ * - Searches for news articles within both top headlines and everything.
+ * - Stores selected articles for detailed viewing.
+ */
 import { defineStore, storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
 import { useNews } from '@/composables/useNews';
@@ -100,6 +110,10 @@ export const useNewsStore = defineStore(
       searchResults.value = [];
     };
 
+    /**
+     * Handles article selection and navigates to the article page.
+     * @param article - The selected article.
+     */
     const handleArticleClick = (article: INewsArticle): void => {
       setSelectedArticle(article);
       router.push(`/article/${encodeURIComponent(article.title)}`);
