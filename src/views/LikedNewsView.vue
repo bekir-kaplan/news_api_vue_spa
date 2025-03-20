@@ -5,12 +5,12 @@ import NewsLayout from '@/layouts/NewsLayout.vue';
 import NewsCard from '@/components/NewsCard.vue';
 import GoBackButton from '@/components/GoBackButton.vue';
 import { computed, ref } from 'vue';
-import type { TCategoryKey } from '@/types/news.types';
+import { CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL } from '@/constants/conFilter';
 
 const likedNewsStore = useLikedNewsStore();
 const { likedArticles, likedArticlesByCategory, likedCount } = storeToRefs(likedNewsStore);
 
-const selectedCategory = ref<TCategoryKey | 'Uncategorized'>('all');
+const selectedCategory = ref<string | 'Uncategorized'>(CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL);
 
 // Computed property to filter articles based on selected category
 const filteredLikedArticles = computed(() => {
@@ -18,11 +18,13 @@ const filteredLikedArticles = computed(() => {
     return likedArticles.value; // Return all articles if no filter is applied
   }
   return likedArticles.value.filter((article) =>
-    selectedCategory.value !== 'all' ? article.category === selectedCategory.value : article
+    selectedCategory.value !== CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL
+      ? article.category === selectedCategory.value
+      : article
   );
 });
 
-const filterLikedArticles = (type: TCategoryKey | 'Uncategorized'): void => {
+const filterLikedArticles = (type: string | 'Uncategorized'): void => {
   selectedCategory.value = type;
 };
 </script>
@@ -55,7 +57,10 @@ const filterLikedArticles = (type: TCategoryKey | 'Uncategorized'): void => {
         </p>
 
         <div class="badge-container">
-          <button @click="filterLikedArticles('all')" class="badge-link badge-link-full">
+          <button
+            @click="filterLikedArticles(CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL)"
+            class="badge-link badge-link-full"
+          >
             All
             <span class="badge-count">{{ likedCount }}</span>
           </button>

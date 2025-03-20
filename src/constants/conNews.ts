@@ -1,6 +1,6 @@
 import type { INewsReqTopHeadlineQParam } from '@/api/types/news/newsRequests';
 import type { ICategory, ISection } from '@/types/homeView.types';
-import type { TNewsFilterParam } from '@/types/news.types';
+import type { TNewsFilterParam, TNewsFilterSearchIn } from '@/types/news.types';
 
 export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 5;
 export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 12;
@@ -23,21 +23,31 @@ export const CON_FILTER_CATEGORIES: Record<string, TNewsFilterParam> = {
   LANGUAGE: 'language',
 };
 
-export const CON_FILTER_GROUPBY_VALUES = [
-  { key: 'category', value: 'Category' },
-  { key: 'country', value: 'Country' },
-  { key: 'language', value: 'Language' },
+export const CON_FILTER_SEARCH_IN: Record<string, TNewsFilterSearchIn> = {
+  TITLE: 'title',
+  CONTENT: 'content',
+  DESCRIPTION: 'description',
+};
+
+export const CON_FILTER_SEARCHIN_VALUES: { key: TNewsFilterSearchIn; value: string }[] = [
+  { key: CON_FILTER_SEARCH_IN.TITLE, value: 'Title' },
+  { key: CON_FILTER_SEARCH_IN.CONTENT, value: 'Content' },
+  { key: CON_FILTER_SEARCH_IN.DESCRIPTION, value: 'Description' },
+];
+
+export const CON_FILTER_GROUPBY_VALUES: { key: TNewsFilterParam; value: string }[] = [
+  { key: CON_FILTER_CATEGORIES.CATEGORY, value: 'Category' },
+  { key: CON_FILTER_CATEGORIES.COUNTRY, value: 'Country' },
+  { key: CON_FILTER_CATEGORIES.LANGUAGE, value: 'Language' },
 ];
 
 export const CON_FILTER_PAGESIZE_VALUES = [
-  { key: 'all', value: 'All' },
   { key: 5, value: 5 },
   { key: 10, value: 10 },
   { key: 15, value: 15 },
 ];
 
 export const CON_NEWS_CATEGORIES = {
-  all: { key: 'all', value: 'All' },
   general: { key: 'general', value: 'General' },
   business: { key: 'business', value: 'Business' },
   entertainment: { key: 'entertainment', value: 'Entertainment' },

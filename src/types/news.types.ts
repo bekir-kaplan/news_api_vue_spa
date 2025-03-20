@@ -13,8 +13,8 @@ import type {
  */
 export type TSortBy = 'relevancy' | 'popularity' | 'publishedAt';
 export type TNewsFilterParam = 'category' | 'country' | 'language';
+export type TNewsFilterSearchIn = 'title' | 'description' | 'content';
 export type TCategoryKey =
-  | 'all'
   | 'business'
   | 'entertainment'
   | 'health'

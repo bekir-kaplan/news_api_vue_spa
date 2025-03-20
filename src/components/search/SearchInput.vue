@@ -29,6 +29,7 @@ import type { INewsArticle } from '@/api/types/news/news';
 const props = defineProps<{
   placeholder?: string;
   minChars?: number;
+  label?: string;
 }>();
 
 const emit = defineEmits<{
@@ -49,7 +50,9 @@ const onSelect = (article: INewsArticle): void => {
 
 <template>
   <div class="relative w-full">
+    <label v-if="label" for="query-input">{{ label }}</label>
     <input
+      id="query-input"
       v-model="searchQuery"
       type="text"
       :placeholder="placeholder || 'Search...'"

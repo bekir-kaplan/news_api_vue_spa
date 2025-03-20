@@ -120,7 +120,12 @@ const goToLikedNews = (): void => {
 
         <div class="hidden md:flex items-center gap-2">
           <!-- Desktop Search Icon -->
-          <button class="navbar-btn-icon" @click="toggleSearch" aria-label="Toggle search">
+          <button
+            class="navbar-btn-icon flex gap-2"
+            @click="toggleSearch"
+            aria-label="Toggle search"
+          >
+            Search
             <MagnifyingGlassIcon v-if="!isSearchOpen" class="navbar-icon" />
             <XMarkIcon v-else class="navbar-icon" />
           </button>

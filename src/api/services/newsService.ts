@@ -43,11 +43,9 @@ class NewsService extends BaseService {
    * @returns {Promise<INewsMapNewsRes>}
    */
   async getTopHeadlines(params: INewsReqTopHeadlineQParam): Promise<INewsMapNewsRes> {
-    const requestDefaults = this.apiConfig.REQUEST_DEFAULTS;
     const response = await this.get<INewsApiRes>(API_CONFIGS.CONFIG_NEWS.ENDPOINTS.TOP_HEADLINES, {
       params: {
         ...params,
-        country: params.country || requestDefaults.HEADLINE_DEFAULT_COUNTRY,
       },
     });
 

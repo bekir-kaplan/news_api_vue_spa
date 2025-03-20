@@ -17,7 +17,7 @@ export const useErrorStore = defineStore('error', () => {
   const errorQueue = ref<{ message: string; errCode: string }[]>([]);
 
   /** Interval controller */
-  let errorInterval: NodeJS.Timeout | null = null;
+  let errorInterval: ReturnType<typeof setInterval> | null = null;
 
   /**
    * Processes the error queue (FIFO order).

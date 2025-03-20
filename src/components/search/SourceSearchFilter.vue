@@ -26,7 +26,7 @@ const { newsFilters } = storeToRefs(filterStore);
 const queryParams = computed(() => {
   return {
     category: newsFilters.value.category,
-    language: '',
+    language: newsFilters.value.language,
     country: newsFilters.value.country,
   };
 });

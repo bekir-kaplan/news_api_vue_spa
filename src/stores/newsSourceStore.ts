@@ -46,10 +46,16 @@ export const useNewsSourceStore = defineStore(
       },
     };
 
+    const sourcesWithDomainNames = computed(() => {
+      return sources.value.map((source) => ({
+        key: new URL(source.url || 'example.com').hostname,
+        value: source.name,
+      }));
+    });
+
     const groupedSources = computed(() => {
       const grouped = sources.value.reduce(
         (acc: Record<string, INewsSource[]>, source: INewsSource) => {
-          //source[groupParam.value] as string;
           const groupKey = source[groupByParam.value] as string;
           if (!acc[groupKey]) {
             acc[groupKey] = [];
@@ -98,6 +104,7 @@ export const useNewsSourceStore = defineStore(
     );
 
     const setQueryParams = (_queryParams: INewsFilterOptions): void => {
+      delete _queryParams.groupBy;
       queryParams = _queryParams;
       fetch.sources();
     };
@@ -112,6 +119,7 @@ export const useNewsSourceStore = defineStore(
 
       // Computed
       groupedSources,
+      sourcesWithDomainNames,
 
       // Actions
       fetch,

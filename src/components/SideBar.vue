@@ -55,6 +55,7 @@ import BaseImage from './BaseImage.vue';
 import utils from '@/utils/index';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
+import { CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL } from '@/constants/conFilter';
 
 const props = defineProps<{
   content: INewsSource | undefined;
@@ -139,7 +140,11 @@ watch(
             <div class="sidebar-info-key">Country:</div>
             <div class="uppercase">
               {{ content?.country }}
-              {{ `( ${CON_COUNTRY_CODES[content?.country || 'all']?.text} )` }}
+              {{
+                `( ${
+                  CON_COUNTRY_CODES[content?.country || CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL]?.text
+                } )`
+              }}
             </div>
           </li>
           <li class="sidebar-info-list">

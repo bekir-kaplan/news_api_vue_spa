@@ -23,7 +23,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import FormSelectElement from '@/components/form-elements/FormSelectElement.vue';
-import type { IEventSelectElementChange } from '@/components/form-elements/FormSelectElement.vue';
 import { useNewsFilterStore } from '@/stores/newsFilterStore';
 import { useNewsSourceStore } from '@/stores/newsSourceStore';
 import { storeToRefs } from 'pinia';
@@ -32,29 +31,66 @@ import type { INewsReqTopHeadlineQParam } from '@/api/types/news/newsRequests';
 import {
   CON_FILTER_GROUPBY_VALUES,
   CON_FILTER_PAGESIZE_VALUES,
+  CON_FILTER_SEARCHIN_VALUES,
   CON_NEWS_CATEGORIES,
 } from '@/constants/conNews';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
+import { CON_LANGUAGE_MAPPING, CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL } from '@/constants/conFilter';
+import FormMultiSelect from '../form-elements/FormMultiSelect.vue';
+import type {
+  IEventSelectElementChange,
+  TCountryCodes,
+  TLanguageCodes,
+} from '@/types/uiForm.types';
 
 const props = defineProps<{
   title?: string;
   filterOptions?: IFilterOption[];
+  autoFilter?: boolean;
 }>();
 
 const groupSelectValues = CON_FILTER_GROUPBY_VALUES;
 const filterStore = useNewsFilterStore();
 const sourcesStore = useNewsSourceStore();
 const categories = computed(() => CON_NEWS_CATEGORIES);
+const searchIn = computed(() => CON_FILTER_SEARCHIN_VALUES);
 const pageSizes = CON_FILTER_PAGESIZE_VALUES;
-const { sources } = storeToRefs(sourcesStore);
+const { sources, sourcesWithDomainNames } = storeToRefs(sourcesStore);
 
 const updateFilter = (param: IEventSelectElementChange): void => {
   let filterValue = param.value;
-  if (filterValue === CON_NEWS_CATEGORIES.all.key) {
+  if (filterValue === CON_SELECT_ELEMENT_DEFAULT_VALUE_ALL) {
     filterValue = '';
   }
   filterStore.setFilter(param.key as keyof INewsReqTopHeadlineQParam, filterValue);
 };
+
+const newSetLanguages = sources.value.reduce((acc, source) => {
+  if (source.language) {
+    acc.add(source.language);
+  }
+  return acc;
+}, new Set());
+
+const newSetCountries = sources.value.reduce((acc, source) => {
+  if (CON_COUNTRY_CODES[source.country]) {
+    acc.add(source.country);
+  }
+  return acc;
+}, new Set());
+
+const newArrLanguages = Array.from(newSetLanguages);
+const newArrCountries = Array.from(newSetCountries);
+
+const sourcesWithLanguage = newArrLanguages.map((lang) => ({
+  key: lang as TLanguageCodes,
+  value: CON_LANGUAGE_MAPPING[lang as TLanguageCodes],
+}));
+
+const sourcesWithCountries = newArrCountries.map((country) => ({
+  key: country as TCountryCodes,
+  value: CON_COUNTRY_CODES[country as TCountryCodes]?.text,
+}));
 
 const checkIfNeeded = (type: IFilterOption): boolean => {
   if (Array.isArray(props.filterOptions)) {
@@ -75,8 +111,7 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
         name="country"
         label="Country"
         default-value="all"
-        :map="{ key: 'key', value: 'text' }"
-        :options="Object.values(CON_COUNTRY_CODES)"
+        :options="Object.values(sourcesWithCountries)"
         @update:value="updateFilter"
       />
 
@@ -90,16 +125,6 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
       />
 
       <FormSelectElement
-        v-if="checkIfNeeded('sources')"
-        name="sources"
-        label="Sources"
-        default-value="all"
-        :map="{ key: 'id', value: 'name' }"
-        :options="sources"
-        @update:value="updateFilter"
-      />
-
-      <FormSelectElement
         v-if="checkIfNeeded('pageSize')"
         name="pageSize"
         label="Page Size"
@@ -109,11 +134,62 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
       />
 
       <FormSelectElement
+        v-if="checkIfNeeded('language')"
+        name="language"
+        label="Language"
+        default-value="all"
+        :options="sourcesWithLanguage"
+        @update:value="updateFilter"
+      />
+
+      <FormSelectElement
         v-if="checkIfNeeded('groupBy')"
         name="groupBy"
         label="GroupBy"
         :options="groupSelectValues"
-        default-value="category"
+        default-value="all"
+        @update:value="updateFilter"
+      />
+
+      <FormMultiSelect
+        v-if="checkIfNeeded('searchIn')"
+        name="searchIn"
+        label="Search In"
+        :options="Object.values(searchIn)"
+        @update:value="updateFilter"
+      />
+
+      <FormMultiSelect
+        v-if="checkIfNeeded('sources')"
+        label="Sources"
+        name="sources"
+        :options="sources"
+        :map="{ key: 'id', value: 'name' }"
+        searchable
+        :max-selections="20"
+        placeholder="Select Sources"
+        @update:value="updateFilter"
+      />
+
+      <FormMultiSelect
+        v-if="checkIfNeeded('domains')"
+        label="Include Domains"
+        name="domains"
+        :options="sourcesWithDomainNames"
+        searchable
+        :max-selections="20"
+        placeholder="Include Domains"
+        @update:value="updateFilter"
+      />
+
+      <FormMultiSelect
+        v-if="checkIfNeeded('excludeDomains')"
+        label="Exclude Domains"
+        name="excludeDomains"
+        :options="sourcesWithDomainNames"
+        searchable
+        :max-selections="20"
+        placeholder="Exclude Domains"
         @update:value="updateFilter"
       />
     </div>

@@ -35,12 +35,6 @@
 <script setup lang="ts">
 import { ChevronDownIcon } from '@heroicons/vue/24/outline';
 
-export interface IEventSelectElementChange {
-  key: string;
-  value: string;
-  event?: Event;
-}
-
 const props = defineProps<{
   id?: string;
   name?: string;
@@ -69,14 +63,14 @@ const handleChange = (key: string, event: Event): void => {
 
 /**
  * Checks if a given value matches the default selected value.
- * @param value - The value to check
- * @returns {boolean} - True if the value matches the defaultValue, otherwise false
+ * @param key - The key to check
+ * @returns {boolean} - True if the key matches the defaultValue, otherwise false
  */
-const checkIfSelected = (value: string): boolean => {
+const checkIfSelected = (key: string | number): boolean => {
   if (!props.defaultValue) {
     return false;
   }
-  return props.defaultValue === value;
+  return props.defaultValue === key;
 };
 </script>
 
@@ -91,6 +85,14 @@ const checkIfSelected = (value: string): boolean => {
         :value="defaultValue"
         @change="(e) => handleChange(name || 'unknown', e)"
       >
+        <option
+          v-if="defaultValue"
+          :key="defaultValue"
+          :value="defaultValue"
+          :selected="checkIfSelected(defaultValue)"
+        >
+          {{ defaultValue }}
+        </option>
         <option
           v-for="option in options"
           :key="map ? option[map.key] : option.key"

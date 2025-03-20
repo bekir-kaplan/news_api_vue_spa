@@ -25,12 +25,17 @@ import router from '@/router';
 import SearchInput from '@/components/search/SearchInput.vue';
 import NewsSearchFilter from './NewsSearchFilter.vue';
 import SourceSearchFilter from './SourceSearchFilter.vue';
-import { CON_NEWS_SEARCH_FILTER_OPTIONS } from '@/constants/conFilter';
+import { CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS } from '@/constants/conFilter';
 import type { INewsArticle } from '@/api/types/news/news';
+import { computed } from 'vue';
 
 defineProps<{ isOpen: boolean }>();
 const emit = defineEmits<{ (e: 'select', article: INewsArticle): void }>();
 const newsStore = useNewsStore();
+
+const currentRouteName = computed(() => {
+  return router.currentRoute.value.name;
+});
 </script>
 
 <template>
@@ -43,12 +48,16 @@ const newsStore = useNewsStore();
   >
     <div v-show="isOpen" class="search-panel-inner">
       <!-- Conditional rendering based on route -->
-      <div v-if="router.currentRoute.value.name !== 'sources'">
+      <div v-if="currentRouteName !== 'sources'">
         <!-- News Filter -->
-        <NewsSearchFilter title="News Filter" :filter-options="CON_NEWS_SEARCH_FILTER_OPTIONS" />
+        <NewsSearchFilter
+          title="News Filter"
+          :filter-options="CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS"
+        />
 
         <!-- Search Input -->
         <SearchInput
+          label="Query"
           placeholder="Search news articles..."
           :min-chars="2"
           @select="emit('select', $event)"

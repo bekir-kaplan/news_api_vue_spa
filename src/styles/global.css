@@ -38,7 +38,7 @@
   @apply mb-4;
 }
 .filter-section {
-  @apply flex gap-2;
+  @apply flex gap-2 flex-wrap;
 }
 .short-text {
   @apply overflow-hidden text-ellipsis whitespace-nowrap;
