@@ -154,6 +154,20 @@ To get started with the project, follow these steps:
     npm run preview
     ```
 
+## Settings
+
+To run the project, you need to add api keys:
+ - NewsData api: https://newsapi.org/
+ - Financial api: https://api.twelvedata.com
+
+- **Update .env file** to connect external apis.:
+    ```sh
+    VITE_NEWS_API_KEY=******************
+    VITE_NEWS_DATA_BASE_URL=https://newsapi.org
+    VITE_TWELVE_DATA_API_KEY=******************
+    VITE_TWELVE_DATA_BASE_URL=https://api.twelvedata.com
+    ```
+
 ## Maintenance
 
 To maintain the project, consider the following:
