@@ -18,12 +18,13 @@ This project is a **Vue 3 + TypeScript + Tailwind** application that provides a 
 
 ## Main Pages ( Home - Categories - Sources - Liked Articles )
 
+<div align="center">
 <img src="./readme_sources/a_main_page.png" width="45%" style="margin-right:1%;">
 <img src="./readme_sources/b_categories.png" width="45%" style="margin-right:1%;">
 
 <img src="./readme_sources/c_sources.png" width="45%" style="margin-right:1%;">
 <img src="./readme_sources/d_liked_articles.png" width="45%" style="margin-right:1%;">
-
+</div>
 
 ## Features and Nav Menu
 
