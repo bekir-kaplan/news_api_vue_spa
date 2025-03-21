@@ -52,17 +52,6 @@ const { marketData, chartData, loading, selectedInterval } = storeToRefs(finance
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  scales: {
-    x: {
-      ticks: {
-        callback(value: string): any {
-          // Extract only the date part without time
-          const label = this.getLabelForValue(value);
-          return label.split(' ')[0];
-        },
-      },
-    },
-  },
 };
 
 /**

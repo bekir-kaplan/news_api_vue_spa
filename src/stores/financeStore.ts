@@ -15,6 +15,7 @@ import { ref, computed } from 'vue';
 import { useFinance } from '@/composables/useFinance';
 import type { IFinMapQuote, IFinMapTimeSeries } from '@/api/types/finance/financeMap';
 import { CON_UI_FINANCE_WATCHLIST } from '@/constants/conUiConfigs';
+import utils from '@/utils';
 
 export const useFinanceStore = defineStore(
   'finance',
@@ -35,8 +36,11 @@ export const useFinanceStore = defineStore(
 
       return {
         labels: timeSeriesData.value.map((data) => {
-          const date = new Date(data.datetime);
-          return `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
+          const date = utils.getDate({
+            currentDate: new Date(data.datetime).getTime(),
+            dateFormat: { month: 'short', day: 'numeric' },
+          });
+          return `${date}`;
         }),
         datasets: [
           {
