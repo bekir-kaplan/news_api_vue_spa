@@ -40,6 +40,11 @@ This project is a **Vue 3 + TypeScript + Tailwind** application that provides a 
 <img src="./readme_sources/h_nav_menu.png" width="48%" style="margin-right:1%;">
 </div>
 
+
+<div align="center">
+<img src="./readme_sources/i_sources_detail.png" width="100%">
+</div>
+
 ---
 
 ## Project Structure
