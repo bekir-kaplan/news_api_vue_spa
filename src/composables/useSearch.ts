@@ -3,6 +3,7 @@ import { useNewsStore } from '@/stores/newsStore';
 import utils from '@/utils/index';
 import { storeToRefs } from 'pinia';
 import { CON_NEWS_SEARCH_ENDPOINTS } from '@/constants/conFilter';
+import DOMPurify from 'dompurify';
 
 export function useSearch(minChars = 3): any {
   const newsStore = useNewsStore();
@@ -11,12 +12,14 @@ export function useSearch(minChars = 3): any {
   const showResults = ref(false);
 
   const debouncedSearch = utils.debounce(async (query: string) => {
-    if (query.length >= minChars) {
+    const cleanQuery = DOMPurify.sanitize(query);
+
+    if (cleanQuery.length >= minChars) {
       if (endpointRef.value === CON_NEWS_SEARCH_ENDPOINTS.EVERYTHING.key) {
-        await newsStore.fetch.everything.search(query);
+        await newsStore.fetch.everything.search(cleanQuery);
       }
       if (endpointRef.value === CON_NEWS_SEARCH_ENDPOINTS.TOP_HEADLINES.key) {
-        await newsStore.fetch.topHeadlines.search(query);
+        await newsStore.fetch.topHeadlines.search(cleanQuery);
       }
       showResults.value = true;
     } else {

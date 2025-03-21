@@ -8,5 +8,5 @@
 }
 
 .endpoint-selection-icon {
-  @apply w-4 h-4 mr-2;
+  @apply w-4 h-4;
 }

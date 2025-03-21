@@ -4,6 +4,7 @@
 
 This project is a **Vue 3 + TypeScript + Tailwind** application that provides a **news and financial dashboard**. It integrates with external APIs to fetch **latest news articles** and **financial market data**. The app features **multi-category news browsing, financial charts, search filters**, and a **responsive UI**.
 
+
 ## Features
 
 - **News API Integration**: Fetch top headlines, articles, and sources.
@@ -13,6 +14,25 @@ This project is a **Vue 3 + TypeScript + Tailwind** application that provides a 
 - **Dynamic UI Components**: Modular Vue components for search, filtering, and navigation.
 - **Optimized Performance**: Cached API responses and debounced search queries.
 - **Responsive Design**: Works on desktop and mobile.
+
+
+## Main Pages ( Home - Categories - Sources - Liked Articles )
+
+<img src="./readme_sources/a_main_page.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/b_categories.png" width="48%" style="margin-right:1%;">
+
+<img src="./readme_sources/c_sources.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/d_liked_articles.png" width="48%" style="margin-right:1%;">
+
+
+## Features and Nav Menu
+
+<img src="./readme_sources/e_everything_filter.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/f_top_headlines_filter.png" width="48%" style="margin-right:1%;">
+
+
+<img src="./readme_sources/g_source_filter.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/h_nav_menu.png" width="48%" style="margin-right:1%;">
 
 ---
 
