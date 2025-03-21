@@ -1,139 +1,146 @@
-# Vue.js News Website
+# News & Finance Dashboard
 
-A modern news website built with Vue.js, TypeScript, and Tailwind CSS. This application allows users to browse and search news articles using the NewsAPI.
+## Overview
+
+This project is a **Vue 3 + TypeScript** application that provides a **news and financial dashboard**. It integrates with external APIs to fetch **latest news articles** and **financial market data**. The app features **multi-category news browsing, financial charts, search filters**, and a **responsive UI**.
 
 ## Features
 
-- Browse latest news articles
-- Search functionality with debouncing
-- Responsive design with mobile-first approach
-- Article detail view with full content
-- Category-based navigation
-- State management with Pinia
-- Type-safe development with TypeScript
-- CSS organization with component-based architecture
+- **News API Integration**: Fetch top headlines, articles, and sources.
+- **Financial Data Integration**: Get stock quotes, time series, and market status.
+- **Pinia State Management**: Centralized state handling for news, finance, and UI state.
+- **Composable Functions**: Reusable logic for API calls and search filtering.
+- **Dynamic UI Components**: Modular Vue components for search, filtering, and navigation.
+- **Optimized Performance**: Cached API responses and debounced search queries.
+- **Responsive Design**: Works on desktop and mobile.
+
+---
 
 ## Project Structure
 
 ```
 src/
-├── api/                    # API integration layer
-│   ├── lib/               # Shared API utilities
-│   ├── mappers/           # Data transformation
-│   ├── services/          # API services
-│   └── types/             # API type definitions
-├── components/            # Reusable Vue components
-├── mocks/                 # Mock data for development
-│   └── newsapi/          # NewsAPI mock responses
-├── router/               # Vue Router configuration
-├── stores/               # Pinia state management
-├── styles/               # CSS styles
-│   ├── base/             # Base styles
-│   ├── components/       # Component styles
-│   └── layouts/          # Layout utilities
-├── types/                # TypeScript type definitions
-├── utils/                # Utility functions
-└── views/                # Page components
+│── api/                # API services & configurations
+│   ├── config/         # API configuration files
+│   ├── services/       # API service classes
+│
+│── assets/             # Static assets (images, icons, etc.)
+│
+│── components/         # Reusable Vue components
+│   ├── form-elements/  # UI form elements (select, input)
+│   ├── navigation/     # Navbar, menus, and logo
+│   ├── search/         # Search-related components
+│   ├── sections/       # News & financial sections
+│   ├── widgets/        # Custom UI widgets (charts, finance data)
+│
+│── composables/        # Vue composables (API calls & utilities)
+│   ├── useNews.ts      # Fetch news articles
+│   ├── useFinance.ts   # Fetch finance data
+│   ├── useSearch.ts    # Search & filter logic
+│
+│── constants/          # Constant values used across the app
+│   ├── conNews.ts      # News-related constants
+│   ├── conFinance.ts   # Finance-related constants
+│   ├── conFilter.ts    # Search filter options
+│   ├── conCountryCodes.ts # Mapping of country codes
+│
+│── layouts/            # Global layout components
+│
+│── mocks/              # Mock API responses (for testing)
+│
+│── router/             # Vue Router configuration
+│
+│── stores/             # Pinia stores for state management
+│   ├── newsStore.ts    # Manages news data
+│   ├── financeStore.ts # Manages financial data
+│   ├── categoryStore.ts # Manages selected categories
+│   ├── newsFilterStore.ts # Manages search filters
+│   ├── newsSourceStore.ts # Manages news sources
+│   ├── navigationStore.ts # Handles app navigation
+│   ├── likedNewsStore.ts # Stores liked articles
+│   ├── apiCacheStore.ts # Caches API responses
+│   ├── errorStore.ts   # Handles global error state
+│
+│── styles/             # Global styles & Tailwind configurations
+│
+│── types/              # TypeScript types for API responses
+│   ├── news.types.ts   # News API types
+│   ├── finance.types.ts # Finance API types
+│   ├── navigation.types.ts # Navigation-related types
+│   ├── stores.types.ts # Store-related types
+│   ├── utils.types.ts  # Utility function types
+│
+│── utils/              # Utility functions
+│   ├── date.ts         # Date format helpers
+│   ├── debounce.ts     # Debounce functions
+│   ├── general.ts      # Miscellaneous utilities
+│
+│── views/              # Page-level Vue components
+│   ├── HomeView.vue    # Homepage
+│   ├── ArticleView.vue # News article details
+│   ├── CategoryView.vue # News by category
+│   ├── LikedNewsView.vue # Saved articles
+│   ├── SourcesView.vue # News sources
+│
+│── App.vue             # Main app component
+│── main.ts             # Vue app initialization
+│── vite.config.ts      # Vite project configuration
+│── README.md           # Project documentation
 ```
 
-## Technology Stack
+## Installation
 
-- **Vue.js 3**: Progressive JavaScript framework
-- **TypeScript**: Static typing and enhanced IDE support
-- **Pinia**: State management
-- **Vue Router**: Client-side routing
-- **Tailwind CSS**: Utility-first CSS framework
-- **Axios**: HTTP client
-- **Vite**: Build tool and development server
+To get started with the project, follow these steps:
 
-## Setup
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/yourusername/repo-name.git
+    cd repo-name
+    ```
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the root directory and add your NewsAPI key:
-   ```
-   VITE_NEWS_API_KEY=your_api_key_here
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
-## Development
+3. **Run the development server**:
+    ```sh
+    npm run dev
+    ```
 
-### API Integration
+4. **Build for production**:
+    ```sh
+    npm run build
+    ```
 
-The project uses a robust API integration layer:
-- `BaseService`: Abstract base class for HTTP requests
-- `NewsService`: Handles all news-related API calls
-- Type-safe responses with TypeScript interfaces
-- Data transformation with dedicated mappers
-- Mock data support for development
+5. **Preview the production build**:
+    ```sh
+    npm run preview
+    ```
 
-### Component Architecture
+## 🔧 Maintenance
 
-Components are organized into:
-- Reusable UI components (`src/components/`)
-- Page-level views (`src/views/`)
-- Each component is self-contained with its own styles
+To maintain the project, consider the following:
 
-### Styling
+- **Update dependencies** regularly to keep the project secure and up-to-date:
+    ```sh
+    npm update
+    ```
 
-The project uses a component-based CSS architecture:
-- Base styles for global defaults
-- Component-specific styles
-- Layout utilities
-- All styles are organized in the `src/styles/` directory
+- **Lint and format code** to ensure code quality:
+    ```sh
+    npm run lint
+    npm run lint:check
+    ```
 
-### State Management
+## Security Issues
 
-Pinia stores handle application state:
-- `newsStore`: Manages news articles and search state
-- Type-safe actions and state
-- Centralized data management
+If you discover any security issues, please report them immediately. Follow these steps:
 
-## Available Scripts
+1. **Do not disclose security issues publicly** until they have been addressed.
+2. **Contact the maintainers** directly via email or a private communication channel.
+3. **Provide detailed information** about the issue, including steps to reproduce and potential impact.
 
-- `npm run dev`: Start development server
-- `npm run build`: Build for production
-- `npm run preview`: Preview production build
-- `npm run lint`: Lint code
-- `npm run lint:check`: Check code for lint issues
+---
 
-## Best Practices
-
-- Type-safe development with TypeScript
-- Component composition with Vue 3 Composition API
-- Responsive design patterns
-- Clean code architecture
-- Modular CSS organization
-- Error handling and loading states
-- Debounced search functionality
-
-## Environment Variables
-
-Required environment variables:
-- `VITE_NEWS_API_KEY`: Your NewsAPI API key
-
-## Browser Support
-
-The application supports all modern browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
+For more information, refer to the official documentation and guidelines provided in the repository.

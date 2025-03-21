@@ -63,8 +63,6 @@ class NewsService extends BaseService {
       params: {
         ...params,
         pageSize: params.pageSize || requestDefaults.MAX_RESULT_PER_REQUEST,
-        language: params.language || requestDefaults.DEFAULT_LANG,
-        sortBy: params.sortBy || requestDefaults.DEFAULT_SORT,
         from: params.from || utils.getDate({ currentDate: Date.now(), dayBefore: 1 }),
       },
     });

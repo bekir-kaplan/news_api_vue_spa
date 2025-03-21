@@ -1,6 +1,6 @@
 import type { INewsReqTopHeadlineQParam } from '@/api/types/news/newsRequests';
 import type { ICategory, ISection } from '@/types/homeView.types';
-import type { TNewsFilterParam, TNewsFilterSearchIn } from '@/types/news.types';
+import type { TNewsFilterParam, TNewsFilterSearchIn, TSortBy } from '@/types/news.types';
 
 export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 5;
 export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 12;
@@ -29,10 +29,22 @@ export const CON_FILTER_SEARCH_IN: Record<string, TNewsFilterSearchIn> = {
   DESCRIPTION: 'description',
 };
 
+export const CON_FILTER_SORTBY: Record<string, TSortBy> = {
+  RELEVANCY: 'relevancy',
+  POPULARITY: 'popularity',
+  PUBLISHED_AT: 'publishedAt',
+};
+
 export const CON_FILTER_SEARCHIN_VALUES: { key: TNewsFilterSearchIn; value: string }[] = [
   { key: CON_FILTER_SEARCH_IN.TITLE, value: 'Title' },
   { key: CON_FILTER_SEARCH_IN.CONTENT, value: 'Content' },
   { key: CON_FILTER_SEARCH_IN.DESCRIPTION, value: 'Description' },
+];
+
+export const CON_FILTER_SORTBY_VALUES: { key: TSortBy; value: string }[] = [
+  { key: CON_FILTER_SORTBY.RELEVANCY, value: 'Title' },
+  { key: CON_FILTER_SORTBY.POPULARITY, value: 'Popularity' },
+  { key: CON_FILTER_SORTBY.PUBLISHED_AT, value: 'Published at' },
 ];
 
 export const CON_FILTER_GROUPBY_VALUES: { key: TNewsFilterParam; value: string }[] = [

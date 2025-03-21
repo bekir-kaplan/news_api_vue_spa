@@ -11,14 +11,10 @@
 import { defineStore, storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
 import { useNews } from '@/composables/useNews';
-import { newsService } from '@/api/services/newsService';
 import { useNewsFilterStore } from './newsFilterStore';
 import type { INewsArticle } from '@/api/types/news/news';
 import type { INewsMapNewsRes } from '@/api/types/news/newsMap';
-import type {
-  INewsReqTopHeadlineQParam,
-  INewsReqEverythingQParam,
-} from '@/api/types/news/newsRequests';
+import type { INewsReqTopHeadlineQParam } from '@/api/types/news/newsRequests';
 import { CON_NEWS_DEFAULT_SECTIONS_PAGESIZE } from '@/constants/conNews';
 import router from '@/router';
 
@@ -33,8 +29,13 @@ export const useNewsStore = defineStore(
     const categoryArticles = ref<Record<string, INewsArticle[]>>({});
     const selectedArticle = ref<INewsArticle | null>(null);
     const searchResults = ref<INewsArticle[]>([]);
+    const endpointRef = ref<string>('everything');
 
     const hasSearchResults = computed(() => searchResults.value.length > 0);
+
+    const setEndpointRef = (endpointName: string): void => {
+      endpointRef.value = endpointName;
+    };
 
     const fetch = {
       topHeadlines: {
@@ -80,20 +81,15 @@ export const useNewsStore = defineStore(
         },
       },
       everything: {
-        // TODO: In search panel we need to add selection
-        // to search in everything or topheadlines search
-        search: async (query: INewsReqEverythingQParam): Promise<void> => {
+        search: async (query: string): Promise<void> => {
           try {
             loading.value = true;
             error.value = null;
 
-            const params = {
-              ...query,
-            };
-
-            // TODO: comosable uzerinden git
-            const result = await newsService.searchNews(params);
-
+            const result = await newsComposable.fetchEverything({
+              ...newsFilters.value,
+              q: query,
+            });
             searchResults.value = result.articles;
           } finally {
             loading.value = false;
@@ -125,6 +121,7 @@ export const useNewsStore = defineStore(
       selectedArticle,
       searchResults,
       carouselArticles,
+      endpointRef,
       loading,
       error,
 
@@ -135,6 +132,7 @@ export const useNewsStore = defineStore(
       fetch,
       setSelectedArticle,
       handleArticleClick,
+      setEndpointRef,
       clearSearch,
     };
   },

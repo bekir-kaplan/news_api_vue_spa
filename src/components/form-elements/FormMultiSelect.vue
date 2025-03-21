@@ -1,12 +1,29 @@
 <script setup lang="ts">
+/**
+ * Multi-Select Dropdown Component
+ * ---------------------------------------------------
+ * This component allows users to select multiple options from a dropdown list.
+ *
+ * Features:
+ * - Supports searching within options.
+ * - Allows a configurable max selection limit.
+ * - Provides a clear UI with selected items displayed as tags.
+ * - Emits updated values for parent components.
+ *
+ * Props:
+ * - `id` (optional) - The unique identifier for the select element.
+ * - `name` (required) - The name of the selection.
+ * - `label` (optional) - Label text displayed above the dropdown.
+ * - `map` (optional) - Defines the key-value mapping for options.
+ * - `options` (required) - List of selectable options.
+ * - `defaultValue` (optional) - Pre-selected options on load.
+ * - `modelValue` (optional) - Bound value for v-model usage.
+ * - `searchable` (optional) - Enables search functionality.
+ * - `maxSelections` (optional) - Limits the number of selected options.
+ * - `placeholder` (optional) - Text displayed when no option is selected.
+ */
 import { ref, computed, onMounted } from 'vue';
-import { ChevronDownIcon } from '@heroicons/vue/24/outline';
-
-export interface IEventMultiSelectChange {
-  key: string;
-  values: string[];
-  event?: Event;
-}
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps<{
   id?: string;
@@ -51,7 +68,15 @@ const toggleDropdown = (): void => {
   isOpen.value = !isOpen.value;
 };
 
-// Select an option
+/**
+ * Handles option selection.
+ * - Prevents duplicate selections.
+ * - Limits selection based on `maxSelections` (if defined).
+ * - Emits updated values to the parent component.
+ *
+ * @param {Event} event - The event triggered by clicking an option.
+ * @param {any} option - The selected option object.
+ */
 const selectOption = (event: Event, option: any): void => {
   const value = props.map ? option[props.map.key] : option.key;
 
@@ -67,7 +92,14 @@ const selectOption = (event: Event, option: any): void => {
   }
 };
 
-// Remove selected option
+/**
+ * Removes a selected option from the list.
+ * - Updates the selected options state.
+ * - Emits updated values to the parent component.
+ *
+ * @param {Event} event - The event triggered by clicking the remove button.
+ * @param {string} value - The value of the option to be removed.
+ */
 const removeOption = (event: Event, value: string): void => {
   selectedOptions.value = selectedOptions.value.filter((v) => v !== value);
   const filterData = Object.values(selectedOptions.value).join(',');
@@ -79,25 +111,18 @@ const removeOption = (event: Event, value: string): void => {
 </script>
 
 <template>
-  <div class="relative w-full" ref="dropdownRef">
+  <div class="multi-select-container" ref="dropdownRef">
     <!-- Label -->
-    <label v-if="label" :for="id || name" class="block text-gray-700 mb-1">{{ label }}</label>
+    <label v-if="label" :for="id || name" class="multi-select-label">{{ label }}</label>
 
     <!-- Selected Items -->
-    <div
-      class="relative w-full border rounded-lg bg-white p-2 cursor-pointer"
-      @click="toggleDropdown"
-    >
-      <div class="flex flex-wrap gap-2">
-        <span v-if="!selectedOptions.length" class="text-gray-400">{{
+    <div class="multi-select-selected-items" @click="toggleDropdown">
+      <div class="multi-select-selected-container">
+        <span v-if="!selectedOptions.length" class="multi-select-placeholder">{{
           placeholder || 'Select options...'
         }}</span>
 
-        <div
-          v-for="option in selectedOptions"
-          :key="option"
-          class="flex items-center bg-blue-500 text-white px-2 py-1 rounded-md text-sm"
-        >
+        <div v-for="option in selectedOptions" :key="option" class="multi-select-bedge">
           {{
             props.map
               ? props.options.find((o: any) => o[props.map?.key || ''] === option)?.[
@@ -105,25 +130,27 @@ const removeOption = (event: Event, value: string): void => {
                 ]
               : option
           }}
-          <button @click.stop="(e) => removeOption(e, option)" class="ml-1 text-white">✕</button>
+          <button @click.stop="(e) => removeOption(e, option)">
+            <XMarkIcon class="multi-select-bedge-close" />
+          </button>
         </div>
       </div>
-      <ChevronDownIcon class="absolute right-2 top-2 w-5 h-5 text-gray-500" />
+      <ChevronDownIcon class="multi-select-button-icon" />
     </div>
 
     <!-- Dropdown -->
-    <div v-if="isOpen" class="absolute z-10 w-full bg-white border mt-1 shadow-lg rounded-lg p-2">
+    <div v-if="isOpen" class="multi-select-dropdown">
       <input
         v-if="searchable"
         v-model="searchQuery"
         type="text"
-        class="w-full p-2 border-b focus:outline-none"
+        class="multi-select-search-input"
         placeholder="Search..."
       />
-      <ul class="max-h-60 overflow-y-auto">
+      <ul class="multi-select-options">
         <li
           v-for="option in filteredOptions"
-          :key="props.map ? option[props.map.key] : option.key"
+          :key="`${props.name}-${props.map ? option[props.map.key] : option.key}`"
           @click="(e) => selectOption(e, option)"
           class="p-2 hover:bg-gray-200 cursor-pointer"
         >
@@ -135,5 +162,5 @@ const removeOption = (event: Event, value: string): void => {
 </template>
 
 <style scoped>
-/* @import '@/styles/form-elements/form-multiselect.css'; */
+@import '@/styles/form-elements/form-multiselect.css';
 </style>

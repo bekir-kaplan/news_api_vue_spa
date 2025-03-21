@@ -25,14 +25,27 @@ import router from '@/router';
 import SearchInput from '@/components/search/SearchInput.vue';
 import NewsSearchFilter from './NewsSearchFilter.vue';
 import SourceSearchFilter from './SourceSearchFilter.vue';
-import { CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS } from '@/constants/conFilter';
+import {
+  CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS,
+  CON_NEWS_SEARCH_EVERYTHING_FILTER_OPTIONS,
+  CON_NEWS_SEARCH_ENDPOINTS,
+} from '@/constants/conFilter';
 import type { INewsArticle } from '@/api/types/news/news';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import EndpointSelection from './EndpointSelection.vue';
+import { watch } from 'vue';
 
 defineProps<{ isOpen: boolean }>();
 const emit = defineEmits<{ (e: 'select', article: INewsArticle): void }>();
 const newsStore = useNewsStore();
+const searchRef = ref('everything');
 
+watch(
+  () => searchRef.value,
+  (newVal) => {
+    newsStore.setEndpointRef(newVal);
+  }
+);
 const currentRouteName = computed(() => {
   return router.currentRoute.value.name;
 });
@@ -49,10 +62,19 @@ const currentRouteName = computed(() => {
     <div v-show="isOpen" class="search-panel-inner">
       <!-- Conditional rendering based on route -->
       <div v-if="currentRouteName !== 'sources'">
+        <EndpointSelection v-model="searchRef" />
         <!-- News Filter -->
         <NewsSearchFilter
-          title="News Filter"
-          :filter-options="CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS"
+          :title="`${
+            searchRef === CON_NEWS_SEARCH_ENDPOINTS.TOP_HEADLINES.key
+              ? CON_NEWS_SEARCH_ENDPOINTS.TOP_HEADLINES.value
+              : CON_NEWS_SEARCH_ENDPOINTS.EVERYTHING.value
+          } News Filter`"
+          :filter-options="
+            searchRef === CON_NEWS_SEARCH_ENDPOINTS.TOP_HEADLINES.key
+              ? CON_NEWS_SEARCH_TOP_HEADLINES_FILTER_OPTIONS
+              : CON_NEWS_SEARCH_EVERYTHING_FILTER_OPTIONS
+          "
         />
 
         <!-- Search Input -->

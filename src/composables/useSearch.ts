@@ -1,15 +1,23 @@
 import { ref, watch } from 'vue';
 import { useNewsStore } from '@/stores/newsStore';
 import utils from '@/utils/index';
+import { storeToRefs } from 'pinia';
+import { CON_NEWS_SEARCH_ENDPOINTS } from '@/constants/conFilter';
 
 export function useSearch(minChars = 3): any {
   const newsStore = useNewsStore();
+  const { endpointRef } = storeToRefs(newsStore);
   const searchQuery = ref('');
   const showResults = ref(false);
 
   const debouncedSearch = utils.debounce(async (query: string) => {
     if (query.length >= minChars) {
-      await newsStore.fetch.topHeadlines.search(query);
+      if (endpointRef.value === CON_NEWS_SEARCH_ENDPOINTS.EVERYTHING.key) {
+        await newsStore.fetch.everything.search(query);
+      }
+      if (endpointRef.value === CON_NEWS_SEARCH_ENDPOINTS.TOP_HEADLINES.key) {
+        await newsStore.fetch.topHeadlines.search(query);
+      }
       showResults.value = true;
     } else {
       showResults.value = false;
@@ -37,6 +45,7 @@ export function useSearch(minChars = 3): any {
   };
 
   return {
+    endpointRef,
     searchQuery,
     showResults,
     handleFocus,

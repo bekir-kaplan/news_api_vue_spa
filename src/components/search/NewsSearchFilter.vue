@@ -32,6 +32,7 @@ import {
   CON_FILTER_GROUPBY_VALUES,
   CON_FILTER_PAGESIZE_VALUES,
   CON_FILTER_SEARCHIN_VALUES,
+  CON_FILTER_SORTBY_VALUES,
   CON_NEWS_CATEGORIES,
 } from '@/constants/conNews';
 import { CON_COUNTRY_CODES } from '@/constants/conCountryCodes';
@@ -54,8 +55,9 @@ const filterStore = useNewsFilterStore();
 const sourcesStore = useNewsSourceStore();
 const categories = computed(() => CON_NEWS_CATEGORIES);
 const searchIn = computed(() => CON_FILTER_SEARCHIN_VALUES);
+const sortBy = computed(() => CON_FILTER_SORTBY_VALUES);
 const pageSizes = CON_FILTER_PAGESIZE_VALUES;
-const { sources, sourcesWithDomainNames } = storeToRefs(sourcesStore);
+const { sources } = storeToRefs(sourcesStore);
 
 const updateFilter = (param: IEventSelectElementChange): void => {
   let filterValue = param.value;
@@ -79,8 +81,16 @@ const newSetCountries = sources.value.reduce((acc, source) => {
   return acc;
 }, new Set());
 
+const newSetDomainNames = sources.value.reduce((acc, source) => {
+  if (source.url) {
+    acc.add(new URL(source.url).hostname);
+  }
+  return acc;
+}, new Set());
+
 const newArrLanguages = Array.from(newSetLanguages);
 const newArrCountries = Array.from(newSetCountries);
+const newArrDomainNames = Array.from(newSetDomainNames);
 
 const sourcesWithLanguage = newArrLanguages.map((lang) => ({
   key: lang as TLanguageCodes,
@@ -90,6 +100,11 @@ const sourcesWithLanguage = newArrLanguages.map((lang) => ({
 const sourcesWithCountries = newArrCountries.map((country) => ({
   key: country as TCountryCodes,
   value: CON_COUNTRY_CODES[country as TCountryCodes]?.text,
+}));
+
+const sourcesWithDomainNames = newArrDomainNames.map((country) => ({
+  key: country,
+  value: country,
 }));
 
 const checkIfNeeded = (type: IFilterOption): boolean => {
@@ -121,6 +136,15 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
         label="Category"
         default-value="all"
         :options="Object.values(categories)"
+        @update:value="updateFilter"
+      />
+
+      <FormSelectElement
+        v-if="checkIfNeeded('sortBy')"
+        name="sortBy"
+        label="Sort By"
+        default-value="all"
+        :options="sortBy"
         @update:value="updateFilter"
       />
 

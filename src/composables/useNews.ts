@@ -1,12 +1,11 @@
 import { ref } from 'vue';
-import { newsService } from '@/api/services/newsService';
-import type { INewsArticle } from '@/api/types/news/news';
 import type { INewsMapNewsRes, INewsMapSourceRes } from '@/api/types/news/newsMap';
 import type {
   INewsReqTopHeadlineQParam,
   INewsReqEverythingQParam,
   INewsReqSourceQParam,
 } from '@/api/types/news/newsRequests';
+import { newsService } from '@/api/services/NewsService';
 
 export function useNews(): any {
   const loading = ref(false);
@@ -25,12 +24,12 @@ export function useNews(): any {
   };
 
   // Search News
-  const fetchEverything = async (params: INewsReqEverythingQParam): Promise<INewsArticle[]> => {
+  const fetchEverything = async (params: INewsReqEverythingQParam): Promise<INewsMapNewsRes> => {
     try {
       loading.value = true;
       error.value = null;
       const result = await newsService.searchNews({ ...params });
-      return result.articles;
+      return result;
     } finally {
       loading.value = false;
     }

@@ -46,13 +46,6 @@ export const useNewsSourceStore = defineStore(
       },
     };
 
-    const sourcesWithDomainNames = computed(() => {
-      return sources.value.map((source) => ({
-        key: new URL(source.url || 'example.com').hostname,
-        value: source.name,
-      }));
-    });
-
     const groupedSources = computed(() => {
       const grouped = sources.value.reduce(
         (acc: Record<string, INewsSource[]>, source: INewsSource) => {
@@ -119,7 +112,6 @@ export const useNewsSourceStore = defineStore(
 
       // Computed
       groupedSources,
-      sourcesWithDomainNames,
 
       // Actions
       fetch,

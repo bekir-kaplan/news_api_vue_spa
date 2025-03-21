@@ -1,0 +1,59 @@
+.multi-select-container {
+  @apply relative sm:col-span-3 w-full;
+}
+
+.multi-select-label {
+  @apply block text-sm/6 text-gray-400;
+}
+
+.multi-select-wrapper {
+  @apply mt-2 grid grid-cols-1;
+}
+
+.multi-select-element {
+  @apply col-start-1 row-start-1 w-full appearance-none rounded-md 
+  bg-white py-1.5 pr-8 pl-3 text-base 
+  text-gray-900 outline-1 -outline-offset-1 
+  outline-gray-300 focus:outline-2 focus:-outline-offset-2 
+  focus:outline-indigo-600 sm:text-sm/6 border
+  capitalize;
+}
+
+.multi-select-bedge {
+  @apply flex items-center bg-gray-200 text-gray-800 px-2 py-1 rounded-md text-sm gap-2;
+}
+
+.multi-select-bedge-close {
+  @apply cursor-pointer w-6 h-6 text-gray-600 hover:text-white hover:bg-red-500 hover:rounded-full p-1;
+}
+.multi-select-element-icon {
+  @apply pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4;
+}
+
+.multi-select-selected-items {
+  @apply relative w-full border rounded-lg bg-white p-2 cursor-pointer;
+}
+
+.multi-select-dropdown {
+  @apply absolute z-10 w-full bg-white border mt-1 shadow-lg rounded-lg p-2;
+}
+
+.multi-select-selected-container {
+  @apply flex flex-wrap gap-2;
+}
+
+.multi-select-placeholder {
+  @apply text-gray-400;
+}
+
+.multi-select-button-icon {
+  @apply absolute right-2 top-2 w-5 h-5 text-gray-500;
+}
+
+.multi-select-search-input {
+  @apply w-full p-2 border-b focus:outline-none;
+}
+
+.multi-select-options {
+  @apply max-h-60 overflow-y-auto;
+}
