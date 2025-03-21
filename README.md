@@ -18,21 +18,21 @@ This project is a **Vue 3 + TypeScript + Tailwind** application that provides a 
 
 ## Main Pages ( Home - Categories - Sources - Liked Articles )
 
-<img src="./readme_sources/a_main_page.png" width="48%" style="margin-right:1%;">
-<img src="./readme_sources/b_categories.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/a_main_page.png" width="45%" style="margin-right:1%;">
+<img src="./readme_sources/b_categories.png" width="45%" style="margin-right:1%;">
 
-<img src="./readme_sources/c_sources.png" width="48%" style="margin-right:1%;">
-<img src="./readme_sources/d_liked_articles.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/c_sources.png" width="45%" style="margin-right:1%;">
+<img src="./readme_sources/d_liked_articles.png" width="45%" style="margin-right:1%;">
 
 
 ## Features and Nav Menu
 
-<img src="./readme_sources/e_everything_filter.png" width="48%" style="margin-right:1%;">
-<img src="./readme_sources/f_top_headlines_filter.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/e_everything_filter.png" width="45%" style="margin-right:1%;">
+<img src="./readme_sources/f_top_headlines_filter.png" width="45%" style="margin-right:1%;">
 
 
-<img src="./readme_sources/g_source_filter.png" width="48%" style="margin-right:1%;">
-<img src="./readme_sources/h_nav_menu.png" width="48%" style="margin-right:1%;">
+<img src="./readme_sources/g_source_filter.png" width="45%" style="margin-right:1%;">
+<img src="./readme_sources/h_nav_menu.png" width="45%" style="margin-right:1%;">
 
 ---
 
