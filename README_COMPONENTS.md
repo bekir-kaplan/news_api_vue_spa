@@ -8,6 +8,7 @@ This directory contains **Vue components** categorized based on their **function
 components/
 │── form-elements/      # UI form components
 │   ├── FormSelectElement.vue  # Custom select dropdown element
+│   ├── FormMultiSelect.vue    # Custom multiselect dropdown element
 │
 │── navigation/         # Navigation-related components
 │   ├── DesktopMenu.vue  # Navigation menu for desktop view
@@ -15,6 +16,7 @@ components/
 │   ├── NavLogo.vue      # Logo component used in the navigation bar
 │
 │── search/             # Components for searching and filtering news
+│   ├── EndpointSelection.vue   # Filter component for news search
 │   ├── NewsSearchFilter.vue    # Filter component for news search
 │   ├── SearchInput.vue         # Search input field with autocomplete
 │   ├── SearchPanel.vue         # Search results panel

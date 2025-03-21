@@ -1,6 +1,11 @@
 .search-input {
   @apply w-full p-2 border rounded-lg focus:ring-2 
-  focus:ring-blue-300 focus:border-blue-500 outline-none;
+  focus:ring-blue-300 focus:border-blue-500 outline-none
+  mt-2 grid grid-cols-1;
+}
+
+.search-input-label {
+  @apply block mb-1;
 }
 
 .search-results {

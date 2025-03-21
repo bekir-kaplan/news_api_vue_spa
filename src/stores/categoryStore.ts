@@ -13,6 +13,7 @@ import { ref } from 'vue';
 import { useNews } from '@/composables/useNews';
 import type { INewsArticle } from '@/api/types/news/news';
 import type { INewsMapNewsRes } from '@/api/types/news/newsMap';
+import { CON_NEWS_DEFAULT_CATEGORY_PAGESIZE } from '@/constants/conNews';
 
 export const useCategoryStore = defineStore('category', () => {
   const { fetchTopHeadlines, loading } = useNews();
@@ -29,7 +30,7 @@ export const useCategoryStore = defineStore('category', () => {
     try {
       const response = await fetchTopHeadlines({
         category: category.value,
-        pageSize: 10, // todo pagesize
+        pageSize: CON_NEWS_DEFAULT_CATEGORY_PAGESIZE,
         page: page.value,
       });
       result.value = response;

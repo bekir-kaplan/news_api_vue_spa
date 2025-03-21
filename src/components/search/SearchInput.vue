@@ -50,7 +50,7 @@ const onSelect = (article: INewsArticle): void => {
 
 <template>
   <div class="relative w-full">
-    <label v-if="label" for="query-input" class="block text-gray-700 mb-1">{{ label }}</label>
+    <label v-if="label" for="query-input" class="search-input-label">{{ label }}</label>
     <input
       id="query-input"
       v-model="searchQuery"

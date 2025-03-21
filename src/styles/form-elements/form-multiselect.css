@@ -1,9 +1,9 @@
 .multi-select-container {
-  @apply relative sm:col-span-3 w-full;
+  @apply relative w-full;
 }
 
 .multi-select-label {
-  @apply block text-sm/6 text-gray-400;
+  @apply block text-sm/6;
 }
 
 .multi-select-wrapper {
@@ -31,7 +31,8 @@
 }
 
 .multi-select-selected-items {
-  @apply relative w-full border rounded-lg bg-white p-2 cursor-pointer;
+  @apply relative w-full border rounded-lg bg-white p-2 cursor-pointer
+  mt-2 flex gap-2 items-center justify-between;
 }
 
 .multi-select-dropdown {
@@ -47,7 +48,7 @@
 }
 
 .multi-select-button-icon {
-  @apply absolute right-2 top-2 w-5 h-5 text-gray-500;
+  @apply right-2 top-2 w-4 h-4 text-gray-500;
 }
 
 .multi-select-search-input {

@@ -16,6 +16,8 @@ const formattedDate = computed(() => {
   if (!selectedArticle.value) {
     return '';
   }
+
+  // TODO
   return new Date(selectedArticle.value.publishedAt).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',

@@ -117,7 +117,7 @@ const checkIfNeeded = (type: IFilterOption): boolean => {
 
 <template>
   <div class="filter-container">
-    <div class="filter-title">
+    <div class="mb-4">
       <h3>{{ title || 'Filter' }}</h3>
     </div>
     <div class="filter-section">

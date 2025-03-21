@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a **Vue 3 + TypeScript** application that provides a **news and financial dashboard**. It integrates with external APIs to fetch **latest news articles** and **financial market data**. The app features **multi-category news browsing, financial charts, search filters**, and a **responsive UI**.
+This project is a **Vue 3 + TypeScript + Tailwind** application that provides a **news and financial dashboard**. It integrates with external APIs to fetch **latest news articles** and **financial market data**. The app features **multi-category news browsing, financial charts, search filters**, and a **responsive UI**.
 
 ## Features
 
@@ -118,7 +118,7 @@ To get started with the project, follow these steps:
     npm run preview
     ```
 
-## 🔧 Maintenance
+## Maintenance
 
 To maintain the project, consider the following:
 

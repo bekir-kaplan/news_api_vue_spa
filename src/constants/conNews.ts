@@ -4,6 +4,7 @@ import type { TNewsFilterParam, TNewsFilterSearchIn, TSortBy } from '@/types/new
 
 export const CON_NEWS_DEFAULT_SECTIONS_PAGESIZE = 5;
 export const CON_NEWS_DEFAULT_CAROUSEL_PAGESIZE = 12;
+export const CON_NEWS_DEFAULT_CATEGORY_PAGESIZE = 12;
 export const CON_NEWS_DEFAULT_COUNTRY = 'us';
 
 export const CON_REQUEST_PARAMS = {

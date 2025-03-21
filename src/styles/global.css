@@ -32,11 +32,9 @@
 }
 
 .filter-container {
-  @apply flex flex-col flex-wrap gap-2 mb-2;
+  @apply flex-col flex-wrap mb-2;
 }
-.filter-title {
-  @apply mb-4;
-}
+
 .filter-section {
   @apply flex gap-2 flex-wrap;
 }
@@ -46,4 +44,7 @@
 
 .global-news-card-image {
   @apply w-full h-48 object-cover;
+}
+.search-panel-inner label {
+  @apply text-gray-400;
 }
