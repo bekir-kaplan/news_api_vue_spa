@@ -29,6 +29,7 @@ import { handleHttpError } from '@/api/utils/ErrorHandler';
 import { checkErrorInFinanceApiResponse } from '@/api/utils/FinanceErrorHandler';
 import { checkErrorInNewsApiResponse } from '@/api/utils/NewsErrorHandler';
 import API_CONFIG from '@/api/config';
+import mockNewsData from '@/mocks/newsapi/top-headlines.json';
 
 export abstract class BaseService {
   protected readonly instance: AxiosInstance;
@@ -83,18 +84,23 @@ export abstract class BaseService {
       }
     }
 
-    const response = await this.instance.get<T, T>(url, config);
+    try {
+      const response = await this.instance.get<T, T>(url, config);
 
-    // Handle API-specific errors
-    this._validateApiResponse(response);
+      // Handle API-specific errors
+      this._validateApiResponse(response);
 
-    // Store response in cache if caching is enabled
-    if (useCache) {
-      const cacheKey = this._getCacheKey(url, config);
-      this._storeInCache(cacheStore, cacheKey, response);
+      // Store response in cache if caching is enabled
+      if (useCache) {
+        const cacheKey = this._getCacheKey(url, config);
+        this._storeInCache(cacheStore, cacheKey, response);
+      }
+
+      return response;
+    } catch (error) {
+      console.error('API request failed, using mock data:', error);
+      return this._getMockData<T>(url);
     }
-
-    return response;
   }
 
   /**
@@ -149,5 +155,12 @@ export abstract class BaseService {
     } else if (requestUrl.includes(API_CONFIG.CONFIG_NEWS.BASE_URL)) {
       checkErrorInNewsApiResponse(response);
     }
+  }
+
+  private _getMockData<T>(url: string): T {
+    if (url.includes('top-headlines')) {
+      return mockNewsData as T;
+    }
+    throw new Error('No mock data available for the requested URL');
   }
 }

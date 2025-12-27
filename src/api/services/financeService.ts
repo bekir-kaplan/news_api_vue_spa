@@ -49,16 +49,13 @@ class FinanceService extends BaseService {
    * @returns {Promise<IFinMapResTimeSeries>}
    */
   async getTimeSeries(params: IFinReqTimeSeries): Promise<IFinMapResTimeSeries> {
-    const response = await this.get<IFinResTimeSeries>(
-      API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.TIME_SERIES,
-      {
-        params: {
-          ...params,
-          interval: params.interval || this.apiConfig.REQUEST_DEFAULTS.INTERVAL,
-          outputsize: params.outputsize || this.apiConfig.REQUEST_DEFAULTS.OUTPUT_SIZE,
-        },
-      }
-    );
+    const response = await this.get<IFinResTimeSeries>(this.apiConfig.ENDPOINTS.TIME_SERIES, {
+      params: {
+        ...params,
+        interval: params.interval || this.apiConfig.REQUEST_DEFAULTS.INTERVAL,
+        outputsize: params.outputsize || this.apiConfig.REQUEST_DEFAULTS.OUTPUT_SIZE,
+      },
+    });
     return mapTimeSeries(response);
   }
 
@@ -68,7 +65,7 @@ class FinanceService extends BaseService {
    * @returns {Promise<IFinMapQuote | null>}
    */
   async getQuote(symbol: IFinReqQuote): Promise<IFinMapQuote | null> {
-    const response = await this.get<IFinResQuote>(API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.QUOTE, {
+    const response = await this.get<IFinResQuote>(this.apiConfig.ENDPOINTS.QUOTE, {
       params: { symbol },
     });
     return mapQuote(response);
@@ -80,12 +77,9 @@ class FinanceService extends BaseService {
    * @returns {Promise<IFinMapMarketState>}
    */
   async getMarketState(symbol: IFinReqMarketState): Promise<IFinMapMarketState> {
-    const response = await this.get<IFinResMarketState>(
-      API_CONFIGS.CONFIG_FINANCE.ENDPOINTS.MARKET_STATE,
-      {
-        params: { symbol },
-      }
-    );
+    const response = await this.get<IFinResMarketState>(this.apiConfig.ENDPOINTS.MARKET_STATE, {
+      params: { symbol },
+    });
     return mapMarketState(response);
   }
 }
